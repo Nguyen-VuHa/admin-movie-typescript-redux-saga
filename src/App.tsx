@@ -1,7 +1,7 @@
 import { PrivateRoute } from 'components/Common';
 import Admin from 'components/Layout/Admin';
 import LoginPage from 'features/auth/pages/Login';
-import React, { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 function App() {

@@ -2,8 +2,42 @@
     --color-white: #fff;
     --color-gray-white: #f7f7f7;
     --color-primary-header: #a6b2c9;
+    --bg-primary: #1a191f;
+    --layout-primary: #222028;
+    --placeholder-color: #a7a4aa;
+    --yellow-primary: #f9ab00;
 }   
 
+body {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'Source Sans Pro', sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+  
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+}
+
+input, button {
+    transition: 0.4s;
+}
+
+button, a {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: 'none';
+}
+  
 //Layout styles
 .d-flex {
     display: flex !important;

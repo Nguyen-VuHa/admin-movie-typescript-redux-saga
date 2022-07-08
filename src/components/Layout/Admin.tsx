@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AlignVerticalBottomIcon from '@mui/icons-material/AlignVerticalBottom';
 import ArticleIcon from '@mui/icons-material/Article';
-import { Outlet, Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import DashBoard from 'features/dashboard';
 import TodoList from 'features/todo';
 import EditTodo from 'features/edit-todo';
@@ -31,7 +31,7 @@ export default function Admin(props: AdminProps) {
             navigate('todo-list');
         if(valueActive === 2)
             navigate('edit-todo');
-    }, [valueActive])
+    }, [valueActive, navigate])
 
     return (
         <div>

@@ -12,7 +12,7 @@ interface InputProps {
     type?: string,
 }
 
-export function Input({ className, placeholder, onChange, value, type }: InputProps) {
+function Input({ className, placeholder, onChange, value, type }: InputProps) {
 
     return (
         <input 
@@ -26,3 +26,5 @@ export function Input({ className, placeholder, onChange, value, type }: InputPr
         />
     )
 }
+
+export default React.memo(Input)

@@ -26,6 +26,13 @@
     color: var(--color-primary-header);
 }
 
+.text-error {
+    width: 100%;
+    font-size: 0.85rem;
+    color: var(--yellow-primary);
+    font-style: italic;
+}
+
 .color-white {
     color: #fff;
 }

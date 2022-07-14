@@ -1,5 +1,6 @@
 import { Container } from '@mui/material';
 import authApi from 'api/authApi';
+import { useAppDispatch } from 'app/hooks';
 import Images from 'assets/images';
 import classNames from 'classnames/bind';
 import { Button, CheckBox } from 'components/Common';
@@ -8,8 +9,10 @@ import { AuthContext } from 'contexts/AuthContext';
 import { handleValidationLogin } from 'middlewares/authLogin';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { addToastTopLeft } from 'reducers/toastifyReducer/toastifySlice';
 import globalStyles from 'utils/globalStyle.module.scss';
 import styles from './login.module.scss';
+import { v4 } from 'uuid';
 
 const gb = classNames.bind(globalStyles);
 const cx = classNames.bind(styles);
@@ -21,11 +24,13 @@ let styleBackgroundImage = {
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const [userName, setUserName] = useState('');
     const [passWord, setPassWord] = useState('');
     const [rememberLogin, setRememberLogin] = useState(false);
     const [validator, setValidator] = useState<any>(null);
+    const [submitLoading, setSubmitLoading] = useState(false);
 
     const { dispatchAuth } = useContext(AuthContext);
 
@@ -52,24 +57,51 @@ const LoginPage = () => {
         }, setValidator);
 
         if(userName && passWord && checkValid) {    
+            setSubmitLoading(true);
             authApi.loginAccount({
                 email: userName,
                 password: passWord,
             })
             .then((res: any) => {
                 if(res && res.status === 200) {
+                    setSubmitLoading(false);
                     localStorage.setItem('accessToken', res.accessToken);
                     localStorage.setItem('refreshToken', res.refreshToken);
                     dispatchAuth({
                         type: 'SET_USER_INFO',
                         payload: res.user,
                     });
+
+                    dispatch(addToastTopLeft({
+                        uuid: v4(),
+                        position: 'top-left',
+                        duration: 3500,
+                        toastText: 'Login Admin Page Successed!',
+                        type: 'success',
+                    }))
                     
                     navigate('/');
                 }
+                else {
+                    setSubmitLoading(false);
+                    dispatch(addToastTopLeft({
+                        uuid: v4(),
+                        position: 'top-left',
+                        duration: 3500,
+                        toastText: res.message,
+                        type: 'warn',
+                    }))
+                }
             })
             .catch((err: any) => {
-                console.log('LOGIN FAILED', err.message);
+                setSubmitLoading(false);
+                dispatch(addToastTopLeft({
+                    uuid: v4(),
+                    position: 'top-left',
+                    duration: 3500,
+                    toastText: err.message,
+                    type: 'warn',
+                }))
             })
         }
     }
@@ -114,6 +146,7 @@ const LoginPage = () => {
                     <Button
                         className={gb('mt-1')}
                         onClick={() => handleLogin()}
+                        loading={submitLoading}
                     >
                         Đăng Nhập
                     </Button>

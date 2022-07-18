@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react'
+import React, { ReactNode, useRef, useState } from 'react'
 import classNames from 'classnames/bind';
 import styleButton from 'assets/styles/styleButton.module.scss';
 import { TailSpin } from  'react-loader-spinner';

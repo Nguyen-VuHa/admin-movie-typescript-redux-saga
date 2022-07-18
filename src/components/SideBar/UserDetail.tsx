@@ -6,11 +6,7 @@ import { IoLogOutOutline } from 'react-icons/io5';
 
 const cx = classNames.bind(styles);
 
-interface UserDetailProps {
-
-}
-
-export default function UserDetail({}: UserDetailProps) {
+export default function UserDetail() {
     return (
         <div className={cx('user')}>
             <div className={cx('sb-user-image')}>

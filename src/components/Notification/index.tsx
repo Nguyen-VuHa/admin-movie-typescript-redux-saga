@@ -21,7 +21,7 @@ export default function Notification({ position = 'top-right', listToast = [] }:
         setTimeout(() => {
             dispatch(removeItemTopLeft(uuid));
         }, 600);
-    },[]);
+    },[dispatch]);
 
     useEffect(() => {
         setListToastify(listToast);

@@ -24,7 +24,7 @@ const objStatus = [
     }
 ]
 
-interface NotifyItem {
+interface NotifyItemProps {
     point?: 'top-left' | 'bottom-left' | 'middle-top' | 'middle-bottom' | 'top-right' | 'bottom-right',
     type?: 'normal' | 'success' | 'info' | 'warn' | 'error',
     duration?: number,
@@ -32,7 +32,7 @@ interface NotifyItem {
     onRemoveItem?: Function,
 }
 
-function NotifyItem({point, duration = 3000, type = 'normal', toastText, onRemoveItem}: NotifyItem) {
+function NotifyItem({point, duration = 3000, type = 'normal', toastText, onRemoveItem}: NotifyItemProps) {
     const [statusShow, setStatusShow] = useState(true);
 
     useEffect(() => {
@@ -42,7 +42,7 @@ function NotifyItem({point, duration = 3000, type = 'normal', toastText, onRemov
         }, duration);
 
         return () => clearTimeout(timeOut)
-    }, [duration])
+    }, [duration, onRemoveItem])
 
     return (
         <div className={cx('notify-items')}>

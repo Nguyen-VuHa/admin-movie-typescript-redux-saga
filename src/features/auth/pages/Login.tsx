@@ -26,8 +26,8 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const [userName, setUserName] = useState('');
-    const [passWord, setPassWord] = useState('');
+    const [userName, setUserName] = useState('admin@gmail.com');
+    const [passWord, setPassWord] = useState('123123123');
     const [rememberLogin, setRememberLogin] = useState(false);
     const [validator, setValidator] = useState<any>(null);
     const [submitLoading, setSubmitLoading] = useState(false);

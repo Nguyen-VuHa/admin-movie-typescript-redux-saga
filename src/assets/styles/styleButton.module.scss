@@ -1,5 +1,6 @@
 
 .button-layout {
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -26,5 +27,42 @@
 
     &:hover {
         background-color: rgba(249,171,0,0.05);
+    }
+}
+
+.title {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    z-index: -999;
+
+    font-size: 12px;
+
+    transition: opacity .3s ease;
+
+    &.show {
+        opacity: 1;
+        z-index: 0;
+        visibility: visible;
+
+        background-color: rgba(249,171,0, .85);
+        padding: 8px 12px;
+        border-radius: 6px;
+    }
+
+    &.bottom {
+        top: 110%;
+    }
+
+    &.top {
+        bottom: 110%;
+    }
+
+    &.left {
+        right: 110%;
+    }
+
+    &.right {
+        left: 110%;
     }
 }

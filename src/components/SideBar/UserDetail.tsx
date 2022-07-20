@@ -3,10 +3,13 @@ import classNames from 'classnames/bind';
 import styles from './sidebar.module.scss';
 import { Button } from 'components/Common';
 import { IoLogOutOutline } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 export default function UserDetail() {
+    const navigate = useNavigate();
+
     return (
         <div className={cx('user')}>
             <div className={cx('sb-user-image')}>
@@ -24,6 +27,7 @@ export default function UserDetail() {
                 title="Đăng xuất"
                 onClick={() => {
                     localStorage.clear();
+                    navigate('/');
                 }}
             >
                 <IoLogOutOutline

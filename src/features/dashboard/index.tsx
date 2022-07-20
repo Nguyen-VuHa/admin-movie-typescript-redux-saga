@@ -2,10 +2,6 @@ import { ImageList, ImageListItem } from '@mui/material';
 import { Container } from '@mui/system';
 import classNames from 'classnames/bind';
 import React from 'react';
-import styles from './dashboard.module.scss';
-
-const cx = classNames.bind(styles);
-
 export interface DashboardProps {
 
 }

@@ -4,20 +4,20 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import './index.css';
 import { BrowserRouter } from 'react-router-dom';
+import { AuthContextProvider } from 'contexts/AuthContext';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
 root.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <BrowserRouter>
+    <Provider store={store}>
+        <BrowserRouter>
+            <AuthContextProvider>
                 <App />
-            </BrowserRouter>
-        </Provider>
-    </React.StrictMode>
+            </AuthContextProvider>
+        </BrowserRouter>
+    </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

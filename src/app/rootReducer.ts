@@ -1,7 +1,9 @@
 import counterReducer from 'features/counter/counterSlice';
-import todoReducer from 'reducers/todoSlice';
+import toastifySlice from 'reducers/toastifyReducer/toastifySlice';
+import todoSlice from 'reducers/todoSlice';
 
 export const rootReducer = {
     counter: counterReducer,
-    todoState: todoReducer,
+    todoState: todoSlice,
+    toastifyState: toastifySlice,
 }

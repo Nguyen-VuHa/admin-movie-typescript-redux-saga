@@ -13,6 +13,7 @@ type NavMenuItemProps = {
 }
 
 function NavMenuItem({ icon = <></>, menuName = 'Menu Name...', active = false, navigation = "!#" }: NavMenuItemProps) {
+    
     return (
         <li className={cx('sb-navbar-item')}>
             <Link to={navigation} className={cx('sb-link', active && 'active')}>

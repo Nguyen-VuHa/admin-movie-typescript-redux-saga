@@ -13,7 +13,7 @@ let listMenu = [
     {
         icon: <IoApps size={20} />,
         menuName: 'TRANG CHỦ',
-        navigateLink: '/admin',
+        navigateLink: '/admin/dashboard',
     },
     {
         icon: <IoFilmSharp size={20} />,
@@ -44,6 +44,8 @@ let listMenu = [
 
 function NavMenu() {
 
+
+
     return (
         <div className={cx('sb-nav-warpper')}>
             <Scrollbars 
@@ -59,7 +61,7 @@ function NavMenu() {
                                 icon={lm.icon}
                                 menuName={lm.menuName}
                                 navigation={lm.navigateLink}
-                                // active={true}
+                                active={window.location.pathname === lm.navigateLink}
                             />
                         })
                     }

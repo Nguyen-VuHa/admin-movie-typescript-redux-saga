@@ -11,6 +11,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 
 function App() {
     const dispatch = useAppDispatch();
+
     const { topLeft } = useAppSelector(state => state.toastifyState);
     const { dispatchAuth } = useContext(AuthContext);
     const dispatchToast = useToastify();

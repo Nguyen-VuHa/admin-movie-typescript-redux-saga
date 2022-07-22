@@ -3,6 +3,7 @@ import React from 'react';
 
 import globalStyles from 'utils/globalStyle.module.scss';
 import Header from './Header';
+import MainContent from './MainContent';
 import OverView from './OverView';
 
 const gb = classNames.bind(globalStyles);
@@ -14,6 +15,7 @@ const DashBoardMain = () => {
             <Header />
             <div className={gb('warapper-content')}>
                 <OverView />
+                <MainContent />
             </div>
         </div>
     )

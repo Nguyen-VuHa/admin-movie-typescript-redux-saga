@@ -1,6 +1,5 @@
 import { Container } from '@mui/material';
 import authApi from 'api/authApi';
-import { useAppDispatch } from 'app/hooks';
 import Images from 'assets/images';
 import classNames from 'classnames/bind';
 import { Button, CheckBox } from 'components/Common';
@@ -9,10 +8,9 @@ import { AuthContext } from 'contexts/AuthContext';
 import { handleValidationLogin } from 'middlewares/authLogin';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addToastTopLeft } from 'reducers/toastifyReducer/toastifySlice';
 import globalStyles from 'utils/globalStyle.module.scss';
 import styles from './login.module.scss';
-import { v4 } from 'uuid';
+import useToastify from 'hooks/useToastify';
 
 const gb = classNames.bind(globalStyles);
 const cx = classNames.bind(styles);
@@ -24,7 +22,7 @@ let styleBackgroundImage = {
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
+    const dispatchToast = useToastify();
 
     const [userName, setUserName] = useState('admin@gmail.com');
     const [passWord, setPassWord] = useState('123123123');
@@ -67,41 +65,42 @@ const LoginPage = () => {
                     setSubmitLoading(false);
                     localStorage.setItem('accessToken', res.accessToken);
                     localStorage.setItem('refreshToken', res.refreshToken);
+
                     dispatchAuth({
                         type: 'SET_USER_INFO',
                         payload: res.user,
                     });
 
-                    dispatch(addToastTopLeft({
-                        uuid: v4(),
-                        position: 'top-left',
-                        duration: 3500,
-                        toastText: 'Login Admin Page Successed!',
-                        type: 'success',
-                    }))
+                    dispatchToast({
+                        type: 'TYPE_SUCCESS',
+                        payload: {
+                            position: 'top-left',
+                            message: 'login admin page successfully!',
+                        }
+                    });
                     
                     navigate('/');
                 }
                 else {
                     setSubmitLoading(false);
-                    dispatch(addToastTopLeft({
-                        uuid: v4(),
-                        position: 'top-left',
-                        duration: 3500,
-                        toastText: res.message,
-                        type: 'warn',
-                    }))
+                    dispatchToast({
+                        type: 'TYPE_WARN',
+                        payload: {
+                            position: 'top-left',
+                            message: res.message,
+                        }
+                    });
                 }
             })
             .catch((err: any) => {
                 setSubmitLoading(false);
-                dispatch(addToastTopLeft({
-                    uuid: v4(),
-                    position: 'top-left',
-                    duration: 3500,
-                    toastText: err.message,
-                    type: 'warn',
-                }))
+                dispatchToast({
+                    type: 'TYPE_WARN',
+                    payload: {
+                        position: 'top-left',
+                        message: err.message,
+                    }
+                });
             })
         }
     }

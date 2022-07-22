@@ -1,18 +1,17 @@
 import MainSideBar from "components/SideBar";
+import { routesConfig } from "constants/routesConfig";
+import { Route, Routes, useRoutes } from "react-router-dom";
 
-export interface AdminProps {
-
-}
-
-export default function Admin(props: AdminProps) {
-
+export default function Admin() {
+    const routes = useRoutes(routesConfig);
+    
     return (
-        <div style={{width: '100%', height: '100%', position: 'relative'}}>
+        <div style={{width: '100%', height: '100%', position: 'relative', display: 'flex'}}>
             {/* SIDEBAR COMPONENT */}
             <MainSideBar />
 
             {/* MAIN COMPONENT */}
-            <div></div>
+            { routes }
         </div>
     )
 }

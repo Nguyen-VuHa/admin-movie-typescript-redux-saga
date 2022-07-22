@@ -5,55 +5,45 @@ import Admin from 'components/Layout/Admin';
 import Notification from 'components/Notification';
 import { AuthContext } from 'contexts/AuthContext';
 import LoginPage from 'features/auth/pages/Login';
-import { Fragment, useContext, useEffect, useState } from 'react';
+import useToastify from 'hooks/useToastify';
+import { Fragment, useContext, useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { addToastTopLeft } from 'reducers/toastifyReducer/toastifySlice';
-import { v4 } from 'uuid';
 
 function App() {
     const dispatch = useAppDispatch();
 
     const { topLeft } = useAppSelector(state => state.toastifyState);
-
     const { dispatchAuth } = useContext(AuthContext);
-
-    const [checkToken, setCheckToken] = useState(false);
-    const [loadingCheck, setLoadingCheck] = useState(true);
+    const dispatchToast = useToastify();
 
     useEffect(() => {
         if(localStorage.getItem('refreshToken')) {
-            setLoadingCheck(true);
             let tokenRefresh = localStorage.getItem('refreshToken') || '';
             authApi.refreshTokenAdmin(tokenRefresh)
             .then((res: any) => {
                 if(res.status === 200) {
                     localStorage.setItem('accessToken', res.accessToken);
                     localStorage.setItem('refreshToken', res.refreshToken);
+
                     dispatchAuth({
                         type: 'SET_USER_INFO',
                         payload: res.user,
                     });
-                    setLoadingCheck(false);
-                    setCheckToken(true);
                 }
             })  
-            .catch((err: any) => {
-                setCheckToken(false);
-                setLoadingCheck(false);
-                dispatch(addToastTopLeft({
-                    uuid: v4(),
-                    position: 'top-left',
-                    duration: 3500,
-                    toastText: '[ERROR] TOKEN INVALID! Please login again...',
-                    type: 'error',
-                }))
+            .catch(() => {
+                let messageError = '[ERROR] TOKEN INVALID! Please login again...';
+                dispatchToast({
+                    type: 'TYPE_ERROR',
+                    payload: {
+                        position: 'top-left',
+                        message: messageError,
+                    }
+                });
                 localStorage.clear();
             })
-        } else {
-            setCheckToken(false);
-            setLoadingCheck(false);
         }
-    }, [])
+    }, [dispatch, dispatchAuth]);
 
     return (
         <Fragment>
@@ -65,17 +55,16 @@ function App() {
             }
            
             <Routes>
-                {
-                    !checkToken && !loadingCheck && <Route path='/login' element={<LoginPage />} />        
-                }
-                
                 <Route element={<PrivateRoute />}>   
                     <Route path='/admin/*' element={<Admin />}/>
                 </Route>
 
+                <Route path='/login' element={<LoginPage />} />
+
+                <Route path='/admin' element={<Navigate to={"/admin/dashboard"} replace />} />
                 <Route
                     path="*"
-                    element={<Navigate to={checkToken && !loadingCheck ? "/admin" : "/login" } replace />}
+                    element={<Navigate to={"/admin/dashboard"} replace />}
                 />
             </Routes>
         </Fragment>

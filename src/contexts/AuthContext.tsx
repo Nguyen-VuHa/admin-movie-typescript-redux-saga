@@ -36,7 +36,6 @@ export const AuthContextProvider = (props: PropsContext) => {
                 return {
                     ...state,
                     ...action.payload,
-                    id: action.payload?.idUser,
                     isLogin: true,
                 };
             case "SET_NUMBER_OF_NOTIFY":

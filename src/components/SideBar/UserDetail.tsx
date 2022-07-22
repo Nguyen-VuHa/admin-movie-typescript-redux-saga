@@ -1,24 +1,26 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import classNames from 'classnames/bind';
 import styles from './sidebar.module.scss';
 import { Button } from 'components/Common';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from 'contexts/AuthContext';
 
 const cx = classNames.bind(styles);
 
 export default function UserDetail() {
     const navigate = useNavigate();
+    const { stateAuth } = useContext(AuthContext);
 
     return (
         <div className={cx('user')}>
             <div className={cx('sb-user-image')}>
-                <img src="https://res.cloudinary.com/cgv-vi-t-nam/image/upload/v1635672981/image_user/ikbpzxsp6mpfto2bvseg.jpg"  alt="USER_NULL"/>
+                <img src={stateAuth && stateAuth.avartar}  alt="USER NULL"/>
             </div>
 
             <div className={cx('sb-user-title')}>
-                <span>admin</span>
-                <p title='Admin BHD Star Cineplex'>Admin BHD Star Cineplex</p>
+                <span>{stateAuth && stateAuth.role === '0' ? 'Admin' : ''}</span>
+                <p title='Admin BHD Star Cineplex'>{stateAuth && stateAuth.fullname}</p>
             </div>
             
             

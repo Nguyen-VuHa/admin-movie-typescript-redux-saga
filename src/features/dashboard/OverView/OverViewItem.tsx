@@ -14,7 +14,7 @@ interface OverviewItemProps {
     loading?: boolean,
 }
 
-function OverViewItem({title = 'Title', value = '0...', icon, loading = false}: OverviewItemProps) {
+function OverViewItem({title = 'Title', value = 'NAN', icon, loading = false}: OverviewItemProps) {
     return (
         <div className={cx('ov-item-layout')}>
             <div className={cx('ov-item-wrapper')}>

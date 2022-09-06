@@ -11,14 +11,13 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 
 function App() {
     const dispatch = useAppDispatch();
-
+    const tokenRefresh = localStorage.getItem('refreshToken') || '';
     const { topLeft } = useAppSelector(state => state.toastifyState);
     const { dispatchAuth } = useContext(AuthContext);
     const dispatchToast = useToastify();
 
     useEffect(() => {
         if(localStorage.getItem('refreshToken')) {
-            let tokenRefresh = localStorage.getItem('refreshToken') || '';
             authApi.refreshTokenAdmin(tokenRefresh)
             .then((res: any) => {
                 if(res.status === 200) {

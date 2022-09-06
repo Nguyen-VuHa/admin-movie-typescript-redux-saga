@@ -15,9 +15,11 @@
 
     appearance: none;
     box-shadow: none;
-
+    font-family: 'Play', sans-serif;
+    
     &::placeholder {
         color: var(--placeholder-color);
+        font-family: 'Play', sans-serif;
     }
 
     &:focus {

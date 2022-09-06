@@ -17,8 +17,10 @@ export default function MainSideBar() {
             <NavMenu />
 
             <div className={cx('sb-copyright')}>
-                © copyright by HOTFLIX, 2019—2021. <br/>Created by 
+                © copyright by HOTFLIX, 2019—2021. <br/>Created by author
                 <a href="https://themeforest.net/user/dmitryvolkov/portfolio" rel="noreferrer" target="_blank">Dmitry Volkov</a>
+                <br/>Clone by 
+                <a href="https://www.facebook.com/profile.php?id=100005998215977" rel="noreferrer" target="_blank">Hạ Vũ</a>
             </div>
         </div>
     )

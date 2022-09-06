@@ -1,6 +1,6 @@
 import MainSideBar from "components/SideBar";
 import { routesConfig } from "constants/routesConfig";
-import { Route, Routes, useRoutes } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 
 export default function Admin() {
     const routes = useRoutes(routesConfig);

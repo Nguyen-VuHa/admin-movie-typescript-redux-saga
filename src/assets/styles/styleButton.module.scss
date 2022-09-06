@@ -36,9 +36,10 @@
     visibility: hidden;
     z-index: -999;
 
-    font-size: 12px;
+    font-size: 13px;
 
     transition: opacity .3s ease;
+    font-family: 'Play', sans-serif;
 
     &.show {
         opacity: 1;

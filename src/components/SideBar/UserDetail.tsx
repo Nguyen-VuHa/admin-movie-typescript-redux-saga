@@ -12,14 +12,16 @@ export default function UserDetail() {
     const navigate = useNavigate();
     const { stateAuth } = useContext(AuthContext);
 
+    console.log(stateAuth);
+
     return (
         <div className={cx('user')}>
             <div className={cx('sb-user-image')}>
-                <img src={stateAuth && stateAuth.avartar}  alt="USER NULL"/>
+                <img src={(stateAuth && stateAuth.avartar) || "https://upanh123.com/wp-content/uploads/2021/03/hinh-nen-may-tinh-3d-1024x768.jpg"}  alt="USER NULL"/>
             </div>
 
             <div className={cx('sb-user-title')}>
-                <span>{stateAuth && stateAuth.role === '0' ? 'Admin' : ''}</span>
+                <span>{stateAuth && stateAuth.role === 0 ? 'Admin' : ''}</span>
                 <p title='Admin BHD Star Cineplex'>{stateAuth && stateAuth.fullname}</p>
             </div>
             

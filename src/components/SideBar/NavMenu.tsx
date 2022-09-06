@@ -18,27 +18,27 @@ let listMenu = [
     {
         icon: <IoFilmSharp size={20} />,
         menuName: 'QUẢN LÝ PHIM',
-        navigateLink: '/admin',
+        navigateLink: '/admin/movie-manager',
     },
     {
         icon: <IoCubeSharp size={20} />,
         menuName: 'QUẢN LÝ RẠP CHIẾU PHIM',
-        navigateLink: '/admin',
+        navigateLink: '#',
     },
     {
         icon: <IoTicket size={20} />,
         menuName: 'QUẢN LÝ VÉ PHIM',
-        navigateLink: '/admin',
+        navigateLink: '#',
     },
     {
         icon: <IoPeopleCircleOutline size={20} />,
         menuName: 'QUẢN LÝ NGƯỜI DÙNG',
-        navigateLink: '/admin',
+        navigateLink: '#',
     },
     {
         icon: <IoChatbubblesSharp size={20} />,
         menuName: 'COMMENTS & REVIEWS',
-        navigateLink: '/admin',
+        navigateLink: '#',
     }
 ]
 

@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import globalStyles from 'utils/globalStyle.module.scss';
 import styles from './login.module.scss';
 import useToastify from 'hooks/useToastify';
+import { Base64 } from 'js-base64';
+import { encryption } from 'utils/variables';
 
 const gb = classNames.bind(globalStyles);
 const cx = classNames.bind(styles);
@@ -56,43 +58,77 @@ const LoginPage = () => {
 
         if(userName && passWord && checkValid) {    
             setSubmitLoading(true);
-            authApi.loginAccount({
-                email: userName,
-                password: passWord,
-            })
+
+            authApi.generatorKeyAuth(Base64.encode(userName))
             .then((res: any) => {
-                if(res && res.status === 200) {
-                    setSubmitLoading(false);
-                    localStorage.setItem('accessToken', res.accessToken);
-                    localStorage.setItem('refreshToken', res.refreshToken);
+                if(res) {
 
-                    dispatchAuth({
-                        type: 'SET_USER_INFO',
-                        payload: res.user,
+                    let dataEncode = Base64.encode(`{
+                        "email": "${userName}",
+                        "password": "${passWord}",
+                        "key_time": ${res.key_time}
+                    }`);
+
+                    let objEnCode = [];
+        
+                    res.en_code.split('').map((eC: string) => {
+                        let strSplit = dataEncode.substring(0, encryption[eC]);
+                        dataEncode = dataEncode.replace(strSplit, '');
+
+                        objEnCode.push({
+                            [eC]: strSplit,
+                        });
                     });
 
-                    dispatchToast({
-                        type: 'TYPE_SUCCESS',
-                        payload: {
-                            position: 'top-left',
-                            message: 'login admin page successfully!',
-                        }
+                    objEnCode.push({
+                        N: dataEncode,
                     });
-                    
-                    navigate('/');
-                }
-                else {
-                    setSubmitLoading(false);
-                    dispatchToast({
-                        type: 'TYPE_WARN',
-                        payload: {
-                            position: 'top-left',
-                            message: res.message,
+
+                    authApi.loginAccount({ data: objEnCode }, Base64.encode(userName))
+                    .then((res: any)=> {
+                        if(res && res.status === 200) {
+                            setSubmitLoading(false);
+                            localStorage.setItem('accessToken', res.accessToken);
+                            localStorage.setItem('refreshToken', res.refreshToken);
+        
+                            dispatchAuth({
+                                type: 'SET_USER_INFO',
+                                payload: res.user,
+                            });
+        
+                            dispatchToast({
+                                type: 'TYPE_SUCCESS',
+                                payload: {
+                                    position: 'top-left',
+                                    message: 'login admin page successfully!',
+                                }
+                            });
+                            
+                            navigate('/');
                         }
-                    });
+                        else {
+                            setSubmitLoading(false);
+                            dispatchToast({
+                                type: 'TYPE_WARN',
+                                payload: {
+                                    position: 'top-left',
+                                    message: res.message,
+                                }
+                            });
+                        }
+                    })
+                    .catch((err: any) => {
+                        setSubmitLoading(false);
+                        dispatchToast({
+                            type: 'TYPE_WARN',
+                            payload: {
+                                position: 'top-left',
+                                message: err.message,
+                            }
+                        });
+                    })
                 }
-            })
-            .catch((err: any) => {
+            }).catch((err: any) => {
                 setSubmitLoading(false);
                 dispatchToast({
                     type: 'TYPE_WARN',

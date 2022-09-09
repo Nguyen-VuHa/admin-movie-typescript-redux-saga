@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { PrivateRoute } from 'components/Common';
 import Admin from 'components/Layout/Admin';
 import Notification from 'components/Notification';
+import routePath from 'constants/routePath';
 import { AuthContext } from 'contexts/AuthContext';
 import LoginPage from 'features/auth/pages/Login';
 import useToastify from 'hooks/useToastify';
@@ -60,10 +61,10 @@ function App() {
 
                 <Route path='/login' element={<LoginPage />} />
 
-                <Route path='/admin' element={<Navigate to={"/admin/dashboard"} replace />} />
+                <Route path='/admin' element={<Navigate to={`admin/${routePath.DASHBOARD}`} replace />} />
                 <Route
                     path="*"
-                    element={<Navigate to={"/admin/dashboard"} replace />}
+                    element={<Navigate to={`admin/${routePath.DASHBOARD}`} replace />}
                 />
             </Routes>
         </Fragment>

@@ -6,6 +6,8 @@ import Scrollbars from 'react-custom-scrollbars-2';
 import NavMenuItem from './NavMenuItem';
 import { IoApps, IoFilmSharp, IoCubeSharp, IoTicket, IoPeopleCircleOutline, IoChatbubblesSharp } from "react-icons/io5";
 import NavMenuItemDrop from './NavMenuItemDrop';
+import routePath from 'constants/routePath';
+import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const gb = classNames.bind(globalStyles);
@@ -14,7 +16,7 @@ let listMenu = [
     {
         icon: <IoApps size={20} />,
         menuName: 'TRANG CHỦ',
-        navigateLink: '/admin/dashboard',
+        navigateLink: routePath.DASHBOARD,
     },
     {
         icon: <IoFilmSharp size={20} />,
@@ -23,11 +25,11 @@ let listMenu = [
         listItemDrop: [
             {
                 menuName: 'Danh Sách Phim',
-                navigateLink: '/admin/movie-manager',
+                navigateLink: routePath.MOVIE_MANAGER,
             },
             {
                 menuName: 'Thể loại',
-                navigateLink: '#',
+                navigateLink: routePath.MOVIE_CATEGORY,
             },
             {
                 menuName: 'Đạo diễn / Diễn viên',
@@ -62,7 +64,7 @@ let listMenu = [
 ]
 
 function NavMenu() {
-
+    const location = useLocation();
 
 
     return (
@@ -90,7 +92,7 @@ function NavMenu() {
                                     icon={lm.icon}
                                     menuName={lm.menuName}
                                     navigation={lm.navigateLink}
-                                    active={window.location.pathname === lm.navigateLink}
+                                    active={location.pathname.includes(lm.navigateLink)}
                                 />
                             }
                             

@@ -32,7 +32,7 @@ function PageNotFound({message = 'The page you are looking for not available!'}:
                     <p className={cx('text')}>{ message }</p>
                     <Button 
                         onClick={() => {
-                            navigation('/admin');
+                            navigation('/');
                         }}
                     >
                         Về Trang Chủ

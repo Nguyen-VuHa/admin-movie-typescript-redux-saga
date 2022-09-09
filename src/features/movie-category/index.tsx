@@ -2,18 +2,19 @@ import React from 'react'
 import globalStyles from 'utils/globalStyle.module.scss';
 import classNames from 'classnames/bind';
 import Header from './Header';
-import TableMovie from './TableMovie';
+import TableCategory from './TableCategory';
 
 const gb = classNames.bind(globalStyles);
 
-function MovieManagerPage() {
+function MovieCategoryPage() {
+
     return (
         <div className={gb('container-main')}>
             <Header />
-            <TableMovie />
+            <TableCategory />
             <div style={{paddingBottom: '20px'}} />
         </div>
     )
 }
 
-export default MovieManagerPage
+export default MovieCategoryPage

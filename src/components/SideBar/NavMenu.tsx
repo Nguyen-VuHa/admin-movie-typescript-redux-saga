@@ -5,6 +5,7 @@ import globalStyles from 'utils/globalStyle.module.scss';
 import Scrollbars from 'react-custom-scrollbars-2';
 import NavMenuItem from './NavMenuItem';
 import { IoApps, IoFilmSharp, IoCubeSharp, IoTicket, IoPeopleCircleOutline, IoChatbubblesSharp } from "react-icons/io5";
+import NavMenuItemDrop from './NavMenuItemDrop';
 
 const cx = classNames.bind(styles);
 const gb = classNames.bind(globalStyles);
@@ -18,7 +19,25 @@ let listMenu = [
     {
         icon: <IoFilmSharp size={20} />,
         menuName: 'QUẢN LÝ PHIM',
-        navigateLink: '/admin/movie-manager',
+        navigateLink: '#',
+        listItemDrop: [
+            {
+                menuName: 'Danh Sách Phim',
+                navigateLink: '/admin/movie-manager',
+            },
+            {
+                menuName: 'Thể loại',
+                navigateLink: '#',
+            },
+            {
+                menuName: 'Đạo diễn / Diễn viên',
+                navigateLink: '#',
+            },
+            {
+                menuName: 'Quản lý Poster phim',
+                navigateLink: '#',
+            },
+        ]
     },
     {
         icon: <IoCubeSharp size={20} />,
@@ -56,13 +75,25 @@ function NavMenu() {
                 <ul className={cx('sb-navbar-list')}>
                     {
                         listMenu.map((lm, index) => {
-                            return <NavMenuItem 
-                                key={index}
-                                icon={lm.icon}
-                                menuName={lm.menuName}
-                                navigation={lm.navigateLink}
-                                active={window.location.pathname === lm.navigateLink}
-                            />
+                            if(lm.listItemDrop && lm.listItemDrop.length > 0) {
+                                return <NavMenuItemDrop 
+                                    key={index}
+                                    icon={lm.icon}
+                                    menuName={lm.menuName}
+                                    navigation={lm.navigateLink}
+                                    active={window.location.pathname === lm.navigateLink}
+                                    menuDrop={lm.listItemDrop}
+                                />
+                            } else {
+                                return <NavMenuItem 
+                                    key={index}
+                                    icon={lm.icon}
+                                    menuName={lm.menuName}
+                                    navigation={lm.navigateLink}
+                                    active={window.location.pathname === lm.navigateLink}
+                                />
+                            }
+                            
                         })
                     }
                 </ul>

@@ -4,8 +4,8 @@ import { call, put, takeEvery } from "redux-saga/effects";
 
 export const addTodoSlice = createAction('todo/addTodoSlice');
 
-function* fetchDataOverView() {
-    yield put(setLoadingOverView());
+function* fetchDataOverView(action: any) {
+    // yield put(setLoadingOverView());
     // yield put(fetchDataOverViewDashBoard);
 }
 

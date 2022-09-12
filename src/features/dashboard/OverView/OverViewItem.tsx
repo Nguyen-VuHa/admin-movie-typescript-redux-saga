@@ -21,13 +21,9 @@ function OverViewItem({title = 'Title', value = 'NAN', icon, loading = false}: O
                 <span className={cx('ov-item-title', loading && gb('skeleton-loading'))}>{ !loading && title }</span>
                 <div className={cx('ov-item-value')}>
                     <p className={cx('ov-value-text', loading && gb('skeleton-loading'))}>{ !loading && value }</p>
-                    { loading && <div className={gb('skeleton-loading')} style={{width: '36px'}}/> }
-                    {
-                        !loading && icon ? icon : <IoFilm 
-                            color="#f9ab00"
-                            size={36}
-                        />
-                    }
+                    <div className={gb(loading && 'skeleton-loading')} style={{width: '36px', height: '36px'}}>
+                        { !loading && icon ? icon : "" }
+                    </div>
                 </div>
             </div>
         </div>

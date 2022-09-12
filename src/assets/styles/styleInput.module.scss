@@ -1,6 +1,6 @@
 
 .custom-input {
-    width: calc(100% - 40px);
+    width: 100%;
     height: 46px;
 
     background-color: var(--layout-primary);
@@ -16,7 +16,8 @@
     appearance: none;
     box-shadow: none;
     font-family: 'Play', sans-serif;
-    
+    box-sizing: border-box;
+
     &::placeholder {
         color: var(--placeholder-color);
         font-family: 'Play', sans-serif;
@@ -25,6 +26,9 @@
     &:focus {
         border-color: var(--yellow-primary);
     }
+}
 
-    
+.message-error {
+    font-style: italic;
+    color: #e04d4d;
 }

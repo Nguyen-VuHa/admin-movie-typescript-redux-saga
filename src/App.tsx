@@ -5,6 +5,7 @@ import Admin from 'components/Layout/Admin';
 import Notification from 'components/Notification';
 import routePath from 'constants/routePath';
 import { AuthContext } from 'contexts/AuthContext';
+import { ModalContextProvider } from 'contexts/ModalContext';
 import LoginPage from 'features/auth/pages/Login';
 import useToastify from 'hooks/useToastify';
 import { Fragment, useContext, useEffect } from 'react';
@@ -47,26 +48,28 @@ function App() {
 
     return (
         <Fragment>
-            {
-                topLeft && topLeft.length > 0
-                && <Notification 
-                    listToast={topLeft}
-                />
-            }
-           
-            <Routes>
-                <Route element={<PrivateRoute />}>   
-                    <Route path='/admin/*' element={<Admin />}/>
-                </Route>
+            <ModalContextProvider>
+                {
+                    topLeft && topLeft.length > 0
+                    && <Notification 
+                        listToast={topLeft}
+                    />
+                }
+            
+                <Routes>
+                    <Route element={<PrivateRoute />}>   
+                        <Route path='/admin/*' element={<Admin />}/>
+                    </Route>
 
-                <Route path='/login' element={<LoginPage />} />
+                    <Route path='/login' element={<LoginPage />} />
 
-                <Route path='/admin' element={<Navigate to={`admin/${routePath.DASHBOARD}`} replace />} />
-                <Route
-                    path="*"
-                    element={<Navigate to={`admin/${routePath.DASHBOARD}`} replace />}
-                />
-            </Routes>
+                    <Route path='/admin' element={<Navigate to={`admin/${routePath.DASHBOARD}`} replace />} />
+                    <Route
+                        path="*"
+                        element={<Navigate to={`admin/${routePath.DASHBOARD}`} replace />}
+                    />
+                </Routes>
+            </ModalContextProvider>
         </Fragment>
     );
 }

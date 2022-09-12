@@ -12,8 +12,6 @@ export default function UserDetail() {
     const navigate = useNavigate();
     const { stateAuth } = useContext(AuthContext);
 
-    console.log(stateAuth);
-
     return (
         <div className={cx('user')}>
             <div className={cx('sb-user-image')}>

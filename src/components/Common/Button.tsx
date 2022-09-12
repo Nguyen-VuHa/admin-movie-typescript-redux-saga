@@ -28,7 +28,10 @@ export function Button({ children, className, onClick, loading = false, loadingT
             ref={buttonRef}
             className={cx('button-layout', className)}
             type="button"
-            onClick={() => onClick && onClick()}
+            onClick={() => {
+                if(!loading)
+                    onClick && onClick();
+            }}
             disabled={loading}
             style={style}
             onMouseMove={(e: any) => {

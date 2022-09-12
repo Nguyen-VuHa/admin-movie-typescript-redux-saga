@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styleInput from 'assets/styles/styleInput.module.scss';
 import classNames from 'classnames/bind';
 
@@ -10,20 +10,33 @@ interface InputProps {
     onChange: Function,
     value: string,
     type?: string,
+    id?: string,
+    errMessage?: string,
+    styleLayout?: Object,
 }
 
-function Input({ className, placeholder, onChange, value, type }: InputProps) {
+function Input({ className, placeholder, onChange, value, type, id, errMessage, styleLayout }: InputProps) {
 
+    const handleOnChangeText = useCallback((text: string) => {
+        onChange(text);
+    },[]);
+    
     return (
-        <input 
-            className={cx('custom-input', className)}
-            placeholder={placeholder}
-            onChange={(e) => {
-                onChange(e.target.value);
-            }}
-            value={value}
-            type={type || 'text'}
-        />
+       <div style={{ width: '100%', ...styleLayout }}>
+            <input 
+                id={id}
+                className={cx('custom-input', className)}
+                placeholder={placeholder}
+                onChange={(e) => {
+                    handleOnChangeText(e.target.value);
+                }}
+                value={value}
+                type={type || 'text'}
+            />
+            {
+                errMessage && <small className={cx('message-error')}>{ errMessage }</small>
+            }
+       </div>
     )
 }
 

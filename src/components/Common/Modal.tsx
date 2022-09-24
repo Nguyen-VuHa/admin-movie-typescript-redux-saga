@@ -1,8 +1,7 @@
-import React, { ReactNode, useContext, useEffect, useRef } from 'react'
+import React, { ReactNode, useRef } from 'react'
 import styles from 'assets/styles/modal.style.module.scss'
 import classNames from 'classnames/bind'
 import { IoClose } from "react-icons/io5";
-import { ModalContext } from 'contexts/ModalContext';
 
 const md = classNames.bind(styles);
 
@@ -10,10 +9,10 @@ interface ModalType {
     children?: ReactNode,
     title?: String,
     onHideModal?: Function,
+    visible?: boolean,
 }
 
-export function Header({ title = 'Modal Title' }: ModalType) {
-    const { onChangeModal } = useContext(ModalContext);
+export function Header({ title = 'Modal Title', onHideModal }: ModalType) {
 
     return (
         <div className={md('md-header')}>
@@ -21,7 +20,7 @@ export function Header({ title = 'Modal Title' }: ModalType) {
             <div 
                 className={md('md-header-close')}
                 onClick={() => {
-                    onChangeModal(false);
+                    onHideModal && onHideModal();
                 }}
             >
                 <IoClose
@@ -47,31 +46,19 @@ export function Footer({ children }: ModalType) {
     )
 }
 
-function Modal({ children, onHideModal }: ModalType) {
+function Modal({ children, onHideModal, visible = false }: ModalType) {
     const containerRef = useRef<HTMLDivElement>(null);
-    const { modal, onChangeModal } = useContext(ModalContext);
-
-    useEffect(() => {
-        if(!modal)
-        {
-            let timeOut = setTimeout(() => {
-                onHideModal && onHideModal();
-            }, 400);
-
-            return () => clearTimeout(timeOut)
-        }
-    }, [modal])
     
     return (
         <div
-            className={md('wrapper-modal', modal && 'open')}
+            className={md('wrapper-modal', visible && 'open')}
             onClick={(e: any) => {
                 if(containerRef.current && !containerRef.current?.contains(e.target)) {
-                    onChangeModal(false);
+                    onHideModal && onHideModal();
                 }
             }}
         >
-            <div  className={md('modal-container', modal && 'show')} ref={containerRef}>
+            <div  className={md('modal-container', visible && 'show')} ref={containerRef}>
                 { children }
             </div>
         </div>

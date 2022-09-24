@@ -1,14 +1,18 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { CategorySlice } from 'models/categories';
 
 const initialState: CategorySlice = {
     loadingFetch: true,
     loadingCreate: false,
     statusCreated: 0,
+    statusUpdated: 0,
     categories: [],
     totalPage: 0,
+    totalRows: 0,
     currentPage: 1,
     errorMessage: '',
+    id: null,
+    categoryNameUpdate: '',
 };
 
 export const categorySlice = createSlice({ 
@@ -36,12 +40,14 @@ export const categorySlice = createSlice({
                 loadingFetch: false,
                 categories: payload.data,
                 totalPage: payload.totalPage,
+                totalRows: payload.totalRows,
             }
         },
         fetchCategoryFailed: (state, { payload }) => {
             return {
                 ...state,
                 loadingFetch: false,
+                errorMessage: payload.message,
             }
         },
 
@@ -49,14 +55,30 @@ export const categorySlice = createSlice({
             return {
                 ...state,
                 loadingCreate: false,
-                statusCreated: 1,
+                statusUpdated: 1,
             }
         },
         createdCategoryFailed: (state, { payload }) => {
             return {
                 ...state,
                 loadingCreate: false,
-                statusCreated: 2,
+                statusUpdated: 2,
+                errorMessage: payload.message,
+            }
+        },
+
+        updatedCategorySuccess: (state) => {
+            return {
+                ...state,
+                loadingCreate: false,
+                statusUpdated: 1,
+            }
+        },
+        updatedCategoryFailed: (state, { payload }) => {
+            return {
+                ...state,
+                loadingCreate: false,
+                statusUpdated: 2,
                 errorMessage: payload.message,
             }
         },
@@ -68,12 +90,41 @@ export const categorySlice = createSlice({
                 currentPage: payload,
             }
         },
+        addItemCategory: (state, { payload }) => {
+            return {
+                ...state,
+                categories: [payload].concat(state.categories),
+            }
+        },
+        updateItemCategory: (state, { payload }) => {
+            return {
+                ...state,
+                categories: state.categories.map(ct => ct.id === payload.id ? { ...ct, category_name: payload.category_name } : { ...ct }),
+                id: null,
+                categoryNameUpdate: '',
+            }
+        },
+        setDataUpdateCategory: (state, { payload }) => {
+            return {
+                ...state,
+                id: payload.id,
+                categoryNameUpdate: payload.name,
+            }
+        },
+        setDefaultDataUpdate: (state) => {
+            return {
+                ...state,
+                id: null,
+                categoryNameUpdate: '',
+            }
+        },
 
         // ACTION DEFAULT VALUE
         setDefaultStatus: (state) => {
             return {
                 ...state,
                 statusCreated: 0,
+                statusUpdated: 0,
                 errorMessage: '',
             }
         },
@@ -88,7 +139,13 @@ export const {
     setLoadingCreated,
     createdCategorySuccess,
     createdCategoryFailed,
-    setDefaultStatus
+    setDefaultStatus,
+    addItemCategory,
+    setDataUpdateCategory,
+    setDefaultDataUpdate,
+    updatedCategorySuccess,
+    updatedCategoryFailed,
+    updateItemCategory,
 } = categorySlice.actions;
 
 export default categorySlice.reducer;

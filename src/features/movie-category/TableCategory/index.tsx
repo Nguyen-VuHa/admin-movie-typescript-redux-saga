@@ -7,6 +7,7 @@ import moment from 'moment';
 import { setCurrentPage } from 'reducers/categoryReducer/categorySlice';
 import LoadingTable from 'components/Common/LoadingTable';
 import TableDefault from 'components/Common/TableDefault';
+import GroupButton from './GroupButton';
 
 const tb = classNames.bind(styleTable);
 
@@ -81,7 +82,7 @@ function TableCategory() {
                         categories.length > 0 ?
                         categories.map((ct, index) => {
                             let statusFilter = status.filter(s => s.id === ct.status);
-                            return <li className={tb('tb-content-item')} key={ct.id}>
+                            return <li className={tb('tb-content-item')} key={index} >
                                 <div style={{width: `${arrTitle[0].width}px`}}>
                                     { index + 1}
                                 </div>
@@ -98,7 +99,10 @@ function TableCategory() {
                                     { ct.createdBy }
                                 </div>  
                                 <div style={{width: `${arrTitle[5].width}px`}}>
-                                    Button Options
+                                    <GroupButton 
+                                        status={ct.status}
+                                        data={ct}
+                                    />
                                 </div>  
                             </li>
                         }) : loadingFetch ? <LoadingTable /> : <TableDefault textNotify='Không có thể loại hiện hành!'/>

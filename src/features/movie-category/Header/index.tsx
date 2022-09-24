@@ -10,7 +10,7 @@ const gb = classNames.bind(GlobalStyles);
 const cx = classNames.bind(Styles);
 
 function Header() {
-    const { categories } = useAppSelector(state => state.categoryState);
+    const { totalRows } = useAppSelector(state => state.categoryState);
 
     return (
         <div className={gb('wrapper-header', cx('sticky-header'))}>
@@ -19,7 +19,7 @@ function Header() {
                     className={cx('layout-title')}
                 >
                     <h2 className={cx('title')}>Thể Loại</h2>
-                    <span className={cx('total-text')}>{ categories.length } thể loại</span>
+                    <span className={cx('total-text')}>{ totalRows } thể loại</span>
                 </div>
                 <div
                     className={cx('layout-title')}

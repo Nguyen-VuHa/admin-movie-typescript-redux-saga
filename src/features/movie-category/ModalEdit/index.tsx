@@ -24,9 +24,11 @@ function ModalEdit() {
     const [msg, setMsg] = useState<string>('');
 
     useEffect(() => {
-        if(id && modalEditCate)
+        if(id)
             setCategoryName(categoryNameUpdate);
-    }, [id, categoryNameUpdate, modalEditCate])
+        else    
+            setCategoryName('');
+    }, [id])
     
 
     const handleCreateCategory = () => {

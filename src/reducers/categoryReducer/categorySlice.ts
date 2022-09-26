@@ -111,6 +111,12 @@ export const categorySlice = createSlice({
                 categoryNameUpdate: payload.name,
             }
         },
+        updateStatusCategory: (state, { payload }) => {
+            return {
+                ...state,
+                categories: state.categories.map(ct => ct.id === payload.id ? { ...ct, status: payload.status } : { ...ct }),
+            }
+        },
         setDefaultDataUpdate: (state) => {
             return {
                 ...state,
@@ -146,6 +152,7 @@ export const {
     updatedCategorySuccess,
     updatedCategoryFailed,
     updateItemCategory,
+    updateStatusCategory,
 } = categorySlice.actions;
 
 export default categorySlice.reducer;

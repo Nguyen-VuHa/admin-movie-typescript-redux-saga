@@ -89,7 +89,6 @@ function MovieCategoryPage() {
     return (
         <div className={gb('container-main')}>
             <ModalEdit />
-        
             <Header />
             <TableCategory />
             <div style={{paddingBottom: '20px'}} />

@@ -13,6 +13,10 @@ const categoriesApi = {
         const url = `api/category/update`;
         return axiosClient.put(url, payload);
     },
+    updateStatusCateApi: (payload: any) => {
+        const url = `api/category/update-status/${payload}`;
+        return axiosClient.get(url);
+    },
 }
 
 export default categoriesApi;

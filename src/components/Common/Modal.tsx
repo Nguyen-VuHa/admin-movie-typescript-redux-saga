@@ -10,6 +10,7 @@ interface ModalType {
     title?: String,
     onHideModal?: Function,
     visible?: boolean,
+    style?: Object,
 }
 
 export function Header({ title = 'Modal Title', onHideModal }: ModalType) {
@@ -46,7 +47,7 @@ export function Footer({ children }: ModalType) {
     )
 }
 
-function Modal({ children, onHideModal, visible = false }: ModalType) {
+function Modal({ children, onHideModal, visible = false, style }: ModalType) {
     const containerRef = useRef<HTMLDivElement>(null);
     
     return (
@@ -57,6 +58,7 @@ function Modal({ children, onHideModal, visible = false }: ModalType) {
                     onHideModal && onHideModal();
                 }
             }}
+            style={style}
         >
             <div  className={md('modal-container', visible && 'show')} ref={containerRef}>
                 { children }

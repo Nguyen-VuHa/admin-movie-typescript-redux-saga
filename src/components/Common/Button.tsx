@@ -13,7 +13,7 @@ interface ButtonProps {
     loadingText?: string,
     style?: Object,
     title?: string,
-    buttonType?: 'default' | 'dismiss' | 'disable'
+    buttonType?: 'default' | 'dismiss' | 'disable' | ''
 }
 
 export function Button({ children, className, onClick, loading = false, loadingText, style, title, buttonType = 'default' }: ButtonProps) {

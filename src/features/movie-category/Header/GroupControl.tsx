@@ -4,7 +4,7 @@ import React, { useContext } from 'react'
 import { IoAddSharp } from "react-icons/io5";
 
 function GroupControl() {
-    const { onChangeModal } = useContext(ModalContext);
+    const { setModalEditCate } = useContext(ModalContext);
 
     return (
         <div 
@@ -18,7 +18,7 @@ function GroupControl() {
         >
             <Button
                 onClick={() => {
-                    onChangeModal(true);
+                    setModalEditCate(true);
                 }}
             >
                 Thêm thể loại

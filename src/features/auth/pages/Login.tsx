@@ -13,6 +13,8 @@ import styles from './login.module.scss';
 import useToastify from 'hooks/useToastify';
 import { Base64 } from 'js-base64';
 import { encryption } from 'utils/variables';
+import generatorPosition from 'utils/generatorPosition';
+import enCodeString from 'utils/generatorPosition';
 
 const gb = classNames.bind(globalStyles);
 const cx = classNames.bind(styles);
@@ -64,16 +66,16 @@ const LoginPage = () => {
                 if(res) {
 
                     let dataEncode = Base64.encode(`{
-                        "email": "${userName}",
-                        "password": "${passWord}",
-                        "key_time": ${res.key_time}
+                        "password": "${Base64.encode(passWord)}",
+                        "email": "${userName}"
                     }`);
 
+                    let base64 = enCodeString(dataEncode, res._k);
                     let objEnCode = [];
         
-                    res.en_code.split('').map((eC: string) => {
-                        let strSplit = dataEncode.substring(0, encryption[eC]);
-                        dataEncode = dataEncode.replace(strSplit, '');
+                    res.e_cd.split('').map((eC: string) => {
+                        let strSplit = base64.substring(0, encryption[eC]);
+                        base64 = base64.replace(strSplit, '');
 
                         objEnCode.push({
                             [eC]: strSplit,
@@ -81,7 +83,7 @@ const LoginPage = () => {
                     });
 
                     objEnCode.push({
-                        N: dataEncode,
+                        N: base64,
                     });
 
                     authApi.loginAccount({ data: objEnCode }, Base64.encode(userName))

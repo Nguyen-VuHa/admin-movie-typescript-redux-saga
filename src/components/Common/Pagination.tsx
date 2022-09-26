@@ -58,7 +58,7 @@ function Pagination({ totalPage = 1, currentPage = 1, onChangeCurrentPage }: Pag
                             key={index}
                             className={tb('pg-btn', item === currentPage && 'active')}
                             onClick={() => {
-                                if(item !== '...')
+                                if(item !== '...' && item !== currentPage)
                                 {
                                     onChangeCurrentPage && onChangeCurrentPage(item)
                                 }

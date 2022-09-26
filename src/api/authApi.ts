@@ -9,9 +9,9 @@ const authApi = {
         const url = `api/auth/account/admin/sign-in?eml=${eml}`;
         return axiosClient.post(url, JSON.stringify(data));
     },
-    refreshTokenAdmin: (refreshToken: string) => {
+    refreshTokenAdmin: () => {
         const url = `api/auth/change-token`;
-        return axiosClient.post(url, { refreshToken: refreshToken });
+        return axiosClient.post(url, { refreshToken: localStorage.getItem('refreshToken') });
     }
 }
 

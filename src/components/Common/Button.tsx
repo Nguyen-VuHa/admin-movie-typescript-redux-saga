@@ -27,7 +27,7 @@ export function Button({ children, className, onClick, loading = false, loadingT
     return (
         <button
             ref={buttonRef}
-            className={cx('button-layout', className, buttonType !== 'default' && buttonType)}
+            className={cx('button-layout', className, buttonType !== 'default' ? buttonType : '')}
             type="button"
             onClick={() => {
                 if(!loading)

@@ -13,7 +13,7 @@ interface CheckBoxProps {
 
 export function CheckBox({ children, className, value = false, onClick }: CheckBoxProps) {
     return (
-        <div className={cx('group-checkbox', className)}>
+        <div className={cx('group-checkbox', [{ className }])}>
             <input id={cx('input-checkbox')} name="c-checkbox" type="checkbox" readOnly checked={value}></input>
             <label 
                 className={cx('lable-checkbox')}

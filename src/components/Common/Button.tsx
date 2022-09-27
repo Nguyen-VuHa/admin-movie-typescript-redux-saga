@@ -29,7 +29,7 @@ export function Button({ children, className, onClick, loading = false, loadingT
             ref={buttonRef}
             className={cx(
                 `button-layout`, 
-                typeDismiss && 'dismiss',
+                typeDismiss ? 'dismiss' : 'default',
                 className
             )}
             type="button"

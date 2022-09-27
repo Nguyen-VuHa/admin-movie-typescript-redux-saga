@@ -26,7 +26,7 @@ export function Button({ children, className, onClick, loading = false, loadingT
     return (
         <button
             ref={buttonRef}
-            className={cx('custom-input', className)}
+            className={cx('custom-input')}
             type="button"
             onClick={() => {
                 if(!loading)

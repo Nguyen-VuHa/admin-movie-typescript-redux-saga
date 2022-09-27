@@ -29,7 +29,7 @@ export function Button({ children, className, onClick, loading = false, loadingT
             ref={buttonRef}
             className={cx(
                 `button-layout`, 
-                [ `${buttonType}`, {className} ]
+                [ `${buttonType}`, `${className}` ]
             )}
             type="button"
             onClick={() => {
@@ -80,7 +80,7 @@ export function Button({ children, className, onClick, loading = false, loadingT
                 : children
             }
             {
-                title && <div className={cx('title' , statusHover ? 'show' : '', position)}>
+                title && <div className={cx('title' , [statusHover ? 'show' : '', `${position}`])}>
                     { title }
                 </div>
             }

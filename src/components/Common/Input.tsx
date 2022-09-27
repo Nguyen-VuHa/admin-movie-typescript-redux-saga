@@ -25,7 +25,7 @@ function Input({ className, placeholder, onChange, value, type, id, errMessage, 
        <div style={{ width: '100%', ...styleLayout }}>
             <input 
                 id={id}
-                className={cx('custom-input', [{ className }])}
+                className={cx('custom-input', [`${className}`])}
                 placeholder={placeholder}
                 onChange={(e) => {
                     handleOnChangeText(e.target.value);

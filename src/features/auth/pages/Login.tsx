@@ -13,12 +13,10 @@ import styles from './login.module.scss';
 import useToastify from 'hooks/useToastify';
 import { Base64 } from 'js-base64';
 import { encryption } from 'utils/variables';
-import generatorPosition from 'utils/generatorPosition';
 import enCodeString from 'utils/generatorPosition';
 
 const gb = classNames.bind(globalStyles);
 const cx = classNames.bind(styles);
-
 
 let styleBackgroundImage = {
     background: `url(${Images.BACK_GROUND_LOGIN}) center center / cover no-repeat`,
@@ -146,10 +144,10 @@ const LoginPage = () => {
 
     return (
         <div 
-            className={gb('d-flex', 'df-justify-center', 'df-align-center', cx('warapper'))}
+            className={gb('d-flex', ['df-justify-center', 'df-align-center', cx('warapper')])}
             style={styleBackgroundImage}
         >       
-            <Container maxWidth="sm" className={gb('d-flex', 'df-justify-center', 'df-align-center')}>
+            <Container maxWidth="sm" className={gb('d-flex', ['df-justify-center', 'df-align-center'])}>
                 <div className={cx('login-form')}>
                     <img width={200} src="https://www.tiendauroi.com/wp-content/uploads/2020/02/bhd-star-cinema.png" alt="BHD LOGO"/>
                     <Input 

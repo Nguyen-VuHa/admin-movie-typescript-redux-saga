@@ -57,7 +57,7 @@ function ModalQuestion({
                     onClick={() => {
                         onClose && onClose();
                     }}
-                    buttonType="dismiss"
+                    typeDismiss={true}
                 >
                     Trở lại
                 </Button>

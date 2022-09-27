@@ -13,10 +13,10 @@ interface ButtonProps {
     loadingText?: string,
     style?: Object,
     title?: string,
-    buttonType?: 'default' | 'dismiss' | 'disable'
+    typeDismiss?: boolean,
 }
 
-export function Button({ children, className, onClick, loading = false, loadingText, style, title, buttonType = 'default' }: ButtonProps) {
+export function Button({ children, className, onClick, loading = false, loadingText, style, title, typeDismiss = false }: ButtonProps) {
 
     const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -27,7 +27,11 @@ export function Button({ children, className, onClick, loading = false, loadingT
     return (
         <button
             ref={buttonRef}
-            className={cx(`button-layout ${buttonType}`, className)}
+            className={cx(
+                `button-layout`, 
+                typeDismiss && 'dismiss',
+                className
+            )}
             type="button"
             onClick={() => {
                 if(!loading)

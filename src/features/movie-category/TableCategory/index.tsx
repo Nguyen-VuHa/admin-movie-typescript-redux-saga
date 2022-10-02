@@ -8,6 +8,7 @@ import { setCurrentPage } from 'reducers/categoryReducer/categorySlice';
 import LoadingTable from 'components/Common/LoadingTable';
 import TableDefault from 'components/Common/TableDefault';
 import GroupButton from './GroupButton';
+import WrapperModal from './WrapperModal';
 
 const tb = classNames.bind(styleTable);
 
@@ -53,11 +54,13 @@ const status = [
 ]
 
 function TableCategory() {
-    const { loadingFetch, categories, totalPage, currentPage } = useAppSelector(state => state.categoryState);
+    const { loadingFetch, categories, totalPage, currentPage, search } = useAppSelector(state => state.categoryState);
     const dispatch = useAppDispatch();
 
     return (
        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: 'auto'}}>
+            <WrapperModal />
+
             <div className={tb('wrapper-table')}>
                 <div
                     className={tb('tb-header')}
@@ -115,7 +118,10 @@ function TableCategory() {
                 onChangeCurrentPage={(page: number) => {
                     dispatch({
                         type: 'FETCH_ALL_CATEGORIES',
-                        payload: page,
+                        payload: {
+                            page,
+                            search
+                        },
                     });
 
                     dispatch(setCurrentPage(page));

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import styleInput from 'assets/styles/styleInput.module.scss';
 import classNames from 'classnames/bind';
 
@@ -13,17 +13,27 @@ interface InputProps {
     id?: string,
     errMessage?: string,
     styleLayout?: Object,
+    focus?: boolean,
 }
 
-function Input({ className, placeholder, onChange, value, type, id, errMessage, styleLayout }: InputProps) {
+function Input({ className, placeholder, onChange, value, type, id, errMessage, styleLayout, focus = false }: InputProps) {
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const handleOnChangeText = useCallback((text: string) => {
         onChange(text);
     },[]);
+
+    useEffect(() => {
+        if(focus && inputRef && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [focus])
+    
     
     return (
        <div style={{ width: '100%', ...styleLayout }}>
             <input 
+                ref={inputRef}
                 id={id}
                 className={cx('custom-input', [`${className}`])}
                 placeholder={placeholder}

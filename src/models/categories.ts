@@ -12,6 +12,7 @@ export interface CategorySlice {
     loadingCreate: boolean,
     statusCreated: number,
     statusUpdated: number,
+    statusDeleted: number,
     categories: Array<Categories> | [],
     totalPage: number,
     currentPage: number,
@@ -19,4 +20,5 @@ export interface CategorySlice {
     totalRows: number,
     id: null,
     categoryNameUpdate: string,
+    search: string,
 }

@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import useToastify from 'hooks/useToastify';
 import { setDefaultStatus } from 'reducers/categoryReducer/categorySlice';
 import { ModalContext } from 'contexts/ModalContext';
+import { CategoryContextProvider } from 'contexts/CategoryContext';
 
 const gb = classNames.bind(globalStyles);
 
@@ -20,7 +21,14 @@ function MovieCategoryPage() {
 
     const { setModalEditCate } = useContext(ModalContext);
 
-    const { currentPage, statusCreated, statusUpdated, errorMessage } = useAppSelector(state => state.categoryState);
+    const { 
+        currentPage, 
+        statusCreated, 
+        statusUpdated, 
+        errorMessage, 
+        search,
+        statusDeleted
+    } = useAppSelector(state => state.categoryState);
     
     useEffect(() => {
         if(statusCreated === STATUS_SUCCESS) {
@@ -76,23 +84,53 @@ function MovieCategoryPage() {
         }
     }, [statusUpdated])
     
-    
+    useEffect(() => {
+        if(statusDeleted === STATUS_SUCCESS) {
+            dispatchToast({
+                type: 'TYPE_SUCCESS',
+                payload: {
+                    message: 'Xóa thể loại thành công!',
+                    position: 'top-left',
+                }
+            });
+
+            dispatch(setDefaultStatus());
+            setModalEditCate(false);
+        }
+
+        if(statusDeleted === STATUS_FAILED) {
+            dispatchToast({
+                type: 'TYPE_ERROR',
+                payload: {
+                    message: errorMessage || 'Xóa thất bại!',
+                    position: 'top-left',
+                }
+            });
+
+            dispatch(setDefaultStatus());
+        }
+    }, [statusDeleted])
 
     useEffect(() => {
         dispatch({
             type: 'FETCH_ALL_CATEGORIES',
-            payload: currentPage,
+            payload: {
+                page: currentPage,
+                search
+            },
         });
-    }, [])
+    }, [search])
     
 
     return (
-        <div className={gb('container-main')}>
-            <ModalEdit />
-            <Header />
-            <TableCategory />
-            <div style={{paddingBottom: '20px'}} />
-        </div>
+        <CategoryContextProvider>
+            <div className={gb('container-main')}>
+                <ModalEdit />
+                <Header />
+                <TableCategory />
+                <div style={{paddingBottom: '20px'}} />
+            </div>
+        </CategoryContextProvider>
     )
 }
 

@@ -6,6 +6,7 @@ const initialState: CategorySlice = {
     loadingCreate: false,
     statusCreated: 0,
     statusUpdated: 0,
+    statusDeleted: 0,
     categories: [],
     totalPage: 0,
     totalRows: 0,
@@ -13,6 +14,7 @@ const initialState: CategorySlice = {
     errorMessage: '',
     id: null,
     categoryNameUpdate: '',
+    search: '',
 };
 
 export const categorySlice = createSlice({ 
@@ -82,8 +84,27 @@ export const categorySlice = createSlice({
                 errorMessage: payload.message,
             }
         },
-
+        deleteCategorySuccess: (state, { payload }) => {
+            return {
+                ...state,
+                categories: state.categories.filter(ct => ct.id !== payload),
+                statusDeleted: 1,
+            }
+        },
+        deleteCategoryFailed: (state, { payload }) => {
+            return {
+                ...state,
+                statusDeleted: 2,
+                errorMessage: payload.message,
+            }
+        },
         // ACTION HANDLE UI
+        setSearchText: (state, { payload }) => {
+            return {
+                ...state,
+                search: payload,
+            }
+        },
         setCurrentPage: (state, { payload }) => {
             return {
                 ...state,
@@ -131,6 +152,7 @@ export const categorySlice = createSlice({
                 ...state,
                 statusCreated: 0,
                 statusUpdated: 0,
+                statusDeleted: 0,
                 errorMessage: '',
             }
         },
@@ -153,6 +175,9 @@ export const {
     updatedCategoryFailed,
     updateItemCategory,
     updateStatusCategory,
+    setSearchText,
+    deleteCategorySuccess,
+    deleteCategoryFailed
 } = categorySlice.actions;
 
 export default categorySlice.reducer;

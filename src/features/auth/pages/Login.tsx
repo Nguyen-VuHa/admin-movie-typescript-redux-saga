@@ -141,6 +141,11 @@ const LoginPage = () => {
         }
     }
 
+    const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        handleLogin();
+    }
+
 
     return (
         <div 
@@ -148,7 +153,10 @@ const LoginPage = () => {
             style={styleBackgroundImage}
         >       
             <Container maxWidth="sm" className={gb('d-flex', ['df-justify-center', 'df-align-center'])}>
-                <div className={cx('login-form')}>
+                <form 
+                    className={cx('login-form')}
+                    onSubmit={(e: React.FormEvent<HTMLFormElement>) => { handleFormSubmit(e) }}
+                >
                     <img width={200} src="https://www.tiendauroi.com/wp-content/uploads/2020/02/bhd-star-cinema.png" alt="BHD LOGO"/>
                     <Input 
                         className={gb('mt-2')}
@@ -158,8 +166,8 @@ const LoginPage = () => {
                             setValidator(null);
                         }}
                         value={userName}
+                        errMessage={validator && validator?.email || ''}
                     /> 
-                    <small className={cx('text-error')}>{ validator && validator?.email }</small>
                     <Input 
                         className={gb('mt-1')}
                         placeholder="Mật khẩu"
@@ -169,8 +177,8 @@ const LoginPage = () => {
                         }}
                         value={passWord}
                         type="password"
+                        errMessage={validator && validator?.password || ''}
                     />
-                    <small className={cx('text-error')}>{ validator && validator?.password }</small> 
                     <CheckBox
                         className={gb('mt-1')}
                         value={rememberLogin}
@@ -182,10 +190,11 @@ const LoginPage = () => {
                         className={gb('mt-1')}
                         onClick={() => handleLogin()}
                         loading={submitLoading}
+                        type="submit"
                     >
                         Đăng Nhập
                     </Button>
-                </div>
+                </form>
             </Container>
         </div>
     )

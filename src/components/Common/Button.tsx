@@ -14,9 +14,10 @@ interface ButtonProps {
     style?: Object,
     title?: string,
     buttonType?: 'default' | 'dismiss',
+    type?: "button" | "submit" | "reset" | undefined,
 }
 
-export function Button({ children, className, onClick, loading = false, loadingText, style, title, buttonType = 'default' }: ButtonProps) {
+export function Button({ children, className, onClick, loading = false, loadingText, style, title, buttonType = 'default', type = 'button' }: ButtonProps) {
 
     const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -31,7 +32,7 @@ export function Button({ children, className, onClick, loading = false, loadingT
                 `button-layout`, 
                 [ `${buttonType}`, `${className}` ]
             )}
-            type="button"
+            type={type}
             onClick={() => {
                 if(!loading)
                     onClick && onClick();
@@ -67,14 +68,14 @@ export function Button({ children, className, onClick, loading = false, loadingT
         >
             {
                 loading ? 
-                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'flex-end'}}>
+                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <TailSpin 
                         height={25}
                         width={25}
                         color='white'
                     />
                     {
-                        loadingText && <div style={{marginLeft: '0.2rem'}}>{ loadingText }</div>
+                        loadingText && <div style={{marginLeft: '0.8rem'}}>{ loadingText }</div>
                     }
                 </div>
                 : children

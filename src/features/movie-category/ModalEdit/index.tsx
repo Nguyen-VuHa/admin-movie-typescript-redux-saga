@@ -50,6 +50,8 @@ function ModalEdit() {
                         createdBy: stateAuth.fullname,
                     }   
                 });
+
+                setCategoryName('');
             }
         }
         else {

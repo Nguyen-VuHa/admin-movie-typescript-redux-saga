@@ -14,6 +14,7 @@ import useToastify from 'hooks/useToastify';
 import { Base64 } from 'js-base64';
 import { encryption } from 'utils/variables';
 import enCodeString from 'utils/generatorPosition';
+import axios from 'axios';
 
 const gb = classNames.bind(globalStyles);
 const cx = classNames.bind(styles);
@@ -51,12 +52,24 @@ const LoginPage = () => {
    
 
     const handleLogin = async () => {
+        let ipClient = "";
+        if(!localStorage.getItem('ipClient'))
+        {
+            let resData = await axios.get('http://ip-api.com/json');
+            ipClient = resData?.data?.query;
+
+            localStorage.setItem('ipClient', ipClient);
+        }
+        else
+            ipClient = localStorage.getItem('ipClient') || "";
+       
+
         let checkValid = handleValidationLogin({
             email: userName,
             password: passWord,
         }, setValidator);
 
-        if(userName && passWord && checkValid) {    
+        if(userName && passWord && checkValid && ipClient) {  
             setSubmitLoading(true);
 
             authApi.generatorKeyAuth(Base64.encode(userName))
@@ -65,7 +78,8 @@ const LoginPage = () => {
 
                     let dataEncode = Base64.encode(`{
                         "password": "${Base64.encode(passWord)}",
-                        "email": "${userName}"
+                        "email": "${userName}",
+                        "ip": "${ipClient}"
                     }`);
 
                     let base64 = enCodeString(dataEncode, res._k);

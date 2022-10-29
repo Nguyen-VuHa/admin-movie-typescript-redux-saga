@@ -1,3 +1,4 @@
+/* global ActiveXObject */
 import authApi from 'api/authApi';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { PrivateRoute } from 'components/Common';
@@ -18,33 +19,38 @@ function App() {
     const dispatchToast = useToastify();
 
     useEffect(() => {
-        if(localStorage.getItem('refreshToken')) {
-            authApi.refreshTokenAdmin()
-            .then((res: any) => {
-                if(res) {
-                    localStorage.setItem('accessToken', res.accessToken);
-                    localStorage.setItem('refreshToken', res.refreshToken);
-    
-                    dispatchAuth({
-                        type: 'SET_USER_INFO',
-                        payload: res.user,
-                    });
-                }
-            })  
-            .catch(() => {
-                let messageError = '[ERROR] TOKEN INVALID! Please login again...';
-                dispatchToast({
-                    type: 'TYPE_ERROR',
-                    payload: {
-                        position: 'top-left',
-                        message: messageError,
-                    }
-                });
-                localStorage.clear();
-            })
-        }
-    }, [dispatch, dispatchAuth]);
+        const handleRefreshToken = async () => {
+            if(localStorage.getItem('refreshToken')) {
 
+                authApi.refreshTokenAdmin()
+                .then((res: any) => {
+                    if(res) {
+                        localStorage.setItem('accessToken', res.accessToken);
+                        localStorage.setItem('refreshToken', res.refreshToken);
+        
+                        dispatchAuth({
+                            type: 'SET_USER_INFO',
+                            payload: res.user,
+                        });
+                    }
+                })  
+                .catch(() => {
+                    let messageError = '[ERROR] TOKEN INVALID! Please login again...';
+                    dispatchToast({
+                        type: 'TYPE_ERROR',
+                        payload: {
+                            position: 'top-left',
+                            message: messageError,
+                        }
+                    });
+                    localStorage.clear();
+                })
+            }
+        }
+      
+        handleRefreshToken();
+    }, [dispatch, dispatchAuth]);
+    
     return (
         <Fragment>
             <ModalContextProvider>

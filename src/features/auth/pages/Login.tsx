@@ -23,6 +23,8 @@ let styleBackgroundImage = {
     background: `url(${Images.BACK_GROUND_LOGIN}) center center / cover no-repeat`,
 }
 
+let urlGetIp = "https://jsonip.com";
+
 const LoginPage = () => {
     const navigate = useNavigate();
     const dispatchToast = useToastify();
@@ -55,8 +57,8 @@ const LoginPage = () => {
         let ipClient = "";
         if(!localStorage.getItem('ipClient'))
         {
-            let resData = await axios.get('http://ip-api.com/json');
-            ipClient = resData?.data?.query;
+            let resData = await axios.get(urlGetIp);
+            ipClient = resData?.data?.ip;
 
             localStorage.setItem('ipClient', ipClient);
         }

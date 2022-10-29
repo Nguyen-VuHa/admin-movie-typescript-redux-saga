@@ -3,4 +3,5 @@ export default {
     MOVIE_MANAGER: 'movie-manager/movie',
     MOVIE_CATEGORY: 'movie-manager/category',
     AUTHOR_MAIN_ACTOR: 'movie-manager/author-main-actor',
+    FILES_SYSTEM: 'files-system/root'
 };

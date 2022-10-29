@@ -4,7 +4,7 @@ import styles from './sidebar.module.scss';
 import globalStyles from 'utils/globalStyle.module.scss';
 import Scrollbars from 'react-custom-scrollbars-2';
 import NavMenuItem from './NavMenuItem';
-import { IoApps, IoFilmSharp, IoCubeSharp, IoTicket, IoPeopleCircleOutline, IoChatbubblesSharp } from "react-icons/io5";
+import { IoApps, IoFilmSharp, IoCubeSharp, IoTicket, IoPeopleCircleOutline, IoChatbubblesSharp, IoDocumentAttach } from "react-icons/io5";
 import NavMenuItemDrop from './NavMenuItemDrop';
 import routePath from 'constants/routePath';
 import { useLocation } from 'react-router-dom';
@@ -60,6 +60,11 @@ let listMenu = [
         icon: <IoChatbubblesSharp size={20} />,
         menuName: 'COMMENTS & REVIEWS',
         navigateLink: '#',
+    },
+    {
+        icon: <IoDocumentAttach size={20} />,
+        menuName: 'FILES SYSTEM',
+        navigateLink: routePath.FILES_SYSTEM,
     }
 ]
 

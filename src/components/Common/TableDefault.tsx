@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react'
 import { IoSadSharp } from "react-icons/io5";
+import Images from 'assets/images';
 
 interface TableDefaultProps {
     textNotify?: string,
-    icon?: ReactNode,
 }
 
 const layoutTableDefault = {
@@ -20,7 +20,7 @@ const textStyle = {
     marginTop: '20px',
 }
 
-function TableDefault({textNotify = 'Table Empty Data!', icon }: TableDefaultProps) {
+function TableDefault({textNotify = 'Table Empty Data!' }: TableDefaultProps) {
     return (
         <div 
             style={{
@@ -28,13 +28,7 @@ function TableDefault({textNotify = 'Table Empty Data!', icon }: TableDefaultPro
                 flexDirection: 'column',
             }}
         >
-            
-            { 
-                icon || <IoSadSharp 
-                    size={150}
-                    color='#f9ab00'
-                />
-            }
+            <img src={Images.EMPTY} alt="NO IMAGES" width={200} height={200} />
             <span style={textStyle}> { textNotify } </span>
         </div>
     )

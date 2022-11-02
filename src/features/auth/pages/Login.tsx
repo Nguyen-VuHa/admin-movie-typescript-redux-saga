@@ -52,24 +52,13 @@ const LoginPage = () => {
    
 
     const handleLogin = async () => {
-        let ipClient = "";
-        if(!localStorage.getItem('ipClient'))
-        {
-            let resData = await axios.get('http://ip-api.com/json');
-            ipClient = resData?.data?.query;
-
-            localStorage.setItem('ipClient', ipClient);
-        }
-        else
-            ipClient = localStorage.getItem('ipClient') || "";
-       
 
         let checkValid = handleValidationLogin({
             email: userName,
             password: passWord,
         }, setValidator);
 
-        if(userName && passWord && checkValid && ipClient) {  
+        if(userName && passWord && checkValid) {  
             setSubmitLoading(true);
 
             authApi.generatorKeyAuth(Base64.encode(userName))
@@ -78,8 +67,7 @@ const LoginPage = () => {
 
                     let dataEncode = Base64.encode(`{
                         "password": "${Base64.encode(passWord)}",
-                        "email": "${userName}",
-                        "ip": "${ipClient}"
+                        "email": "${userName}"
                     }`);
 
                     let base64 = enCodeString(dataEncode, res._k);
@@ -104,7 +92,8 @@ const LoginPage = () => {
                             setSubmitLoading(false);
                             localStorage.setItem('accessToken', res.accessToken);
                             localStorage.setItem('refreshToken', res.refreshToken);
-        
+                            localStorage.setItem('dssKey', res.dssKey);
+
                             dispatchAuth({
                                 type: 'SET_USER_INFO',
                                 payload: res.user,

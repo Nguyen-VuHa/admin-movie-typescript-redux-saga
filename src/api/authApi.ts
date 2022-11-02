@@ -11,7 +11,10 @@ const authApi = {
     },
     refreshTokenAdmin: () => {
         const url = `api/auth/change-token`;
-        return axiosClient.post(url, { refreshToken: localStorage.getItem('refreshToken'), ip: localStorage.getItem('ipClient') });
+        return axiosClient.post(url, { 
+            refreshToken: localStorage.getItem('refreshToken'), 
+            dssKey: localStorage.getItem('dssKey') 
+        });
     }
 }
 

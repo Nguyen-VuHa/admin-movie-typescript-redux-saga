@@ -23,8 +23,6 @@ let styleBackgroundImage = {
     background: `url(${Images.BACK_GROUND_LOGIN}) center center / cover no-repeat`,
 }
 
-let urlGetIp = "https://jsonip.com";
-
 const LoginPage = () => {
     const navigate = useNavigate();
     const dispatchToast = useToastify();

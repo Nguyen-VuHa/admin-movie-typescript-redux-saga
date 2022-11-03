@@ -1,2 +1,2 @@
 React JS - Typescript
-Link Demo: https://admin-bhdstar.herokuapp.com
+Link Demo: https://admin-bhd-star.vercel.app/

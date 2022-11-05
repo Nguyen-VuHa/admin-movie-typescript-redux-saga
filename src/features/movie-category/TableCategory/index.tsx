@@ -9,6 +9,7 @@ import LoadingTable from 'components/Common/LoadingTable';
 import TableDefault from 'components/Common/TableDefault';
 import GroupButton from './GroupButton';
 import WrapperModal from './WrapperModal';
+import { status } from 'constants/status';
 
 const tb = classNames.bind(styleTable);
 
@@ -36,20 +37,6 @@ const arrTitle = [
     {
         title: 'Options',
         width: 200,
-    }
-]
-
-
-const status = [
-    {
-        id: 1,
-        statusName: "Kích hoạt",
-        color: "#3fd02a",
-    },
-    {
-        id: 0,
-        statusName: "Ẩn",
-        color: "#f43535",
     }
 ]
 
@@ -108,7 +95,7 @@ function TableCategory() {
                                     />
                                 </div>  
                             </li>
-                        }) : loadingFetch ? <LoadingTable /> : <TableDefault textNotify='Không có thể loại hiện hành!'/>
+                        }) : loadingFetch ? <LoadingTable textLoading="Đang tải dữ liệu..."/> : <TableDefault textNotify='Không có thể loại hiện hành!'/>
                     }
                 </ul>
             </div>

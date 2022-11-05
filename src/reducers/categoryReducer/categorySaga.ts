@@ -25,8 +25,8 @@ function* createCategory(action: any): any {
             category_name: action.payload.categoryName,
             createdBy: action.payload.createdBy,
             status: STATUS_DEFAULT,
-            updatedAt: moment().format('YYYY-MM-DD'),
-            createdAt: moment().format('YYYY-MM-DD'),
+            updatedAt: moment().format('YYYY-MM-DD hh:mm:ss'),
+            createdAt: moment().format('YYYY-MM-DD hh:mm:ss'),
         }))
         yield put(createdCategorySuccess())
     }

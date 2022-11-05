@@ -19,7 +19,7 @@ function InputSearch() {
         return () => {
             clearTimeout(timeOut);
         };
-    }, [txtSearch]);
+    }, [txtSearch, dispatch]);
 
     return (
         <HeaderInputSearch 

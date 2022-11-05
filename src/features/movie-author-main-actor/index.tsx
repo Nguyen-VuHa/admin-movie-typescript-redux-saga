@@ -4,6 +4,7 @@ import classNames from 'classnames/bind';
 import Header from './Header';
 import TableAuthorMainActor from './TableAuthorMainActor';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
+import ModalEdit from './ModalEdit';
 
 const gb = classNames.bind(globalStyles);
 
@@ -34,6 +35,7 @@ function MovieAuthorMainActorPage() {
 
     return (
         <div className={gb('container-main')}>
+            <ModalEdit />
             <Header />
             <TableAuthorMainActor />
             <div style={{paddingBottom: '20px'}} />

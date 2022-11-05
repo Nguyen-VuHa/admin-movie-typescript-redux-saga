@@ -1,6 +1,6 @@
 import React, { ReactNode, useRef } from 'react'
 import classNames from 'classnames/bind';
-import styleButton from 'assets/styles/styleButton.module.scss';
+import styleButton from 'assets/styles/button.style.module.scss';
 import { hexToRGBA } from 'utils/hexToRgba';
 
 const cx = classNames.bind(styleButton);

@@ -1,5 +1,5 @@
 import React from 'react'
-import styleTable from 'assets/styles/styleTable.module.scss';
+import styleTable from 'assets/styles/table.style.module.scss';
 import classNames from 'classnames/bind';
 import Pagination from 'components/Common/Pagination';
 

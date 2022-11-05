@@ -1,7 +1,7 @@
 import { Button } from 'components/Common';
 import Input from 'components/Common/Input';
 import Modal from 'components/Common/Modal';
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import commonStyle from 'utils/common.style.module.scss';
 import classNames from 'classnames/bind';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
@@ -13,6 +13,7 @@ import { setDefaultDataUpdate } from 'reducers/categoryReducer/categorySlice';
 const cm = classNames.bind(commonStyle);
 
 function ModalEdit() {
+    const categoryNameRef = useRef<HTMLInputElement>(null);
     const dispatch = useAppDispatch();
     const dispatchToast = useToastify();
 
@@ -66,7 +67,7 @@ function ModalEdit() {
             }
             else {
                 setMsg('Trường này không được trống!');
-                document.getElementById("category_name_id")?.focus();
+                categoryNameRef && categoryNameRef.current && categoryNameRef.current.focus();
             }
         }
     }
@@ -100,7 +101,7 @@ function ModalEdit() {
             <Modal.Body>
                 <h3 className={cm('fg-title')} style={{marginBottom: '8px'}}>Nhập thể loại phim</h3>
                 <Input 
-                    id="category_name_id"
+                    ref={categoryNameRef}
                     value={categoryName}
                     placeholder='Nhập thể loại'
                     onChange={(text: string) => {

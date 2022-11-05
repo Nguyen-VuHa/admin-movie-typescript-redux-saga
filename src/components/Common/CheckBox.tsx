@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import styleCheckbox from 'assets/styles/styleCheckbox.module.scss';
+import styleCheckbox from 'assets/styles/checkbox.style.module.scss';
 import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styleCheckbox);

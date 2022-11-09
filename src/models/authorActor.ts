@@ -27,4 +27,5 @@ export interface AuthorActorSlice {
     id: null,
     search: string,
     type: number,
+    authorActorName: string,
 }

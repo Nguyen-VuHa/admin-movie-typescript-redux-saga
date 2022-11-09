@@ -6,6 +6,10 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import TableDefault from 'components/Common/TableDefault';
 import LoadingTable from 'components/Common/LoadingTable';
 import moment from 'moment';
+import { status } from 'constants/status';
+import GroupButton from './GroupButton';
+import WrapperModal from './WrapperModal';
+import { setCurrentPageAuthorActor } from 'reducers/authorActorReducer/authorActorSlice';
 
 const tb = classNames.bind(styleTable);
 
@@ -16,15 +20,19 @@ const headerTable = [
     },
     {
         title: 'Họ & tên',
-        width: 250,
+        width: 200,
     },
     {
         title: 'Loại',
-        width: 200,
+        width: 150,
     },
     {
-        title: 'Trạng thái',
-        width: 200,
+        title: 'Trạng Thái',
+        width: 150,
+    },
+    {
+        title: 'Ngày Tạo',
+        width: 150,
     },
     {
         title: 'Người tạo',
@@ -39,73 +47,94 @@ const headerTable = [
 
 function TableAuthorMainActor() {
     const dispatch = useAppDispatch();
-    const { loadingFetch, authorActors, totalPage, currentPage, search } = useAppSelector(state => state.authorActorState);
+    const { loadingFetch, authorActors, totalPage, currentPage, search, type } = useAppSelector(state => state.authorActorState);
 
     return (
-       <>
-            <div className={tb('wrapper-table')}>
-                <div
-                    className={tb('tb-header')}
-                >
-                    {
-                        headerTable.map(ht => {
-                            return  <div 
-                                key={ht.title}
-                                className={tb('tb-header-title')}
-                                style={{width: `${ht.width}px`}}
-                            >
-                                { ht.title }
-                            </div>
-                        })
-                    }
-                </div>
-                <ul
-                    className={tb('tb-content')}
-                >
+       <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: 'auto'}}>
+            <WrapperModal />
+
+            <table className={tb('wrapper-table')}>
+                <thead>
+                    <tr>
+                        {
+                            headerTable.map(ht => {
+                                return  <th 
+                                    key={ht.title}
+                                >
+                                    { ht.title }
+                                </th>
+                            })
+                        }
+                    </tr>
+                </thead>
+                <tbody>
                     {
                         authorActors && authorActors.length > 0
                         ? authorActors.map((ac, index) => {
-                            return <li className={tb('tb-content-item')} key={ac.id}>
-                                <div style={{width: `${headerTable[0].width}px`}}>
-                                    { index + 1}
-                                </div>
-                                <div style={{width: `${headerTable[1].width}px`}}>
-                                    { ac.name }
-                                </div>
-                                <div style={{width: `${headerTable[2].width}px`}}>
-                                    { ac.type }
-                                </div>
-                                <div style={{width: `${headerTable[3].width}px`}}>
-                                    { ac.status }
-                                </div>
-                                <div style={{width: `${headerTable[4].width}px`}}>
-                                    { moment(ac.createdAt).format('HH:mm DD/MM/YYYY') }
-                                </div>
-                                <div style={{width: `${headerTable[5].width}px`}}>
+                            let statusFilter = status.filter(s => s.id === ac.status);
 
-                                </div>
-                            </li>
+                            return <tr className={tb('tb-content-item')} key={index} >
+                                <td>
+                                    <div className={tb('table-text')}>{ index + 1}</div>
+                                </td>
+                                <td>
+                                    <div className={tb('table-text')}>{ ac.name }</div>
+                                </td>
+                                <td>
+                                    <div className={tb('table-text')}>{ ac.type }</div>
+                                </td>
+                                <td>
+                                    <div className={tb('table-text')} style={{color: statusFilter[0]?.color || "#ff9800" }}>  
+                                        { statusFilter[0]?.statusName || 'Không xác định' }
+                                    </div>    
+                                </td>
+                                <td>
+                                    <div className={tb('table-text')}>{ moment(ac.createdAt).format('HH:mm DD/MM/YYYY') }</div>
+                                </td>  
+                                <td>
+                                    <div className={tb('table-text')}>{ ac.createdBy }</div>
+                                </td>  
+                                <td>
+                                    <div className={tb('table-text')}>
+                                        <GroupButton 
+                                            status={ac.status}
+                                            data={ac}
+                                        />
+                                    </div>
+                                </td>  
+                        </tr>
                         })
-                        : loadingFetch ? <LoadingTable textLoading="Đang tải dữ liệu..."/> : <TableDefault textNotify='Không có đạo diễn hoặc diễn viên hiện hành!'/>
+                        : loadingFetch ? 
+                        <tr>
+                            <td colSpan={headerTable.length}>
+                                <LoadingTable textLoading="Đang tải dữ liệu..."/>
+                            </td>
+                        </tr>
+                        : <tr>
+                            <td colSpan={headerTable.length}>
+                                <TableDefault textNotify='Không có đạo diễn hoặc diễn viên hiện hành!'/>
+                            </td>
+                        </tr>
                     }
-                </ul>
-            </div>
+                </tbody>
+            </table>
             <Pagination 
                 currentPage={currentPage}
                 totalPage={totalPage}
                 onChangeCurrentPage={(page: number) => {
-                    // dispatch({
-                    //     type: 'FETCH_ALL_CATEGORIES',
-                    //     payload: {
-                    //         page,
-                    //         search
-                    //     },
-                    // });
+                    dispatch({
+                        type: 'FETCH_LIST_AUTHOR_ACTOR',
+                        payload: {
+                            page: currentPage,
+                            search,
+                            type
+                        },
+                    });
 
-                    // dispatch(setCurrentPage(page));
+                    dispatch(setCurrentPageAuthorActor(page));
                 }}
             />
-       </>
+       </div>
     )
 }
 

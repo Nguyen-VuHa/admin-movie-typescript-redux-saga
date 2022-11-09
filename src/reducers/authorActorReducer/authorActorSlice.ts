@@ -1,6 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthorActorSlice } from 'models/authorActor';
 
+const arrType = [
+    {
+        value: 1,
+        name: "Đạo diễn",
+    },
+    {
+        value: 2,
+        name: "Diễn viên",
+    }
+]
+
 const initialState: AuthorActorSlice = {
     loadingFetch: true,
     loadingCreate: false,
@@ -18,6 +29,7 @@ const initialState: AuthorActorSlice = {
     id: null,
     search: '',
     type: 0,
+    authorActorName: '',
 };
 
 export const authorActorSlice = createSlice({ 
@@ -55,6 +67,58 @@ export const authorActorSlice = createSlice({
                 errorMessage: payload.message,
             }
         },
+        createNewAuthorActorSuccess: (state) => {
+            return {
+                ...state,
+                loadingCreate: false,
+                statusCreated: 1,
+            }
+        },
+        createdNewAuthorActorFailed: (state, { payload }) => {
+            return {
+                ...state,
+                loadingCreate: false,
+                statusCreated: 2,
+                errorMessage: payload.message,
+            }
+        },
+        deleteAuthorActorSuccess: (state, { payload }) => {
+            return {
+                ...state,
+                authorActors: state.authorActors.filter(at => at.id !== payload),
+                statusDeleted: 1,
+            }
+        },
+        deleteAuthorActorFailed: (state, { payload }) => {
+            return {
+                ...state,
+                statusDeleted: 2,
+                errorMessage: payload.message,
+            }
+        },
+        updateItemAuthorActor: (state, { payload }) => {
+            return {
+                ...state,
+                authorActors: state.authorActors.map(at => at.id === payload.id ? { ...at, name: payload.name, type: payload.type } : { ...at }),
+                id: null,
+                authorActorName: '',
+            }
+        },
+        updatedAuthorActorSuccess: (state) => {
+            return {
+                ...state,
+                loadingCreate: false,
+                statusUpdated: 1,
+            }
+        },
+        updatedAuthorActorFailed: (state, { payload }) => {
+            return {
+                ...state,
+                loadingCreate: false,
+                statusUpdated: 2,
+                errorMessage: payload.message,
+            }
+        },
         // ACTION HANDLE UI
         setAuthorActorSearch: (state, { payload }) => {
             return {
@@ -62,8 +126,56 @@ export const authorActorSlice = createSlice({
                 search: payload,
             }
         },
+        setTypeAuthorActor: (state, { payload }) => {
+            return {
+                ...state,
+                type: payload,
+            }
+        },
+        setCurrentPageAuthorActor: (state, { payload }) => {
+            return {
+                ...state,
+                currentPage: payload,
+            }
+        },
+        setAuthorActorName: (state, { payload }) => {
+            return {
+                ...state,
+                authorActorName: payload,
+            }
+        },
+        setDefaultValueSubmit: (state) => {
+            return {
+                ...state,
+                authorActorName: '',
+                type: 0,
+            }
+        },
+        addNewAuthorActor: (state, { payload }) => {
+            return {
+                ...state,
+                authorActors: [payload].concat(state.authorActors),
+            }
+        },
+        setDataUpdateAuthroActor: (state, { payload }) => {
+            return {
+                ...state,
+                id: payload.id,
+                authorActorName: payload.name,
+                type: payload.type,
+            }
+        },
+        setDefaultDataUpdateAuthorActor: (state) => {
+            return {
+                ...state,
+                id: null,
+                authorActorName: '',
+                type: 0,
+            }
+        },
+
         // ACTION DEFAULT VALUE
-        setDefaultStatus: (state) => {
+        setDefaultStatusAuthorActor: (state) => {
             return {
                 ...state,
                 statusCreated: 0,
@@ -78,10 +190,26 @@ export const authorActorSlice = createSlice({
 export const { 
     setLoadingFetch, 
     setLoadingCreated,
+    
     setAuthorActorSearch,
+    setTypeAuthorActor,
+    setAuthorActorName,
+    setDefaultValueSubmit,
+    setDefaultStatusAuthorActor,
+    addNewAuthorActor,
+    setCurrentPageAuthorActor,
+    setDefaultDataUpdateAuthorActor,
 
     fetchAuthorActorSuccess,
     fetchAuthorActorFailed,
+    createNewAuthorActorSuccess,
+    createdNewAuthorActorFailed,
+    deleteAuthorActorSuccess,
+    deleteAuthorActorFailed,
+    updateItemAuthorActor,
+    updatedAuthorActorSuccess,
+    updatedAuthorActorFailed,
+    setDataUpdateAuthroActor,
 } = authorActorSlice.actions;
 
 export default authorActorSlice.reducer;

@@ -48,57 +48,67 @@ function TableCategory() {
        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: 'auto'}}>
             <WrapperModal />
 
-            <div className={tb('wrapper-table')}>
-                <div
-                    className={tb('tb-header')}
-                >   
+            <table className={tb('wrapper-table')}>
+                <thead>
+                    <tr>
+                        {
+                            arrTitle.map((arrT, index) => {
+                                return  <th 
+                                    key={index}
+                                >
+                                    { arrT.title }
+                                </th>
+                            })
+                        } 
+                    </tr>
+                </thead>
+                <tbody>
                     {
-                        arrTitle.map((arrT, index) => {
-                            return  <div 
-                                key={index}
-                                className={tb('tb-header-title')}
-                                style={{width: `${arrT.width}px`}}
-                            >
-                                { arrT.title }
-                            </div>
-                        })
-                    } 
-                </div>
-                
-                <ul
-                    className={tb('tb-content')}
-                >
-                    {
-                        categories.length > 0 ?
+                        categories && categories.length > 0 ?
                         categories.map((ct, index) => {
                             let statusFilter = status.filter(s => s.id === ct.status);
-                            return <li className={tb('tb-content-item')} key={index} >
-                                <div style={{width: `${arrTitle[0].width}px`}}>
-                                    { index + 1}
-                                </div>
-                                <div style={{width: `${arrTitle[1].width}px`}}>
-                                    { ct.category_name }
-                                </div>
-                                <div style={{width: `${arrTitle[2].width}px`, color: statusFilter[0]?.color || "#ff9800" }}>
-                                    { statusFilter[0]?.statusName || 'Không xác định' }
-                                </div>
-                                <div style={{width: `${arrTitle[3].width}px`}}>
-                                    { moment(ct.createdAt).format('HH:mm DD/MM/YYYY') }
-                                </div>  
-                                <div style={{width: `${arrTitle[4].width}px`}}>
-                                    { ct.createdBy }
-                                </div>  
-                                <div style={{width: `${arrTitle[5].width}px`}}>
-                                    <GroupButton 
-                                        status={ct.status}
-                                        data={ct}
-                                    />
-                                </div>  
-                            </li>
-                        }) : loadingFetch ? <LoadingTable textLoading="Đang tải dữ liệu..."/> : <TableDefault textNotify='Không có thể loại hiện hành!'/>
+                            return <tr key={index} >
+                                <td>
+                                    <div className={tb('table-text')}>{ index + 1}</div>
+                                </td>
+                                <td>
+                                    <div className={tb('table-text')}>{  ct.category_name }</div>
+                                </td>
+                                <td >
+                                    <div className={tb('table-text')} style={{color: statusFilter[0]?.color || "#ff9800" }}>
+                                        { statusFilter[0]?.statusName || 'Không xác định' }
+                                    </div>   
+                                </td>
+                                <td>
+                                    <div className={tb('table-text')}> { moment(ct.createdAt).format('HH:mm DD/MM/YYYY') }</div>
+                                   
+                                </td>  
+                                <td>
+                                    <div className={tb('table-text')}>{ ct.createdBy }</div>
+                                </td>  
+                                <td>
+                                    <div className={tb('table-text')}>
+                                        <GroupButton 
+                                            status={ct.status}
+                                            data={ct}
+                                        />
+                                    </div>
+                                </td>  
+                            </tr>
+                        }) : loadingFetch ? 
+                        <tr className="d-flex justify-content-center align-items-center" >
+                            <td colSpan={arrTitle.length}>
+                                <LoadingTable textLoading="Đang tải dữ liệu..."/>
+                            </td>
+                        </tr> 
+                        : <tr>
+                            <td colSpan={arrTitle.length}>
+                                <TableDefault textNotify='Không có thể loại hiện hành!'/>
+                            </td>
+                        </tr>
                     }
-                </ul>
-            </div>
+                </tbody>
+            </table>
             <Pagination 
                 currentPage={currentPage}
                 totalPage={totalPage}

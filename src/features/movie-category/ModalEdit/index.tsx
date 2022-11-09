@@ -33,7 +33,7 @@ function ModalEdit() {
     
 
     const handleCreateCategory = () => {
-        if(categoryName && stateAuth.fullname) {
+        if(categoryName && stateAuth && stateAuth.fullname) {
             if(id) {
                 dispatch({
                     type: 'UPDATE_CATEGORY',

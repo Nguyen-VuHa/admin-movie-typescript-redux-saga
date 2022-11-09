@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styleTable from 'assets/styles/styleTable.module.scss';
+import styleTable from 'assets/styles/table.style.module.scss';
 import classNames from 'classnames/bind';
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import createPagination from 'utils/caculatePagination';

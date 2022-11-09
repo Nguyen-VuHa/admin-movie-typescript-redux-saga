@@ -1,8 +1,10 @@
 import { Button } from 'components/Common'
-import React from 'react'
+import { ModalContext } from 'contexts/ModalContext';
+import React, { useContext } from 'react'
 import { IoAddSharp } from "react-icons/io5";
 
 function GroupControl() {
+    const { setModalEditAuthorActor } = useContext(ModalContext);
 
     return (
         <div 
@@ -14,7 +16,11 @@ function GroupControl() {
                 position: 'relative' 
             }}
         >
-            <Button>
+            <Button
+                onClick={() => {
+                    setModalEditAuthorActor(true);
+                }}
+            >
                 Thêm mới
                 <IoAddSharp 
                     size={18}

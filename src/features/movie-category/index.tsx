@@ -9,11 +9,9 @@ import useToastify from 'hooks/useToastify';
 import { setDefaultStatus } from 'reducers/categoryReducer/categorySlice';
 import { ModalContext } from 'contexts/ModalContext';
 import { CategoryContextProvider } from 'contexts/CategoryContext';
+import { STATUS_FAILED, STATUS_SUCCESS } from 'constants/status';
 
 const gb = classNames.bind(globalStyles);
-
-const STATUS_SUCCESS = 1;
-const STATUS_FAILED = 2;
 
 function MovieCategoryPage() {
     const dispatch = useAppDispatch();

@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef } from 'react';
-import styleInput from 'assets/styles/styleInput.module.scss';
+import React, { useCallback, useEffect } from 'react';
+import styleInput from 'assets/styles/input.style.module.scss';
 import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styleInput);
@@ -16,16 +16,14 @@ interface InputProps {
     focus?: boolean,
 }
 
-function Input({ className, placeholder, onChange, value, type, id, errMessage, styleLayout, focus = false }: InputProps) {
-    const inputRef = useRef<HTMLInputElement>(null);
-
+const Input = ({ className, placeholder, onChange, value, type, id = '', errMessage, styleLayout, focus = false }: InputProps, ref?: any) => {
     const handleOnChangeText = useCallback((text: string) => {
         onChange(text);
     },[]);
 
     useEffect(() => {
-        if(focus && inputRef && inputRef.current) {
-            inputRef.current.focus();
+        if(focus && ref && ref.current) {
+            ref.current.focus();
         }
     }, [focus])
     
@@ -33,7 +31,7 @@ function Input({ className, placeholder, onChange, value, type, id, errMessage, 
     return (
        <div style={{ width: '100%', ...styleLayout }}>
             <input 
-                ref={inputRef}
+                ref={ref}
                 id={id}
                 className={cx('custom-input', [`${className}`])}
                 placeholder={placeholder}
@@ -50,4 +48,4 @@ function Input({ className, placeholder, onChange, value, type, id, errMessage, 
     )
 }
 
-export default React.memo(Input)
+export default React.memo(React.forwardRef(Input));

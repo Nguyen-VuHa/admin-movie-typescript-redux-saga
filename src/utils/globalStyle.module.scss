@@ -23,6 +23,28 @@ body {
     -moz-osx-font-smoothing: grayscale;
     color: var(--color-white);
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: var(--layout-primary);
+    
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--yellow-primary);
+    border-radius: 8px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(249, 171, 0.5);
+}
   
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -126,13 +148,12 @@ a {
 
 // container main page
 .container-main {
-    width: calc(100% - 288px);
+    width: calc(100% - 310px);
     min-height: 100vh;
     height: auto;
     background: var(--bg-primary);
     margin-left: 280px;
     padding: 0 15px;
-    overflow: hidden;
 }
 
 .wrapper-header, .warapper-content {

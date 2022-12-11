@@ -5,11 +5,14 @@ import Styles from './header.module.scss';
 import SortBy from './SortBy';
 import Input from 'components/Common/Input';
 import InputSearch from './InputSearch';
+import { useAppSelector } from 'app/hooks';
 
 const gb = classNames.bind(GlobalStyles);
 const cx = classNames.bind(Styles);
 
 function Header() {
+    const { totalRows } = useAppSelector(state => state.movieState);
+
     return (
         <div className={gb('wrapper-header', cx('sticky-header'))}>
             <div className={gb('header')}>
@@ -17,11 +20,11 @@ function Header() {
                     className={cx('layout-title')}
                 >
                     <h2 className={cx('title')}>Quản Lý Phim</h2>
-                    <span className={cx('total-text')}>14,452 phim</span>
+                    <span className={cx('total-text')}>{ totalRows } phim</span>
                 </div>
                 <div
                     className={cx('layout-title')}
-                    style={{width: 'auto', alignItems: 'flex-start'}}
+                    style={{ width: 'auto', alignItems: 'flex-start' }}
                 >
                     <SortBy />
                     <InputSearch />

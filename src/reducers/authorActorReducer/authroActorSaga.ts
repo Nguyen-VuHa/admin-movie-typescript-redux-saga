@@ -1,5 +1,5 @@
 import moment from "moment";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeLatest, takeLeading } from "redux-saga/effects";
 import { addNewAuthorActor, createdNewAuthorActorFailed, createNewAuthorActorSuccess, deleteAuthorActorFailed, deleteAuthorActorSuccess, fetchAuthorActorFailed, fetchAuthorActorSuccess, setLoadingCreated, setLoadingFetch, updatedAuthorActorFailed, updatedAuthorActorSuccess, updateItemAuthorActor } from "./authorActorSlice";
 import authorActorApi from "api/authorActorApi";
 
@@ -75,8 +75,8 @@ function* deletedAuthorActor(action: any): any {
 
 
 export function* authorActorSaga() {
-    yield takeEvery('FETCH_LIST_AUTHOR_ACTOR', fetchListAuthorActor);
-    yield takeEvery('CREATED_NEW_AUTHOR_ACTOR', createNewAuthorActor);
-    yield takeEvery('UPDATED_AUTHOR_ACTOR', updatedAuthorActor);
-    yield takeEvery('DELETED_AUTHOR_ACTOR', deletedAuthorActor);
+    yield takeLatest('FETCH_LIST_AUTHOR_ACTOR', fetchListAuthorActor);
+    yield takeLeading('CREATED_NEW_AUTHOR_ACTOR', createNewAuthorActor);
+    yield takeLeading('UPDATED_AUTHOR_ACTOR', updatedAuthorActor);
+    yield takeLeading('DELETED_AUTHOR_ACTOR', deletedAuthorActor);
 }

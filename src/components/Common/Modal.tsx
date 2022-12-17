@@ -35,7 +35,7 @@ export function Header({ title = 'Modal Title', onHideModal }: ModalType) {
 
 export function Content({ children }: ModalType) {
     return (
-        <div style={{padding: '10px'}}>
+        <div style={{ flexShrink: 0, width: '100%', margin: '10px 0' }} >
             { children }
         </div>
     )
@@ -43,7 +43,7 @@ export function Content({ children }: ModalType) {
 
 export function Footer({ children }: ModalType) {
     return (
-        <div className={md('md-footer')}>{ children }</div>
+        <div className={md('md-footer')} style={{flexShrink: 0}}>{ children }</div>
     )
 }
 

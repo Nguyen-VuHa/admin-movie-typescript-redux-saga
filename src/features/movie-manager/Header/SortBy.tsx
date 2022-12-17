@@ -47,7 +47,8 @@ function SortBy() {
                 justifyContent: 'flex-start', 
                 alignItems: 'flex-start', 
                 flexDirection: 'column', 
-                position: 'relative' 
+                position: 'relative',
+                whiteSpace: 'nowrap',
             }}
             ref={buttonRef}
         >

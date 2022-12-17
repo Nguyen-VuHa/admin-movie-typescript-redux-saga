@@ -16,18 +16,20 @@
     position: relative;
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
     width: 100%;
-    height: 350px;
+    height: 400px;
     background-color: #222028;
     border-radius: 6px;
 
     cursor: pointer;
     user-select: none;
+    overflow: hidden;
    
-    div {
+    div, svg {
         transition: all .35s ease;
     }
 
@@ -36,9 +38,31 @@
             color: var(--color-primary-header);
         }
 
-        svg path, svg circle {
+        svg {
             stroke: var(--color-primary-header);
+            fill: var(--color-primary-header);
         }
+    }
+}
+
+.button-remove {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    top: 10px;
+    right: 10px;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 999px;
+    background-color: var(--layout-primary);
+    transition: all .35s ease;
+
+    &:hover {
+        opacity: .8;
     }
 }
 
@@ -67,7 +91,14 @@
 
     width: 100%;
     height: 100%;
-    z-index: 99999;
+
+    z-index: -9999;
+    transition: all 0.3s step-end;
+
+    &.open {
+        z-index: 9999;
+        transition: all 0.3s step-start;
+    }
 }
 
 .modal-edit {

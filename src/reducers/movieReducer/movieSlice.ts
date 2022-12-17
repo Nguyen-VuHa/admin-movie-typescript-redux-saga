@@ -19,6 +19,10 @@ const initialState: MovieSlice = {
 
     search: '',
     sortBy: '',
+
+    modalEditImg: false,
+    imgBase64: '',
+    listPoster: [],
 };
 
 export const movieSlice = createSlice({ 
@@ -81,7 +85,37 @@ export const movieSlice = createSlice({
                 sortBy: payload,
             }
         },
+        setModalEditImage: (state, { payload }) => {
+            return {
+                ...state,
+                modalEditImg: payload,
+            }
+        },
+        setImageBase64: (state, { payload }) => {
+            return {
+                ...state,
+                imgBase64: payload,
+            }
+        },
+        setListPoster: (state, { payload }) => {
+            return {
+                ...state,
+                listPoster: state.listPoster.concat(payload),
+            }
+        },
+        removeItemPoster: (state, { payload }) => {
+            return {
+                ...state,
+                listPoster: state.listPoster.filter((lp) => lp.id !== payload),
+            }
+        },
         // ACTION DEFAULT VALUE
+        setDefaultImageEdit: (state) => {
+            return {
+                ...state,
+                imgBase64: '',
+            }
+        }
     },
 });
 
@@ -96,6 +130,12 @@ export const {
     setCurrentPage,
     setSearchText,
     setSortBy,
+    setModalEditImage,
+    setImageBase64,
+    setListPoster,
+    removeItemPoster,
+
+    setDefaultImageEdit,
 } = movieSlice.actions;
 
 export default movieSlice.reducer;

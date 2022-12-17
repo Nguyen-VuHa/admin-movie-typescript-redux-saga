@@ -6,6 +6,11 @@ interface Movies {
     createdAt: string,
 }
 
+interface PosterObject {
+    id: number,
+    base64: string,
+}
+
 export interface MovieSlice {
     loadingFetch: boolean,
     loadingCreate: boolean,
@@ -24,4 +29,8 @@ export interface MovieSlice {
     
     search: string,
     sortBy: string,
+
+    modalEditImg: boolean,
+    imgBase64: string,
+    listPoster: Array<PosterObject>,
 }

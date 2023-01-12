@@ -1,6 +1,6 @@
 import categoriesApi from "api/categoyApi";
 import moment from "moment";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery, takeLatest, takeLeading } from "redux-saga/effects";
 import { addItemCategory, createdCategoryFailed, createdCategorySuccess, deleteCategoryFailed, deleteCategorySuccess, fetchCategoryFailed, fetchCategorySuccess, setLoadingCreated, setLoadingFetch, updatedCategoryFailed, updatedCategorySuccess, updateItemCategory, updateStatusCategory } from "./categorySlice";
 
 const STATUS_DEFAULT = 1;
@@ -78,9 +78,9 @@ function* deleteCategorySaga(action: any): any {
 
 
 export function* categorySaga() {
-    yield takeEvery('FETCH_ALL_CATEGORIES', fetchAllCategory);
-    yield takeEvery('CREATE_CATEGORY', createCategory);
-    yield takeEvery('UPDATE_CATEGORY', updateCategory);
-    yield takeEvery('UPDATE_STATUS_CATEGORY', updateStatusCategorySaga);
-    yield takeEvery('DELETE_CATEGORY', deleteCategorySaga);
+    yield takeLatest('FETCH_ALL_CATEGORIES', fetchAllCategory);
+    yield takeLeading('CREATE_CATEGORY', createCategory);
+    yield takeLeading('UPDATE_CATEGORY', updateCategory);
+    yield takeLeading('UPDATE_STATUS_CATEGORY', updateStatusCategorySaga);
+    yield takeLeading('DELETE_CATEGORY', deleteCategorySaga);
 }

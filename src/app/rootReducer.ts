@@ -3,6 +3,7 @@ import dashboardSlice from 'reducers/dashboardReducer/dashboardSlice';
 import categorySlice from 'reducers/categoryReducer/categorySlice';
 import folderSlice from 'reducers/folderReducer/folderSlice';
 import authorActorSlice from 'reducers/authorActorReducer/authorActorSlice';
+import movieSlice from 'reducers/movieReducer/movieSlice';
 
 export const rootReducer = {
     toastifyState: toastifySlice,
@@ -10,4 +11,5 @@ export const rootReducer = {
     categoryState: categorySlice,
     folderState: folderSlice,
     authorActorState: authorActorSlice,
+    movieState: movieSlice,
 }

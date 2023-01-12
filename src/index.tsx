@@ -6,6 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthContextProvider } from 'contexts/AuthContext';
+import './utils/global.scss';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);

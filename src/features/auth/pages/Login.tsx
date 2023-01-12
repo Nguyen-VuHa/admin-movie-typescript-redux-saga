@@ -1,4 +1,3 @@
-import { Container } from '@mui/material';
 import authApi from 'api/authApi';
 import Images from 'assets/images';
 import classNames from 'classnames/bind';
@@ -14,7 +13,6 @@ import useToastify from 'hooks/useToastify';
 import { Base64 } from 'js-base64';
 import { encryption } from 'utils/variables';
 import enCodeString from 'utils/generatorPosition';
-import axios from 'axios';
 
 const gb = classNames.bind(globalStyles);
 const cx = classNames.bind(styles);
@@ -155,7 +153,7 @@ const LoginPage = () => {
             className={gb('d-flex', ['df-justify-center', 'df-align-center', cx('warapper')])}
             style={styleBackgroundImage}
         >       
-            <Container maxWidth="sm" className={gb('d-flex', ['df-justify-center', 'df-align-center'])}>
+            <div className={gb('d-flex', ['df-justify-center', 'df-align-center', 'w-100'])}>
                 <form 
                     className={cx('login-form')}
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) => { handleFormSubmit(e) }}
@@ -198,7 +196,7 @@ const LoginPage = () => {
                         Đăng Nhập
                     </Button>
                 </form>
-            </Container>
+            </div>
         </div>
     )
 }

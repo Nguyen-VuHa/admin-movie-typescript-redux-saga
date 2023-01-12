@@ -5,6 +5,14 @@
     color: var(--yellow-primary);
 }
 
+.title-input {
+    width: auto;
+    font-size: 16px;
+    color: var(--yellow-primary);
+    margin-bottom: 7px;
+}
+
+
 .wrapper-image {
     display: grid;
     grid-template-columns: 270px 270px 270px 270px;
@@ -96,7 +104,7 @@
     transition: all 0.3s step-end;
 
     &.open {
-        z-index: 9999;
+        z-index: 999;
         transition: all 0.3s step-start;
     }
 }
@@ -120,4 +128,17 @@
     justify-content: space-between;
     align-items: center;
     padding: 15px;
+}
+
+
+.grid-col-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.form-group {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
 }

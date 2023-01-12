@@ -63,16 +63,57 @@
         border: 2px solid rgb(249, 171, 0);
     }
 
+    &.multiple {
+        min-height: 46px;
+        height: auto !important;
+
+        & div {
+            margin: 0;
+        }
+    }
+
     &.active {
         svg path, svg circle {
             stroke: var(--yellow-primary);
         }
 
         .select-text {
+            
+            .layout-select {
+                display: flex;
+                flex-wrap: wrap;
+
+                div {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    color: var(--yellow-primary) !important;
+                    font-weight: 500;
+
+                    background: #222028;
+                    border-radius: 6px;
+
+                    padding: 2px 5px;
+                    margin-top: 2px;
+                    margin-left: 2px;
+                }
+
+                svg {
+                    margin: 0;
+                    
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+            }
+
             span {
                 color: var(--yellow-primary) !important;
                 font-weight: 500;
             }
+
+           
         }
 
         .icon-drop {

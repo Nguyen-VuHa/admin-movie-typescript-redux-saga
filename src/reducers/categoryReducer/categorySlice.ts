@@ -7,12 +7,17 @@ const initialState: CategorySlice = {
     statusCreated: 0,
     statusUpdated: 0,
     statusDeleted: 0,
+
     categories: [],
+    categorySelect: [],
+
     totalPage: 0,
     totalRows: 0,
     currentPage: 1,
+
     errorMessage: '',
     id: null,
+
     categoryNameUpdate: '',
     search: '',
 };
@@ -52,7 +57,19 @@ export const categorySlice = createSlice({
                 errorMessage: payload.message,
             }
         },
-
+        fetchDataSelectCategorySuccess: (state, { payload }) => {
+            return {
+                ...state,
+                categorySelect: payload,
+            }
+        },
+        fetchDataSelectCategoryFailed: (state, { payload }) => {
+            return {
+                ...state,
+                categorySelect: [],
+                errorMessage: payload.message,
+            }
+        },
         createdCategorySuccess: (state) => {
             return {
                 ...state,
@@ -161,6 +178,8 @@ export const categorySlice = createSlice({
 
 export const { 
     setLoadingFetch, 
+    fetchDataSelectCategorySuccess,
+    fetchDataSelectCategoryFailed,
     fetchCategorySuccess, 
     fetchCategoryFailed,
     setCurrentPage,

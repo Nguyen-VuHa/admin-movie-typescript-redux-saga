@@ -3,6 +3,7 @@ import Styles from './formdata.module.scss';
 import classNames from 'classnames/bind';
 import Input from 'components/Common/Input';
 import InputSelectMultiple from 'components/Common/InputSelectMultiple';
+import { useAppSelector } from 'app/hooks';
 
 const cx = classNames.bind(Styles);
 
@@ -13,6 +14,10 @@ interface FormValueProps {
 function FormValue({}: FormValueProps) {
     const [valueSelect, setValueSelect] = useState<Array<string>>([]);
 
+    const { authorACtorSelect } = useAppSelector(state => state.authorActorState);
+    const { categorySelect } = useAppSelector(state => state.categoryState);
+
+    console.log(categorySelect);
     return (
         <div>
             <div className={cx('title-form')}>THÔNG TIN PHIM</div>
@@ -45,38 +50,9 @@ function FormValue({}: FormValueProps) {
                     <InputSelectMultiple 
                         value={valueSelect}
                         placeholder="-- Chọn đạo diễn --"
-                        data={
-                            [
-                                {   
-                                    value: 1,
-                                    name: 'Options 1'
-                                },
-                                {
-                                    value: 2,
-                                    name: 'Options 2'
-                                },
-                                {
-                                    value: 3,
-                                    name: 'Options 3'
-                                },
-                                {
-                                    value: 4,
-                                    name: 'Options 4'
-                                },
-                                {
-                                    value: 5,
-                                    name: 'Options 5'
-                                },
-                                {
-                                    value: 6,
-                                    name: 'Options 6'
-                                },
-                                {
-                                    value: 7,
-                                    name: 'Options 7'
-                                }
-                            ]
-                        }
+                        data={authorACtorSelect && authorACtorSelect.length > 0 ?
+                            authorACtorSelect.filter((ac: any) => ac.type === 'Đạo diễn')?.map((acs: any) => { return { value: acs.id, name: acs.name }})
+                        : []}
                         onChange={(value: any) => {
                             let arrTemp = valueSelect;
                             if(value && arrTemp.findIndex(arr => arr === value.toString()) === -1) {
@@ -98,38 +74,9 @@ function FormValue({}: FormValueProps) {
                     <InputSelectMultiple 
                         value={valueSelect}
                         placeholder="-- Chọn diễn viên --"
-                        data={
-                            [
-                                {   
-                                    value: 1,
-                                    name: 'Options 1'
-                                },
-                                {
-                                    value: 2,
-                                    name: 'Options 2'
-                                },
-                                {
-                                    value: 3,
-                                    name: 'Options 3'
-                                },
-                                {
-                                    value: 4,
-                                    name: 'Options 4'
-                                },
-                                {
-                                    value: 5,
-                                    name: 'Options 5'
-                                },
-                                {
-                                    value: 6,
-                                    name: 'Options 6'
-                                },
-                                {
-                                    value: 7,
-                                    name: 'Options 7'
-                                }
-                            ]
-                        }
+                        data={authorACtorSelect && authorACtorSelect.length > 0 ?
+                            authorACtorSelect.filter((ac: any) => ac.type === 'Diễn viên')?.map((acs: any) => { return { value: acs.id, name: acs.name }})
+                        : []}
                         onChange={(value: any) => {
                             let arrTemp = valueSelect;
                             if(value && arrTemp.findIndex(arr => arr === value.toString()) === -1) {
@@ -152,39 +99,8 @@ function FormValue({}: FormValueProps) {
                     <div className={cx('title-input')}>Thể loại phim</div>
                     <InputSelectMultiple 
                         value={valueSelect}
-                        placeholder="-- Chọn diễn viên --"
-                        data={
-                            [
-                                {   
-                                    value: 1,
-                                    name: 'Options 1'
-                                },
-                                {
-                                    value: 2,
-                                    name: 'Options 2'
-                                },
-                                {
-                                    value: 3,
-                                    name: 'Options 3'
-                                },
-                                {
-                                    value: 4,
-                                    name: 'Options 4'
-                                },
-                                {
-                                    value: 5,
-                                    name: 'Options 5'
-                                },
-                                {
-                                    value: 6,
-                                    name: 'Options 6'
-                                },
-                                {
-                                    value: 7,
-                                    name: 'Options 7'
-                                }
-                            ]
-                        }
+                        placeholder="-- Chọn thể loại --"
+                        data={categorySelect.length > 0 ? categorySelect.map(ct => { return { value: ct.id, name: ct.category_name }}) : []}
                         onChange={(value: any) => {
                             let arrTemp = valueSelect;
                             if(value && arrTemp.findIndex(arr => arr === value.toString()) === -1) {

@@ -1,7 +1,7 @@
 import categoriesApi from "api/categoyApi";
 import moment from "moment";
-import { call, put, takeEvery, takeLatest, takeLeading } from "redux-saga/effects";
-import { addItemCategory, createdCategoryFailed, createdCategorySuccess, deleteCategoryFailed, deleteCategorySuccess, fetchCategoryFailed, fetchCategorySuccess, setLoadingCreated, setLoadingFetch, updatedCategoryFailed, updatedCategorySuccess, updateItemCategory, updateStatusCategory } from "./categorySlice";
+import { call, put, takeLatest, takeLeading } from "redux-saga/effects";
+import { addItemCategory, createdCategoryFailed, createdCategorySuccess, deleteCategoryFailed, deleteCategorySuccess, fetchCategoryFailed, fetchCategorySuccess, fetchDataSelectCategoryFailed, fetchDataSelectCategorySuccess, setLoadingCreated, setLoadingFetch, updatedCategoryFailed, updatedCategorySuccess, updateItemCategory, updateStatusCategory } from "./categorySlice";
 
 const STATUS_DEFAULT = 1;
 
@@ -13,6 +13,16 @@ function* fetchAllCategory(action: any): any {
     }
     catch(err: any) {
         yield put(fetchCategoryFailed(err.response.data));
+    }
+}
+
+function* fetchDataSelectCategory(): any {
+    try {
+        const response = yield call(categoriesApi.fetchDataSelectCategoryApi);
+        yield put(fetchDataSelectCategorySuccess(response.data))
+    }
+    catch(err: any) {
+        yield put(fetchDataSelectCategoryFailed(err.response.data));
     }
 }
 
@@ -79,6 +89,7 @@ function* deleteCategorySaga(action: any): any {
 
 export function* categorySaga() {
     yield takeLatest('FETCH_ALL_CATEGORIES', fetchAllCategory);
+    yield takeLatest('FETCH_DATA_SELECT_CATEGORIES', fetchDataSelectCategory);
     yield takeLeading('CREATE_CATEGORY', createCategory);
     yield takeLeading('UPDATE_CATEGORY', updateCategory);
     yield takeLeading('UPDATE_STATUS_CATEGORY', updateStatusCategorySaga);

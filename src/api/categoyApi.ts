@@ -5,6 +5,10 @@ const categoriesApi = {
         const url = `api/category/all?_p=${payload.page}&_s=${payload.search}`;
         return axiosClient.get(url);
     },
+    fetchDataSelectCategoryApi: () => {
+        const url = `api/category/select-all`;
+        return axiosClient.get(url);
+    },
     createCategoryApi: (payload: any) => {
         const url = `api/category/create`;
         return axiosClient.post(url, payload);

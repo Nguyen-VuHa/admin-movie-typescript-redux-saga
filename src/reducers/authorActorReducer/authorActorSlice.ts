@@ -1,17 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthorActorSlice } from 'models/authorActor';
 
-const arrType = [
-    {
-        value: 1,
-        name: "Đạo diễn",
-    },
-    {
-        value: 2,
-        name: "Diễn viên",
-    }
-]
-
 const initialState: AuthorActorSlice = {
     loadingFetch: true,
     loadingCreate: false,
@@ -20,6 +9,7 @@ const initialState: AuthorActorSlice = {
     statusDeleted: 0,
 
     authorActors: [],
+    authorACtorSelect: [],
 
     totalPage: 0,
     totalRows: 0,
@@ -33,7 +23,7 @@ const initialState: AuthorActorSlice = {
 };
 
 export const authorActorSlice = createSlice({ 
-    name: 'categories',
+    name: 'authorActors',
     initialState,
     reducers: {
         // ACTION LOADING
@@ -51,6 +41,19 @@ export const authorActorSlice = createSlice({
         },
         
         // ACTION HANDLE CALL API
+        fetchAuthorActorSelectSuccess: (state, { payload }) => {
+            return {
+                ...state,
+                authorACtorSelect: payload,
+            }
+        },
+        fetchAuthorActorSelectFailed: (state, { payload }) => {
+            return {
+                ...state,
+                errorMessage: payload.message,
+                authorACtorSelect: [],
+            }
+        },
         fetchAuthorActorSuccess: (state, { payload }) => {
             return {
                 ...state,
@@ -200,6 +203,8 @@ export const {
     setCurrentPageAuthorActor,
     setDefaultDataUpdateAuthorActor,
 
+    fetchAuthorActorSelectSuccess,
+    fetchAuthorActorSelectFailed,
     fetchAuthorActorSuccess,
     fetchAuthorActorFailed,
     createNewAuthorActorSuccess,

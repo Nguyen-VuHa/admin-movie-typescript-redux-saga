@@ -64,7 +64,7 @@ function TableCategory() {
                 </thead>
                 <tbody>
                     {
-                        categories && categories.length > 0 ?
+                        categories && categories.length > 0 ? 
                         categories.map((ct, index) => {
                             let statusFilter = status.filter(s => s.id === ct.status);
                             return <tr key={index} >
@@ -96,7 +96,7 @@ function TableCategory() {
                                 </td>  
                             </tr>
                         }) : loadingFetch ? 
-                        <tr className="d-flex justify-content-center align-items-center" >
+                        <tr>
                             <td colSpan={arrTitle.length}>
                                 <LoadingTable textLoading="Đang tải dữ liệu..."/>
                             </td>

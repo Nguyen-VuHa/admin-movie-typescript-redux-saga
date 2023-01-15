@@ -16,6 +16,7 @@ export interface AuthorActorSlice {
     statusDeleted: number,
 
     authorActors: Array<AuthorActor> | [],
+    authorACtorSelect: Array<any> | [],
 
     totalPage: number,
     currentPage: number,

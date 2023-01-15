@@ -97,7 +97,7 @@ function TableMovie() {
                             </tr>
                         })
                         : loadingFetch ? 
-                        <tr className="d-flex justify-content-center align-items-center" >
+                        <tr>
                             <td colSpan={arrTitle.length}>
                                 <LoadingTable textLoading="Đang tải dữ liệu..." />
                             </td>

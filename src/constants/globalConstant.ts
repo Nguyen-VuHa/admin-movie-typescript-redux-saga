@@ -1,0 +1,5 @@
+const DEFAULT_FOLDER_ROOT = 1;
+
+export {
+    DEFAULT_FOLDER_ROOT
+}

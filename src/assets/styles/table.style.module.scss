@@ -1,0 +1,122 @@
+
+
+.wrapper-table {
+    border-spacing: 0;
+    width: 100%;
+    height: auto;
+    border-collapse: collapse;
+
+    thead {
+        border-bottom: 20px solid #1a191f;
+
+        th {
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+            font-weight: 400;
+            padding: 0 15px 0 15px;
+            line-height: 100%;
+            margin-bottom: 0;
+            border: none;
+        }
+    }
+
+    tbody {
+        tr {
+            border-bottom: 10px solid #1a191f;
+        }
+
+        td {
+            padding: 0;
+            background-color: transparent;
+            border: 0px solid transparent;
+        }
+
+        td:last-child {
+            .table-text {
+                border-radius: 0 6px 6px 0;
+            }
+        }
+
+        td:first-child {
+            .table-text {
+                border-radius: 6px 0 0 6px;
+            }
+        }
+    }
+}
+
+.table-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 15px;
+
+    color: #fff;
+
+    font-weight: 400;
+    line-height: 30px;
+    padding: 10px 14px;
+
+    background-color: #222028; 
+}
+
+.wrapper-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.tb-pg-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #222028;
+    border-radius: 6px;
+    height: 40px;
+    padding: 0 15px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+}
+
+.pg-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #222028;
+    height: 40px;
+    width: auto;
+    border-radius: 6px;
+}
+
+.pg-btn {
+    font-size: 14px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255,255,255,0.7);
+    border-radius: 6px;
+    border: 2px solid transparent;
+
+    user-select: none;
+    cursor: pointer;
+
+    transition: all .3s ease;
+
+    &:hover {
+        color: #f9ab00;
+    }
+
+    &.active {
+        border-color: #f9ab00;
+        color: #f9ab00;
+        cursor: default;
+    }
+}

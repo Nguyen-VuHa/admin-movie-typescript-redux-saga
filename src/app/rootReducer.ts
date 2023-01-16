@@ -1,7 +1,15 @@
-import counterReducer from 'features/counter/counterSlice';
-import todoReducer from 'reducers/todoSlice';
+import toastifySlice from 'reducers/toastifyReducer/toastifySlice';
+import dashboardSlice from 'reducers/dashboardReducer/dashboardSlice';
+import categorySlice from 'reducers/categoryReducer/categorySlice';
+import folderSlice from 'reducers/folderReducer/folderSlice';
+import authorActorSlice from 'reducers/authorActorReducer/authorActorSlice';
+import movieSlice from 'reducers/movieReducer/movieSlice';
 
 export const rootReducer = {
-    counter: counterReducer,
-    todoState: todoReducer,
+    toastifyState: toastifySlice,
+    dashboardState: dashboardSlice,
+    categoryState: categorySlice,
+    folderState: folderSlice,
+    authorActorState: authorActorSlice,
+    movieState: movieSlice,
 }

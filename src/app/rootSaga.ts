@@ -1,6 +1,14 @@
 import { all } from 'redux-saga/effects';
-import { todoSaga } from 'reducers/todoSaga';
+import { categorySaga } from 'reducers/categoryReducer/categorySaga';
+import { folderSaga } from 'reducers/folderReducer/folderSaga';
+import { authorActorSaga } from 'reducers/authorActorReducer/authroActorSaga';
+import { movieSaga } from 'reducers/movieReducer/movieSaga';
 
 export default function* rootSaga() {
-    yield all([todoSaga()]);
+    yield all([
+        categorySaga(),
+        folderSaga(),
+        authorActorSaga(),
+        movieSaga(),
+    ]);
 }

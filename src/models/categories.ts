@@ -14,6 +14,7 @@ export interface CategorySlice {
     statusUpdated: number,
     statusDeleted: number,
     categories: Array<Categories> | [],
+    categorySelect: Array<any> | [],
     totalPage: number,
     currentPage: number,
     errorMessage: string,

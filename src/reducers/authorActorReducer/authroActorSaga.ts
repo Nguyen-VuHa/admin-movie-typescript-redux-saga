@@ -1,6 +1,6 @@
 import moment from "moment";
 import { call, put, takeLatest, takeLeading } from "redux-saga/effects";
-import { addNewAuthorActor, createdNewAuthorActorFailed, createNewAuthorActorSuccess, deleteAuthorActorFailed, deleteAuthorActorSuccess, fetchAuthorActorFailed, fetchAuthorActorSuccess, setLoadingCreated, setLoadingFetch, updatedAuthorActorFailed, updatedAuthorActorSuccess, updateItemAuthorActor } from "./authorActorSlice";
+import { addNewAuthorActor, createdNewAuthorActorFailed, createNewAuthorActorSuccess, deleteAuthorActorFailed, deleteAuthorActorSuccess, fetchAuthorActorFailed, fetchAuthorActorSelectFailed, fetchAuthorActorSelectSuccess, fetchAuthorActorSuccess, setLoadingCreated, setLoadingFetch, updatedAuthorActorFailed, updatedAuthorActorSuccess, updateItemAuthorActor } from "./authorActorSlice";
 import authorActorApi from "api/authorActorApi";
 
 const STATUS_DEFAULT = 1;
@@ -23,6 +23,16 @@ function* fetchListAuthorActor(action: any): any {
     }
     catch(err: any) {
         yield put(fetchAuthorActorFailed(err.response.data))
+    }
+}
+
+function* fetchDataSelectAuthorActor(): any {
+    try {
+        const response = yield call(authorActorApi.getSelectAuthorActorApi);
+        yield put(fetchAuthorActorSelectSuccess(response.data))
+    }
+    catch(err: any) {
+        yield put(fetchAuthorActorSelectFailed(err.response.data))
     }
 }
 
@@ -76,6 +86,7 @@ function* deletedAuthorActor(action: any): any {
 
 export function* authorActorSaga() {
     yield takeLatest('FETCH_LIST_AUTHOR_ACTOR', fetchListAuthorActor);
+    yield takeLatest('FETCH_DATA_SELECT_AUTHOR_ACTOR', fetchDataSelectAuthorActor);
     yield takeLeading('CREATED_NEW_AUTHOR_ACTOR', createNewAuthorActor);
     yield takeLeading('UPDATED_AUTHOR_ACTOR', updatedAuthorActor);
     yield takeLeading('DELETED_AUTHOR_ACTOR', deletedAuthorActor);

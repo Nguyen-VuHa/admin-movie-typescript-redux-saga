@@ -1,6 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { MovieSlice } from 'models';
 
+const msgErrorForm = {
+    msgMovieName: '',
+    msgShowtime: '',
+    msgStartDate: '',
+    msgEndDate: '',
+    msgDescription: '',
+    msgIdTrailer: '',
+    msgAuthor: '',
+    msgMainActor: '',
+    msgCategories: '',
+}
+
 const initialState: MovieSlice = {
     loadingFetch: true,
     loadingCreate: false,
@@ -23,12 +35,120 @@ const initialState: MovieSlice = {
     modalEditImg: false,
     imgBase64: '',
     listPoster: [],
+
+    dataEdit: {
+        id: '',
+        movieName: '',
+        showtime: 0,
+        startDate: '',
+        endDate: '',
+        description: '',
+        idTrailer: '',
+        author: [],
+        mainActor: [],
+        categories: [],
+    },
+    msgDataEdit: msgErrorForm,
 };
 
 export const movieSlice = createSlice({ 
     name: 'movies',
     initialState,
     reducers: {
+        // Handle Data Edit Movie
+        resetErrorFormData: (state) => {
+            return {
+                ...state,
+                msgDataEdit: msgErrorForm,
+            }
+        },
+        setErrorFormData: (state, { payload }) => {
+            return {
+                ...state,
+                msgDataEdit: payload,
+            }
+        },
+        setMainActorSelectEdit: (state, { payload }) => {
+            return {
+                ...state,
+                dataEdit: {
+                    ...state.dataEdit,
+                    mainActor: payload,
+                }
+            }
+        },
+        setAuthorSelectEdit: (state, { payload }) => {
+            return {
+                ...state,
+                dataEdit: {
+                    ...state.dataEdit,
+                    author: payload,
+                }
+            }
+        },
+        setCategorySelectEdit: (state, { payload }) => {
+            return {
+                ...state,
+                dataEdit: {
+                    ...state.dataEdit,
+                    categories: payload,
+                }
+            }
+        },
+        setIDTrailerEdit: (state, { payload }) => {
+            return {
+                ...state,
+                dataEdit: {
+                    ...state.dataEdit,
+                    idTrailer: payload,
+                }
+            }
+        },
+        setDescriptionEdit: (state, { payload }) => {
+            return {
+                ...state,
+                dataEdit: {
+                    ...state.dataEdit,
+                    description: payload,
+                }
+            }
+        },
+        setEndDateEdit: (state, { payload }) => {
+            return {
+                ...state,
+                dataEdit: {
+                    ...state.dataEdit,
+                    endDate: payload,
+                }
+            }
+        },
+        setStartDateEdit: (state, { payload }) => {
+            return {
+                ...state,
+                dataEdit: {
+                    ...state.dataEdit,
+                    startDate: payload,
+                }
+            }
+        },
+        setShowtimeEdit: (state, { payload }) => {
+            return {
+                ...state,
+                dataEdit: {
+                    ...state.dataEdit,
+                    showtime: payload,
+                }
+            }
+        },
+        setMovieNameEdit: (state, { payload }) => {
+            return {
+                ...state,
+                dataEdit: {
+                    ...state.dataEdit,
+                    movieName: payload,
+                }
+            }
+        },
         // ACTION LOADING
         setLoadingFetch: (state) => {
             return {
@@ -120,6 +240,18 @@ export const movieSlice = createSlice({
 });
 
 export const { 
+    setMovieNameEdit,
+    setShowtimeEdit,
+    setIDTrailerEdit,
+    setDescriptionEdit,
+    setStartDateEdit,
+    setEndDateEdit,
+    setCategorySelectEdit,
+    setMainActorSelectEdit,
+    setAuthorSelectEdit,
+    setErrorFormData,
+    resetErrorFormData,
+    
     setLoadingFetch,
     setLoadingCreated,
 

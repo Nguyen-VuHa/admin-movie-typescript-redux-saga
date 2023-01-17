@@ -28,6 +28,36 @@
     }
 }
 
+.custom-input-area {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+
+    background-color: var(--layout-primary);
+    border: 2px solid transparent;
+
+    color: var(--color-white);
+
+    font-size: 16px;
+    border-radius: 6px;
+    padding: 0;
+    padding: 0 20px;
+
+    appearance: none;
+    box-shadow: none;
+    font-family: 'Play', sans-serif;
+    box-sizing: border-box;
+
+    &::placeholder {
+        color: var(--placeholder-color);
+        font-family: 'Play', sans-serif;
+    }
+
+    &:focus {
+        border-color: var(--yellow-primary);
+    }
+}
+
 .message-error {
     font-style: italic;
     color: #e04d4d;
@@ -80,8 +110,9 @@
         .select-text {
             
             .layout-select {
-                display: flex;
-                flex-wrap: wrap;
+                display: grid;
+                grid-auto-flow: column;
+                grid-gap: 5px;
 
                 div {
                     display: flex;
@@ -94,9 +125,7 @@
                     background: #222028;
                     border-radius: 6px;
 
-                    padding: 2px 5px;
-                    margin-top: 2px;
-                    margin-left: 2px;
+                    padding: 0 5px;
                 }
 
                 svg {

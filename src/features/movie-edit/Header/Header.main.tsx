@@ -6,14 +6,52 @@ import { Button } from 'components/Common';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { IoCaretBack } from "react-icons/io5";
 import { MdDataSaverOn } from "react-icons/md";
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { validatorEditMovie } from 'middlewares/editMovie';
+import { setErrorFormData } from 'reducers/movieReducer/movieSlice';
+import useToastify from 'hooks/useToastify';
 
 const gb = classNames.bind(GlobalStyles);
 const cx = classNames.bind(Styles);
 
 function Header() {
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const idMovie = searchParams.get('id');
+    
+    const dispatchToast = useToastify();
+
+    const { dataEdit, listPoster } = useAppSelector(state => state.movieState);
+
+    const handleSubmitFormMovie = async () => {
+        const resultVal = validatorEditMovie(dataEdit);
+
+        if(resultVal && resultVal.status && listPoster.length > 0) {
+
+        } else {
+            if(listPoster.length <= 0) {
+                dispatchToast({
+                    type: 'TYPE_WARN',
+                    payload: {
+                        position: 'top-left',
+                        message: 'Tối thiểu phải có 1 hình ảnh poster cho bộ phim.',
+                    }
+                });
+            }
+
+            if(resultVal && resultVal.error) {
+                dispatch(setErrorFormData(resultVal.error));
+                dispatchToast({
+                    type: 'TYPE_WARN',
+                    payload: {
+                        position: 'top-left',
+                        message: 'Có một số trường rỗng! Vui lòng kiểm tra lại trước khi xử lý.',
+                    }
+                });
+            }
+        }
+    }
 
     return (
         <div className={gb('wrapper-header', cx('sticky-header'))}>
@@ -39,6 +77,7 @@ function Header() {
                     style={{width: 'auto', alignItems: 'flex-start'}}
                 >
                     <Button
+                        onClick={() => handleSubmitFormMovie()}
                     >
                         Lưu lại
                         <MdDataSaverOn size={18} style={{ marginLeft: '8px' }}/>

@@ -8,7 +8,11 @@ const moviesApi = {
     updateStatusMovie: (payload: any) => {
         const url = `api/movie/hidden?_id=${payload}`;
         return axiosClient.put(url);
-    }
+    },
+    createNewMovie: (payload: any) => {
+        const url = `api/movie/create`;
+        return axiosClient.post(url, payload);
+    },
 }
 
 export default moviesApi;

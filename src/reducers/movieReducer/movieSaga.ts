@@ -1,7 +1,7 @@
 import moviesApi from "api/movieApi";
 import moment from "moment";
-import { call, put, takeEvery, takeLatest, takeLeading } from "redux-saga/effects";
-import { fetchMovieFailed, fetchMovieSuccess, setLoadingFetch, updateStatusMovie } from "./movieSlice";
+import { call, put, takeLatest, takeLeading } from "redux-saga/effects";
+import { createNewMovieFailed, createNewMovieSuccess, fetchMovieFailed, fetchMovieSuccess, setLoadingCreated, setLoadingFetch, updateStatusMovie } from "./movieSlice";
 
 const STATUS_DEFAULT = 1;
 
@@ -32,7 +32,20 @@ function* changeStatusMovie(action: any): any {
     }
 }
 
+
+function* createNewMovie(action: any): any {
+    try {
+        yield put(setLoadingCreated());
+        yield call(moviesApi.createNewMovie, action.payload);
+        yield put(createNewMovieSuccess())
+    }
+    catch(err: any) {
+        yield put(createNewMovieFailed(err.message))
+    }
+}
+
 export function* movieSaga() {
     yield takeLatest('FETCH_LIST_MOVIE', fetchAllMovie);
     yield takeLeading('CHANGE_STATUS_MOVIE', changeStatusMovie);
+    yield takeLeading('CREATE_NEW_MOVIE', createNewMovie);
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import classNames from 'classnames/bind';
 import GlobalStyles from 'utils/globalStyle.module.scss';
 import Styles from './header.module.scss';
@@ -8,8 +8,9 @@ import { IoCaretBack } from "react-icons/io5";
 import { MdDataSaverOn } from "react-icons/md";
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { validatorEditMovie } from 'middlewares/editMovie';
-import { setErrorFormData } from 'reducers/movieReducer/movieSlice';
+import { setErrorFormData, resetFormEditMovie } from 'reducers/movieReducer/movieSlice';
 import useToastify from 'hooks/useToastify';
+import ModalQuestion from 'components/Common/ModalQuestion';
 
 const gb = classNames.bind(GlobalStyles);
 const cx = classNames.bind(Styles);
@@ -19,16 +20,44 @@ function Header() {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const idMovie = searchParams.get('id');
+
+    const [modalConfirm, setModalConfirm] = useState<boolean>(false)
     
     const dispatchToast = useToastify();
 
-    const { dataEdit, listPoster } = useAppSelector(state => state.movieState);
+    const { dataEdit, listPoster, statusCreated, errorMessage } = useAppSelector(state => state.movieState);
+    
+    useEffect(() => {
+        if(statusCreated === 1) {
+            dispatchToast({
+                type: 'TYPE_SUCCESS',
+                payload: {
+                    position: 'top-left',
+                    message: 'Tạo mới phim thành công!',
+                }
+            });
+
+            dispatch(resetFormEditMovie());
+            navigate(-1);
+        }
+
+        if(statusCreated === 2) {
+            dispatchToast({
+                type: 'TYPE_ERROR',
+                payload: {
+                    position: 'top-left',
+                    message: errorMessage,
+                }
+            });
+        }
+    }, [statusCreated])
+    
 
     const handleSubmitFormMovie = async () => {
         const resultVal = validatorEditMovie(dataEdit);
-
+        setModalConfirm(true);
         if(resultVal && resultVal.status && listPoster.length > 0) {
-
+            
         } else {
             if(listPoster.length <= 0) {
                 dispatchToast({
@@ -55,6 +84,14 @@ function Header() {
 
     return (
         <div className={gb('wrapper-header', cx('sticky-header'))}>
+            {
+                modalConfirm && <ModalQuestion 
+                    status={modalConfirm}
+                    title="THÔNG BÁO"
+                    textConfirm={'Quá trình này có thể xảy ra lâu!' + '\n' + 'Vui lòng không tắt trình duyệt khi đang thực hiện.'}
+                />
+            }
+            
             <div className={gb('header')}>
                 <div
                     className={cx('layout-title')}

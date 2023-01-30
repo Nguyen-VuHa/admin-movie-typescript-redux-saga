@@ -18,6 +18,7 @@ const initialState: MovieSlice = {
     loadingCreate: false,
 
     statusCreated: 0,
+    
     statusUpdated: 0,
     statusDeleted: 0,
 
@@ -186,6 +187,21 @@ export const movieSlice = createSlice({
                 movies: state.movies.map(mv => mv.id === payload.id ? { ...mv, status: payload.status ? mv.status == 1 ? 0 : 1 : mv.status } : { ...mv })
             }
         },
+        createNewMovieSuccess: (state) => {
+            return {
+                ...state,
+                loadingCreate: false,
+                statusCreated: 1,
+            }
+        },
+        createNewMovieFailed: (state, { payload }) => {
+            return {
+                ...state,
+                loadingCreate: false,
+                errorMessage: payload,
+                statusCreated: 2,
+            }
+        },
         // ACTION HANDLE UI
         setCurrentPage: (state, { payload }) => {
             return {
@@ -230,10 +246,37 @@ export const movieSlice = createSlice({
             }
         },
         // ACTION DEFAULT VALUE
+        resetFormEditMovie: (state) => {
+            return {
+                ...state,
+                dataEdit: {
+                    id: '',
+                    movieName: '',
+                    showtime: 0,
+                    startDate: '',
+                    endDate: '',
+                    description: '',
+                    idTrailer: '',
+                    author: [],
+                    mainActor: [],
+                    categories: [],
+                },
+                msgDataEdit: msgErrorForm,
+            }
+        },
         setDefaultImageEdit: (state) => {
             return {
                 ...state,
                 imgBase64: '',
+            }
+        },
+        setDefaultStatusEditMovie: (state) => {
+            return {
+                ...state,
+                statusCreated: 0,
+                statusUpdated: 0,
+                statusDeleted: 0,
+                errorMessage: '',
             }
         }
     },
@@ -258,6 +301,8 @@ export const {
     fetchMovieSuccess,
     fetchMovieFailed,
     updateStatusMovie,
+    createNewMovieSuccess,
+    createNewMovieFailed,
 
     setCurrentPage,
     setSearchText,
@@ -268,6 +313,8 @@ export const {
     removeItemPoster,
 
     setDefaultImageEdit,
+    setDefaultStatusEditMovie,
+    resetFormEditMovie,
 } = movieSlice.actions;
 
 export default movieSlice.reducer;

@@ -11,6 +11,7 @@ import { validatorEditMovie } from 'middlewares/editMovie';
 import { setErrorFormData, resetFormEditMovie } from 'reducers/movieReducer/movieSlice';
 import useToastify from 'hooks/useToastify';
 import ModalQuestion from 'components/Common/ModalQuestion';
+import LoadingFullScreem from 'components/Common/LoadingFullScreem';
 
 const gb = classNames.bind(GlobalStyles);
 const cx = classNames.bind(Styles);
@@ -59,26 +60,26 @@ function Header() {
         if(resultVal && resultVal.status && listPoster.length > 0) {
             
         } else {
-            if(listPoster.length <= 0) {
-                dispatchToast({
-                    type: 'TYPE_WARN',
-                    payload: {
-                        position: 'top-left',
-                        message: 'Tối thiểu phải có 1 hình ảnh poster cho bộ phim.',
-                    }
-                });
-            }
+            // if(listPoster.length <= 0) {
+            //     dispatchToast({
+            //         type: 'TYPE_WARN',
+            //         payload: {
+            //             position: 'top-left',
+            //             message: 'Tối thiểu phải có 1 hình ảnh poster cho bộ phim.',
+            //         }
+            //     });
+            // }
 
-            if(resultVal && resultVal.error) {
-                dispatch(setErrorFormData(resultVal.error));
-                dispatchToast({
-                    type: 'TYPE_WARN',
-                    payload: {
-                        position: 'top-left',
-                        message: 'Có một số trường rỗng! Vui lòng kiểm tra lại trước khi xử lý.',
-                    }
-                });
-            }
+            // if(resultVal && resultVal.error) {
+            //     dispatch(setErrorFormData(resultVal.error));
+            //     dispatchToast({
+            //         type: 'TYPE_WARN',
+            //         payload: {
+            //             position: 'top-left',
+            //             message: 'Có một số trường rỗng! Vui lòng kiểm tra lại trước khi xử lý.',
+            //         }
+            //     });
+            // }
         }
     }
 
@@ -89,6 +90,12 @@ function Header() {
                     status={modalConfirm}
                     title="THÔNG BÁO"
                     textConfirm={'Quá trình này có thể xảy ra lâu!' + '\n' + 'Vui lòng không tắt trình duyệt khi đang thực hiện.'}
+                    onClose={() => {
+                        setModalConfirm(false);
+                    }}
+                    onSave={() => {
+                        setModalConfirm(false);
+                    }}
                 />
             }
             

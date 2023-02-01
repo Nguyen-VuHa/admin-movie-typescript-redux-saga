@@ -1,9 +1,19 @@
+import { configHeaderAxios } from "utils/configAxios";
+
 const { default: axiosClient } = require("./axiosClient");
 
 const categoriesApi = {
     fetchAllCategoryApi: (payload: any) => {
-        const url = `api/category/all?_p=${payload.page}&_s=${payload.search}`;
-        return axiosClient.get(url);
+        const url = `api/category/all`;
+
+        const config = configHeaderAxios({
+            params: {
+                _p: payload.page,
+                _s: payload.search,
+            }
+        });
+
+        return axiosClient.get(url, config);
     },
     fetchDataSelectCategoryApi: () => {
         const url = `api/category/select-all`;

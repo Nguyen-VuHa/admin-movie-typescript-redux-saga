@@ -86,9 +86,13 @@ function ModalEdit() {
                     }
                 })
             }
+
+            handleCloseModal();
         } else {
             authorNameRef.current && authorNameRef.current.focus();
         }
+
+       
     }
 
     const handleClearMsgError = useCallback(() => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames/bind';
 import GlobalStyles from 'utils/globalStyle.module.scss';
 import Styles from './header.module.scss';
@@ -8,10 +8,11 @@ import { IoCaretBack } from "react-icons/io5";
 import { MdDataSaverOn } from "react-icons/md";
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { validatorEditMovie } from 'middlewares/editMovie';
-import { setErrorFormData, resetFormEditMovie } from 'reducers/movieReducer/movieSlice';
+import { setErrorFormData, resetErrorFormData } from 'reducers/movieReducer/movieSlice';
 import useToastify from 'hooks/useToastify';
 import ModalQuestion from 'components/Common/ModalQuestion';
-import LoadingFullScreem from 'components/Common/LoadingFullScreem';
+import moviesApi from 'api/movieApi';
+import { setLoadingFullScreen } from 'reducers/globalReducer/globalSlice';
 
 const gb = classNames.bind(GlobalStyles);
 const cx = classNames.bind(Styles);
@@ -26,60 +27,64 @@ function Header() {
     
     const dispatchToast = useToastify();
 
-    const { dataEdit, listPoster, statusCreated, errorMessage } = useAppSelector(state => state.movieState);
-    
-    useEffect(() => {
-        if(statusCreated === 1) {
-            dispatchToast({
-                type: 'TYPE_SUCCESS',
-                payload: {
-                    position: 'top-left',
-                    message: 'Tạo mới phim thành công!',
-                }
-            });
+    const { dataEdit, listPoster } = useAppSelector(state => state.movieState);
 
-            dispatch(resetFormEditMovie());
-            navigate(-1);
-        }
-
-        if(statusCreated === 2) {
-            dispatchToast({
-                type: 'TYPE_ERROR',
-                payload: {
-                    position: 'top-left',
-                    message: errorMessage,
-                }
-            });
-        }
-    }, [statusCreated])
-    
-
-    const handleSubmitFormMovie = async () => {
+    const handleSubmitFormMovie = () => {
         const resultVal = validatorEditMovie(dataEdit);
-        setModalConfirm(true);
         if(resultVal && resultVal.status && listPoster.length > 0) {
-            
+            dispatch(resetErrorFormData());
+            setModalConfirm(true);
         } else {
-            // if(listPoster.length <= 0) {
-            //     dispatchToast({
-            //         type: 'TYPE_WARN',
-            //         payload: {
-            //             position: 'top-left',
-            //             message: 'Tối thiểu phải có 1 hình ảnh poster cho bộ phim.',
-            //         }
-            //     });
-            // }
+            if(listPoster.length <= 0) {
+                dispatchToast({
+                    type: 'TYPE_WARN',
+                    payload: {
+                        position: 'top-left',
+                        message: 'Tối thiểu phải có 1 hình ảnh poster cho bộ phim.',
+                    }
+                });
+            }
 
-            // if(resultVal && resultVal.error) {
-            //     dispatch(setErrorFormData(resultVal.error));
-            //     dispatchToast({
-            //         type: 'TYPE_WARN',
-            //         payload: {
-            //             position: 'top-left',
-            //             message: 'Có một số trường rỗng! Vui lòng kiểm tra lại trước khi xử lý.',
-            //         }
-            //     });
-            // }
+            if(resultVal && resultVal.error) {
+                dispatch(setErrorFormData(resultVal.error));
+                dispatchToast({
+                    type: 'TYPE_WARN',
+                    payload: {
+                        position: 'top-left',
+                        message: 'Có một số trường rỗng! Vui lòng kiểm tra lại trước khi xử lý.',
+                    }
+                });
+            }
+        }
+    }
+
+    const handleSubmitEditMovie = async () => {
+        try {
+            let arrPoster = [];
+
+            for await(const poster of listPoster) {
+                let formData = new FormData();
+
+                formData.append('image', poster.base64);
+
+                let result = await moviesApi.uploadPosterMovie(formData);
+
+                if(result && result.url) {
+                    arrPoster.push(result.url);
+                }
+            }
+
+            dispatch({
+                type: 'CREATE_NEW_MOVIE',
+                payload: {
+                    ...dataEdit,
+                    poster: arrPoster
+                }
+            });
+
+        } catch (error: any) {
+            console.log(error, error.message);
+            dispatch(setLoadingFullScreen(false));
         }
     }
 
@@ -94,6 +99,8 @@ function Header() {
                         setModalConfirm(false);
                     }}
                     onSave={() => {
+                        handleSubmitEditMovie();
+                        dispatch(setLoadingFullScreen(true));
                         setModalConfirm(false);
                     }}
                 />

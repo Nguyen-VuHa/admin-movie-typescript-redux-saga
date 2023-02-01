@@ -1,10 +1,11 @@
 interface ObjHeaderConfig {
-    params: Object,
+    params?: Object,
+    headers?: Object,
 }
 
-export const configHeaderAxios = ({ params }: ObjHeaderConfig) => {
+export const configHeaderAxios = ({ params, headers }: ObjHeaderConfig) => {
     return {
-        headers: {'Authorization': 'JWT ' + 'NO TOKEN'},
+        headers: { 'Authorization': 'JWT ' + 'NO TOKEN', ...headers },
         params: params,
     }
 }

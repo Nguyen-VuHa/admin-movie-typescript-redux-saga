@@ -25,9 +25,8 @@ function GroupPoster() {
                 {
                     listPoster && listPoster.length > 0
                     && listPoster.map((lt: any, index: number) => {
-                        return <div className={cx('layout-image')}>
+                        return <div className={cx('layout-image')} key={index}>
                             <img 
-                                key={index}
                                 src={lt.base64}
                                 alt="NO POSTER"
                                 width="100%"

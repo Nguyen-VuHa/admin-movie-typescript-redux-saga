@@ -32,6 +32,17 @@ const moviesApi = {
         const url = `api/movie/create`;
         return axiosClient.post(url, payload);
     },
+    uploadPosterMovie: (payload: any) => {
+        const url = `api/movie/upload-images`;
+
+        const config = configHeaderAxios({
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        });
+        
+        return axiosClient.post(url, payload, config);
+    },
 }
 
 export default moviesApi;

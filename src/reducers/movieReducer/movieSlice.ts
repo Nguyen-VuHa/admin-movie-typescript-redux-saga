@@ -40,7 +40,7 @@ const initialState: MovieSlice = {
     dataEdit: {
         id: '',
         movieName: '',
-        showtime: 0,
+        showTime: 0,
         startDate: '',
         endDate: '',
         description: '',
@@ -137,7 +137,7 @@ export const movieSlice = createSlice({
                 ...state,
                 dataEdit: {
                     ...state.dataEdit,
-                    showtime: payload,
+                    showTime: payload,
                 }
             }
         },
@@ -252,7 +252,7 @@ export const movieSlice = createSlice({
                 dataEdit: {
                     id: '',
                     movieName: '',
-                    showtime: 0,
+                    showTime: 0,
                     startDate: '',
                     endDate: '',
                     description: '',

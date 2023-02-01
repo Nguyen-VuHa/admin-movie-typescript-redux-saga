@@ -35,7 +35,6 @@ function* changeStatusMovie(action: any): any {
 
 function* createNewMovie(action: any): any {
     try {
-        yield put(setLoadingCreated());
         yield call(moviesApi.createNewMovie, action.payload);
         yield put(createNewMovieSuccess())
     }

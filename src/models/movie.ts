@@ -14,7 +14,7 @@ interface PosterObject {
 export interface DataEditMovie {
     id: string,
     movieName: string,
-    showtime: number,
+    showTime: number,
     startDate: string,
     endDate: string,
     description: string,

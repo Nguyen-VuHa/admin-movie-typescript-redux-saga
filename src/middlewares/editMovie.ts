@@ -19,7 +19,7 @@ export const validatorEditMovie = (data: DataEditMovie): any => {
     
     const { 
         movieName,
-        showtime,
+        showTime,
         startDate,
         endDate,
         description,
@@ -36,9 +36,9 @@ export const validatorEditMovie = (data: DataEditMovie): any => {
     else
         msg.msgMovieName = ''
 
-    if(isEmpty(showtime.toString()))
+    if(isEmpty(showTime.toString()))
         msg.msgShowtime = "Trường này không được trống!";
-    else if(showtime < 60 || showtime > 180)
+    else if(showTime < 60 || showTime > 180)
         msg.msgShowtime = "Thời lượng phim không được dưới 60 phút và trên 180 phút!";
     else
         msg.msgShowtime = ''

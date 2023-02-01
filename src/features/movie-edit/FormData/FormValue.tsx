@@ -162,7 +162,7 @@ const FormGroupMovieName = () => {
 
 const FormGroupShowTime = () => {
     const { dataEdit, msgDataEdit } = useAppSelector(state => state.movieState);
-    const { showtime } = dataEdit;
+    const { showTime } = dataEdit;
     const { msgShowtime } = msgDataEdit;
 
     const dispatch = useAppDispatch();
@@ -172,7 +172,7 @@ const FormGroupShowTime = () => {
             <div className={cx('title-input')}>Thời lượng (phút)</div>
             <Input 
                 placeholder='Nhập thời lượng...'
-                value={showtime ? showtime.toString() : ''}
+                value={showTime ? showTime.toString() : ''}
                 onChange={(text: string) => {
                     if(text && /^\d+$/.test(text))
                         dispatch(setShowtimeEdit(parseInt(text)))

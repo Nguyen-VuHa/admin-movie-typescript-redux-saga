@@ -4,7 +4,7 @@ import isEmpty from "validator/lib/isEmpty";
 import isDate from "validator/lib/isDate";
 import moment from "moment";
 
-export const validatorEditMovie = (data: DataEditMovie): any => {
+export const validatorEditMovie = (data: DataEditMovie, isUpdate: boolean = false): any => {
     const msg = {
         msgMovieName: '',
         msgShowtime: '',
@@ -47,7 +47,7 @@ export const validatorEditMovie = (data: DataEditMovie): any => {
         msg.msgStartDate = "Trường này không được trống!";
     else if(!isDate(startDate))
         msg.msgStartDate = "Định dạng ngày không hợp lệ!";
-    else if(!(moment(startDate).format('YYYY-MM-DD') >= moment(new Date()).format('YYYY-MM-DD')))
+    else if(!isUpdate && !(moment(startDate).format('YYYY-MM-DD') >= moment(new Date()).format('YYYY-MM-DD')))
         msg.msgStartDate = "Ngày bắt đầu phải lớn hơn hoặc bằng ngày hiện tại!";
     else
         msg.msgStartDate = ''

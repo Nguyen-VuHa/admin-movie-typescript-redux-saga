@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { MovieSlice } from 'models';
+import moment from 'moment';
 
 const msgErrorForm = {
     msgMovieName: '',
@@ -15,12 +16,12 @@ const msgErrorForm = {
 
 const initialState: MovieSlice = {
     loadingFetch: true,
-    loadingCreate: false,
+    loadingEdit: false,   
+    loadingDetail: false,
 
-    statusCreated: 0,
-    
-    statusUpdated: 0,
+    statusEdit: 0,
     statusDeleted: 0,
+    statusDetail: 0,
 
     movies: [],
 
@@ -157,10 +158,16 @@ export const movieSlice = createSlice({
                 loadingFetch: true,
             }
         },
-        setLoadingCreated: (state) => {
+        setLoadingEdit: (state) => {
             return {
                 ...state,
-                loadingCreate: true,
+                loadingEdit: true,
+            }
+        },
+        setLoadingDetail: (state) => {
+            return {
+                ...state,
+                loadingDetail: true,
             }
         },
         
@@ -181,6 +188,32 @@ export const movieSlice = createSlice({
                 errorMessage: payload.message,
             }
         },
+        fetchDetailMovieSuccess: (state, { payload }) => {
+            return {
+                ...state,
+                loadingDetail: false,
+                dataEdit: {
+                    ...state.dataEdit,
+                    ...payload,
+                    startDate: moment(payload.startDate).format('YYYY-MM-DD'),
+                    endDate: moment(payload.endDate).format('YYYY-MM-DD'),
+                },
+                listPoster: payload.poster.map((p: any, idx: number) => {
+                    return {
+                        id: idx + 1,
+                        base64: p,
+                    }
+                }),
+            }
+        },
+        fetchDetailMovieFailed: (state, { payload }) => {
+            return {
+                ...state,
+                loadingDetail: false,
+                errorMessage: payload.message,
+                statusDetail: 2,
+            }
+        },
         updateStatusMovie: (state, { payload }) => {
             return {
                 ...state,
@@ -190,16 +223,31 @@ export const movieSlice = createSlice({
         createNewMovieSuccess: (state) => {
             return {
                 ...state,
-                loadingCreate: false,
-                statusCreated: 1,
+                loadingEdit: false,
+                statusEdit: 1,
             }
         },
         createNewMovieFailed: (state, { payload }) => {
             return {
                 ...state,
+                loadingEdit: false,
+                errorMessage: payload,
+                statusEdit: 2,
+            }
+        },
+        updateMovieSuccess: (state) => {
+            return {
+                ...state,
+                loadingCreate: false,
+                statusEdit: 1,
+            }
+        },
+        updateMovieFailed: (state, { payload }) => {
+            return {
+                ...state,
                 loadingCreate: false,
                 errorMessage: payload,
-                statusCreated: 2,
+                statusEdit: 2,
             }
         },
         // ACTION HANDLE UI
@@ -261,6 +309,7 @@ export const movieSlice = createSlice({
                     mainActor: [],
                     categories: [],
                 },
+                listPoster: [],
                 msgDataEdit: msgErrorForm,
             }
         },
@@ -270,12 +319,18 @@ export const movieSlice = createSlice({
                 imgBase64: '',
             }
         },
+        resetStatusDetail: (state) => {
+            return {
+                ...state,
+                statusDetail: 0,
+            }
+        },
         setDefaultStatusEditMovie: (state) => {
             return {
                 ...state,
-                statusCreated: 0,
-                statusUpdated: 0,
+                statusEdit: 0,
                 statusDeleted: 0,
+                statusDetail: 0,
                 errorMessage: '',
             }
         }
@@ -296,14 +351,19 @@ export const {
     resetErrorFormData,
     
     setLoadingFetch,
-    setLoadingCreated,
+    setLoadingEdit,
+    setLoadingDetail,
 
     fetchMovieSuccess,
     fetchMovieFailed,
     updateStatusMovie,
     createNewMovieSuccess,
     createNewMovieFailed,
-
+    fetchDetailMovieSuccess,
+    fetchDetailMovieFailed,
+    updateMovieSuccess,
+    updateMovieFailed,
+    
     setCurrentPage,
     setSearchText,
     setSortBy,
@@ -314,6 +374,7 @@ export const {
 
     setDefaultImageEdit,
     setDefaultStatusEditMovie,
+    resetStatusDetail,
     resetFormEditMovie,
 } = movieSlice.actions;
 

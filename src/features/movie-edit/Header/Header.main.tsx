@@ -30,30 +30,59 @@ function Header() {
     const { dataEdit, listPoster } = useAppSelector(state => state.movieState);
 
     const handleSubmitFormMovie = () => {
-        const resultVal = validatorEditMovie(dataEdit);
-        if(resultVal && resultVal.status && listPoster.length > 0) {
-            dispatch(resetErrorFormData());
-            setModalConfirm(true);
-        } else {
-            if(listPoster.length <= 0) {
-                dispatchToast({
-                    type: 'TYPE_WARN',
-                    payload: {
-                        position: 'top-left',
-                        message: 'Tối thiểu phải có 1 hình ảnh poster cho bộ phim.',
-                    }
-                });
+        if(idMovie) {
+            const resultVal = validatorEditMovie(dataEdit, true);
+            if(resultVal && resultVal.status && listPoster.length > 0) {
+                dispatch(resetErrorFormData());
+                setModalConfirm(true);
+            } else {
+                if(listPoster.length <= 0) {
+                    dispatchToast({
+                        type: 'TYPE_WARN',
+                        payload: {
+                            position: 'top-left',
+                            message: 'Tối thiểu phải có 1 hình ảnh poster cho bộ phim.',
+                        }
+                    });
+                }
+    
+                if(resultVal && resultVal.error) {
+                    dispatch(setErrorFormData(resultVal.error));
+                    dispatchToast({
+                        type: 'TYPE_WARN',
+                        payload: {
+                            position: 'top-left',
+                            message: 'Có một số trường rỗng! Vui lòng kiểm tra lại trước khi xử lý.',
+                        }
+                    });
+                }
             }
-
-            if(resultVal && resultVal.error) {
-                dispatch(setErrorFormData(resultVal.error));
-                dispatchToast({
-                    type: 'TYPE_WARN',
-                    payload: {
-                        position: 'top-left',
-                        message: 'Có một số trường rỗng! Vui lòng kiểm tra lại trước khi xử lý.',
-                    }
-                });
+        } else {
+            const resultVal = validatorEditMovie(dataEdit);
+            if(resultVal && resultVal.status && listPoster.length > 0) {
+                dispatch(resetErrorFormData());
+                setModalConfirm(true);
+            } else {
+                if(listPoster.length <= 0) {
+                    dispatchToast({
+                        type: 'TYPE_WARN',
+                        payload: {
+                            position: 'top-left',
+                            message: 'Tối thiểu phải có 1 hình ảnh poster cho bộ phim.',
+                        }
+                    });
+                }
+    
+                if(resultVal && resultVal.error) {
+                    dispatch(setErrorFormData(resultVal.error));
+                    dispatchToast({
+                        type: 'TYPE_WARN',
+                        payload: {
+                            position: 'top-left',
+                            message: 'Có một số trường rỗng! Vui lòng kiểm tra lại trước khi xử lý.',
+                        }
+                    });
+                }
             }
         }
     }
@@ -63,24 +92,40 @@ function Header() {
             let arrPoster = [];
 
             for await(const poster of listPoster) {
-                let formData = new FormData();
+                if(poster.base64.includes('http')) {
+                    arrPoster.push(poster.base64);
+                } else {
+                    let formData = new FormData();
 
-                formData.append('image', poster.base64);
-
-                let result = await moviesApi.uploadPosterMovie(formData);
-
-                if(result && result.url) {
-                    arrPoster.push(result.url);
+                    formData.append('image', poster.base64);
+    
+                    let result = await moviesApi.uploadPosterMovie(formData);
+    
+                    if(result && result.url) {
+                        arrPoster.push(result.url);
+                    }
                 }
+                
             }
 
-            dispatch({
-                type: 'CREATE_NEW_MOVIE',
-                payload: {
-                    ...dataEdit,
-                    poster: arrPoster
-                }
-            });
+            if(idMovie) {
+                dispatch({
+                    type: 'UPDATED_MOVIE',
+                    payload: {
+                        ...dataEdit,
+                        poster: arrPoster
+                    }
+                });
+            } else {
+                dispatch({
+                    type: 'CREATE_NEW_MOVIE',
+                    payload: {
+                        ...dataEdit,
+                        poster: arrPoster
+                    }
+                });
+            }
+            
 
         } catch (error: any) {
             console.log(error, error.message);
@@ -130,7 +175,7 @@ function Header() {
                     <Button
                         onClick={() => handleSubmitFormMovie()}
                     >
-                        Lưu lại
+                        {idMovie ? 'Cập nhật' : 'Lưu lại'}
                         <MdDataSaverOn size={18} style={{ marginLeft: '8px' }}/>
                     </Button>
                 </div>

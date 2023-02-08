@@ -38,11 +38,12 @@ export interface MsgErrorFormMovie {
 
 export interface MovieSlice {
     loadingFetch: boolean,
-    loadingCreate: boolean,
+    loadingEdit: boolean,
+    loadingDetail: boolean,
 
-    statusCreated: number,
-    statusUpdated: number,
+    statusEdit: number,
     statusDeleted: number,
+    statusDetail: number,
 
     movies: Array<Movies> | [],
 

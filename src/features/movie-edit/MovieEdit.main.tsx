@@ -5,18 +5,21 @@ import Header from './Header/Header.main';
 import FormDataMain from './FormData/FormData.main';
 import { MovieContextProvider } from 'contexts/MovieContext';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { resetFormEditMovie, setDefaultStatusEditMovie } from 'reducers/movieReducer/movieSlice';
+import { resetFormEditMovie, resetStatusDetail, setDefaultStatusEditMovie } from 'reducers/movieReducer/movieSlice';
 import { setLoadingFullScreen } from 'reducers/globalReducer/globalSlice';
 import useToastify from 'hooks/useToastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const gb = classNames.bind(globalStyles);
 
 function MovieEditPage() {
     const dispatch = useAppDispatch();
+    const [searchParams] = useSearchParams();
+    const idMovie = searchParams.get('id');
+
     const { authorACtorSelect } = useAppSelector(state => state.authorActorState);
     const { categorySelect } = useAppSelector(state => state.categoryState);
-    const { statusCreated } = useAppSelector(state => state.movieState);
+    const { statusEdit, loadingDetail, statusDetail } = useAppSelector(state => state.movieState);
     const dispatchToast = useToastify();
     const navigate = useNavigate();
     
@@ -31,12 +34,12 @@ function MovieEditPage() {
     }, [categorySelect]);
 
     useEffect(() => {
-        if(statusCreated === 1) {
+        if(statusEdit === 1) {
             dispatchToast({
                 type: 'TYPE_SUCCESS',
                 payload: {
                     position: 'top-left',
-                    message: 'Tạo mới thành công!',
+                    message: `${idMovie ? 'Cập nhật' : 'Tạo mới'} thành công!`,
                 }
             });
 
@@ -46,12 +49,12 @@ function MovieEditPage() {
             dispatch(setDefaultStatusEditMovie());
         }
 
-        if(statusCreated === 2) {
+        if(statusEdit === 2) {
             dispatchToast({
                 type: 'TYPE_ERROR',
                 payload: {
                     position: 'top-left',
-                    message: 'Tạo mới thất bại!',
+                    message: `${idMovie ? 'Cập nhật' : 'Tạo mới'} thất bại!`,
                 }
             });
             
@@ -59,8 +62,30 @@ function MovieEditPage() {
             dispatch(setDefaultStatusEditMovie());
         }
 
-    }, [statusCreated])
+    }, [statusEdit])
     
+    useEffect(() => {
+        if(idMovie) {
+            dispatch({
+                type: 'GET_MOVIE_BY_ID',
+                payload: idMovie,
+            })
+        }
+    }, [idMovie, dispatch]);
+
+
+    useEffect(() => {
+        if(idMovie)
+            dispatch(setLoadingFullScreen(loadingDetail));
+        
+    }, [loadingDetail, dispatch]);
+
+    useEffect(() => {
+        if(statusDetail === 2) {
+            navigate(-1);
+            dispatch(resetStatusDetail());
+        }
+    }, [statusDetail])
 
     return (
         <MovieContextProvider>

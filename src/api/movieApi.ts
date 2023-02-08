@@ -43,6 +43,22 @@ const moviesApi = {
         
         return axiosClient.post(url, payload, config);
     },
+    updateMovie: (payload: any) => {
+        const url = `api/movie/update`;
+
+        const config = configHeaderAxios({
+            params: {
+                _id: payload.id,
+            }
+        });
+
+        return axiosClient.put(url, payload, config);
+    },
+    getMovieDetailById: (payload: any) => {
+        const url = `api/movie/detail/${payload}`;
+
+        return axiosClient.get(url);
+    },
 }
 
 export default moviesApi;

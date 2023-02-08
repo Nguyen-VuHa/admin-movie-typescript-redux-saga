@@ -4,6 +4,7 @@ import COLORS from 'constants/colors';
 import { MovieContext } from 'contexts/MovieContext';
 import React, { useContext } from 'react';
 import { IoLockOpen, IoLockClosed, IoCreate } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
 
 interface GroupButtonProps {
     status: number,
@@ -11,8 +12,8 @@ interface GroupButtonProps {
 }
 
 function GroupButton({ status, data }: GroupButtonProps) {
-    const dispatch = useAppDispatch();
-    const { movieState, dispatchMovie } = useContext(MovieContext);
+    const navigate = useNavigate();
+    const { dispatchMovie } = useContext(MovieContext);
 
     return (
         <>
@@ -46,7 +47,7 @@ function GroupButton({ status, data }: GroupButtonProps) {
                     }
                     color={COLORS.BLUE_INFO}
                     onClick={() => {
-                        
+                        navigate(`edit?id=${data.id}`);
                     }}
                 />
             </div>

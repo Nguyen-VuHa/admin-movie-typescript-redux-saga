@@ -35,10 +35,6 @@ let listMenu = [
                 menuName: 'Đạo diễn / Diễn viên',
                 navigateLink: routePath.AUTHOR_MAIN_ACTOR,
             },
-            {
-                menuName: 'Quản lý Poster phim',
-                navigateLink: '#',
-            },
         ]
     },
     {

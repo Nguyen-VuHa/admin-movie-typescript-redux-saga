@@ -39,8 +39,18 @@ let listMenu = [
     },
     {
         icon: <IoCubeSharp size={20} />,
-        menuName: 'QUẢN LÝ RẠP CHIẾU PHIM',
+        menuName: 'QUẢN LÝ CỤM RẠP',
         navigateLink: '#',
+        listItemDrop: [
+            {
+                menuName: 'Cụm rạp chiếu phim',
+                navigateLink: routePath.CINEMA_MANAGER,
+            },
+            {
+                menuName: 'Phòng chiếu',
+                navigateLink: '#',
+            },
+        ]
     },
     {
         icon: <IoTicket size={20} />,
@@ -71,7 +81,7 @@ function NavMenu() {
     return (
         <div className={cx('sb-nav-warpper')}>
             <Scrollbars 
-                style={{ width: '100%', height: 'calc(100vh - 230px)'}}
+                style={{ width: '100%', height: 'calc(100vh - 230px)' }}
                 renderThumbVertical={props => <div {...props} className={gb('theme-custom-scrollbar')}/>}
             >
                 {/*List Nav Bar Menu  */}

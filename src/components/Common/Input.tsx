@@ -18,7 +18,7 @@ interface InputProps {
 
 const Input = ({ className, placeholder, onChange, value, type, id = '', errMessage, styleLayout, focus = false }: InputProps, ref?: any) => {
     const handleOnChangeText = useCallback((text: string) => {
-        onChange(text);
+        onChange && onChange(text);
     },[]);
 
     useEffect(() => {

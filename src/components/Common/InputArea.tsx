@@ -14,9 +14,10 @@ interface InputProps {
     errMessage?: string,
     styleLayout?: Object,
     focus?: boolean,
+    minHeight?: number,
 }
 
-const InputArea = ({ className, placeholder, onChange, value, type, id = '', errMessage, styleLayout, focus = false }: InputProps, ref?: any) => {
+const InputArea = ({ className, placeholder, onChange, value, type, id = '', errMessage, styleLayout, focus = false, minHeight = 300 }: InputProps, ref?: any) => {
     const handleOnChangeText = useCallback((text: string) => {
         onChange(text);
     },[]);
@@ -33,7 +34,7 @@ const InputArea = ({ className, placeholder, onChange, value, type, id = '', err
             <textarea 
                 ref={ref}
                 id={id}
-                style={{ paddingTop: 15, minHeight: '300px'}}
+                style={{ paddingTop: 15, minHeight: `${minHeight}px`}}
                 className={cx('custom-input-area', [`${className}`])}
                 placeholder={placeholder}
                 onChange={(e) => {

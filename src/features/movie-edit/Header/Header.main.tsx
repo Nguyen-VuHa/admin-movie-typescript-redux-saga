@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import classNames from 'classnames/bind';
 import GlobalStyles from 'utils/globalStyle.module.scss';
-import Styles from './header.module.scss';
+import Styles from 'assets/styles/header.style.module.scss';
 import { Button } from 'components/Common';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { IoCaretBack } from "react-icons/io5";
@@ -162,7 +162,7 @@ function Header() {
                     >
                         <IoCaretBack size={18}/>
                     </Button>
-                    <h2 className={cx('title')}>
+                    <h2 className={cx('title', ['ml-1'])}>
                         {
                             idMovie ? 'Cập nhật phim' : 'Thêm Mới Phim'
                         }

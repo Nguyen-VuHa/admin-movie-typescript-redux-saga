@@ -46,7 +46,7 @@ function CinemaMain() {
         } else {
             dispatch(clearCinemas());
         }
-    }, [selectSite, sites]);
+    }, [selectSite]);
     
 
     return (

@@ -1,8 +1,12 @@
 import { Button } from 'components/Common'
+import routePath from 'constants/routePath';
 import React from 'react'
 import { IoAddSharp } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
 
 function GroupControl() {
+    const navigate = useNavigate();
+    
     return (
         <div 
             style={{ 
@@ -16,7 +20,7 @@ function GroupControl() {
         >
             <Button
                 onClick={() => {
-
+                    navigate('edit');
                 }}
             >
                 Thêm cụm rạp

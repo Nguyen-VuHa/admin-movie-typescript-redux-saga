@@ -20,6 +20,16 @@ const cinemaApi = {
 
         return axiosClient.get(url, config);
     },
+    fetchLocalAddress: () => {
+        const url = `api/local/address`;
+
+        return axiosClient.get(url);
+    },
+    createCinema: (payload: any) => {
+        const url = `api/create/cinema`;
+
+        return axiosClient.post(url, payload);
+    },
 }
 
 export default cinemaApi;

@@ -1,8 +1,7 @@
 import React from 'react'
 import classNames from 'classnames/bind';
 import GlobalStyles from 'utils/globalStyle.module.scss';
-import Styles from './header.module.scss';
-import { Button } from 'components/Common';
+import Styles from 'assets/styles/header.style.module.scss';
 
 const gb = classNames.bind(GlobalStyles);
 const cx = classNames.bind(Styles);

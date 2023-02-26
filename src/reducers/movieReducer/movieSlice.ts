@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { MovieSlice } from 'models';
+import { MovieSlice, MsgErrorFormMovie } from 'models';
 import moment from 'moment';
 
-const msgErrorForm = {
+const msgErrorForm: MsgErrorFormMovie = {
     msgMovieName: '',
     msgShowtime: '',
     msgStartDate: '',

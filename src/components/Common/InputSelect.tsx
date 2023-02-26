@@ -16,12 +16,13 @@ interface InputSelectProps {
     labelDefault?: string,
     onChange?: Function,
     errMessage?: string,
+    defaultItem?: boolean,
 }
 
 function InputSelect({
     data, placeholder = "Selected Combobox",
     value, labelDefault = "-- Xóa lựa chọn --", onChange,
-    errMessage
+    errMessage, defaultItem = true
 }: InputSelectProps) {
     const dropdownRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLDivElement>(null);
@@ -81,7 +82,7 @@ function InputSelect({
                     data && data.length > 0 ? 
                     <>
                         {
-                            value && <div
+                            value && defaultItem && <div
                                 className={cx('item-dropdown')}
                                 onClick={() => {
                                     onChange && onChange(null);

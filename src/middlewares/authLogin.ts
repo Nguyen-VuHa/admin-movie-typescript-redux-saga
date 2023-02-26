@@ -33,6 +33,5 @@ export const handleValidationLogin = (data: AuthLogin, setValidator: React.SetSt
         setValidator(msg);
         return false;
     }
-
    
 }

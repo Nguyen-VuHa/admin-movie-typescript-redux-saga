@@ -1,3 +1,11 @@
+.title {
+    color: var(--color-white);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 100%;
+    margin: 0;
+    font-family: 'Play', sans-serif;
+}
 
 .sticky-header {
     position: sticky;
@@ -7,18 +15,7 @@
     box-sizing: border-box;
     width: '100%';
     max-width: '100%';
-    z-index: 999;
-}
-
-.title {
-    color: var(--color-white);
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 100%;
-    margin: 0;
-    font-family: 'Play', sans-serif;
-    white-space: nowrap;
-    margin-left: 1rem;
+    z-index: 1;
 }
 
 .layout-title {

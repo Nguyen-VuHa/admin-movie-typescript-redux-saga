@@ -55,7 +55,7 @@ const FormGroupCategoriesSelect = () => {
                 placeholder="-- Chọn thể loại --"
                 data={categorySelect.length > 0 ? categorySelect.map(ct => { return { value: ct.id, name: ct.category_name }}) : []}
                 onChange={(value: any) => {
-                    if(categories.findIndex(cg => cg === value) === -1)
+                    if(categories.findIndex((cg: any) => cg === value) === -1)
                         dispatch(setCategorySelectEdit(categories.concat(value)));
 
                     if(!value) 

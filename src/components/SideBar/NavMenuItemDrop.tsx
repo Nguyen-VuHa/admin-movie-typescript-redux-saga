@@ -1,7 +1,7 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react'
+import React, { ReactNode, useRef, useState } from 'react'
 import classNames from 'classnames/bind';
 import styles from './sidebar.module.scss';
-import { IoCaretForward, IoEllipse } from "react-icons/io5";
+import { IoCaretForward } from "react-icons/io5";
 import { useLocation, useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
@@ -38,7 +38,7 @@ function NavMenuItemDrop({ icon, menuName, menuDrop }: NavMenuItemDropProps) {
                 </div>
             </div>
             
-            <ul className={cx('sidebar-menu-cld', statusDrop && 'show')} style={ statusDrop ? {height: `${itemRef && itemRef.current && itemRef.current?.offsetHeight * (menuDrop && menuDrop.length || 0) + 20 * 3}px`} : {height: 0}} >
+            <ul className={cx('sidebar-menu-cld', statusDrop && 'show')} style={ statusDrop ? {height: `${itemRef && itemRef.current && itemRef.current?.offsetHeight * ((menuDrop && menuDrop.length) || 0) + 20 * ((menuDrop && menuDrop.length - 1) || 0)}px`} : {height: 0}} >
                 {
                     menuDrop && menuDrop.length > 0
                     && menuDrop.map((md, index) => {

@@ -25,6 +25,7 @@ const dataEditCinema: DataEditCinema = {
 const initialState: CinemaSlice = {
     loadingFetch: false,
     loadingEdit: false,
+    loadingFetchDetail: false,
 
     sites: [],
     selectSite: null,
@@ -59,6 +60,12 @@ export const cinemaSlice = createSlice({
             return {
                 ...state,
                 loadingEdit: payload,
+            }
+        },
+        setLoadingFetchDetail: (state, { payload }) => {
+            return {
+                ...state,
+                loadingFetchDetail: payload,
             }
         },
 
@@ -152,6 +159,24 @@ export const cinemaSlice = createSlice({
                 loadingFetch: false,
             }
         },
+        // Fetch Cinema By Cinema Id
+        fetchCinemaByIdSuccess: (state, { payload }) => {
+            return {
+                ...state,
+                dataEditCinema: {
+                    ...state.dataEditCinema,
+                    ...payload,
+                },
+                loadingFetchDetail: false,
+            }
+        },
+        fetchCinemaByIdFailed: (state, { payload }) => {
+            return {
+                ...state,
+                errorMessage: payload.message,
+                loadingFetchDetail: false,
+            }
+        },
         // Fetch local address
         fetchLocalAddressSuccess: (state, { payload }) => {
             return {
@@ -165,8 +190,8 @@ export const cinemaSlice = createSlice({
                 errorMessage: payload.message,
             }
         },
-        // Request data created cinema 
-        createdCinemaSuccess: (state, { payload }) => {
+        // Request data created and update cinema 
+        editCinemaSuccess: (state, { payload }) => {
             return {
                 ...state,
                 statusEdited: STATUS_SUCCESS,
@@ -175,7 +200,7 @@ export const cinemaSlice = createSlice({
                 msgDataEdit: msgErrorForm, // set default message error
             }
         },
-        createdCinemaFailed: (state, { payload }) => {
+        editCinemaFailed: (state, { payload }) => {
             return {
                 ...state,
                 errorMessage: payload.message,
@@ -209,6 +234,7 @@ export const cinemaSlice = createSlice({
 export const { 
     setLoadingFetch,
     setLoadingEdit,
+    setLoadingFetchDetail,
 
     setSiteCinema,
     setCinemaName,
@@ -221,10 +247,12 @@ export const {
     fetchAllSiteFailed,
     fetchCinemaBySiteSuccess,
     fetchCinemaBySiteFailed,
+    fetchCinemaByIdSuccess,
+    fetchCinemaByIdFailed,
     fetchLocalAddressSuccess,
     fetchLocalAddressFailed,
-    createdCinemaSuccess,
-    createdCinemaFailed,
+    editCinemaSuccess,
+    editCinemaFailed,
     
     setDataSelectSite,
     clearCinemas,

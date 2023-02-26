@@ -4,7 +4,7 @@ import GlobalStyles from 'utils/globalStyle.module.scss';
 import Styles from 'assets/styles/header.style.module.scss';
 import { Button } from 'components/Common';
 import { IoCaretBack } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { MdDataSaverOn } from 'react-icons/md';
 import { validateDataCinema } from 'middlewares/editCinema';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
@@ -17,6 +17,9 @@ function HeaderMain() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
+    const [searchParams] = useSearchParams();
+    const idCinema = searchParams.get('id');
+
     const { dataEditCinema, loadingEdit } = useAppSelector(state => state.cinemaState);
     
     const handleSubmitEdit = () => {
@@ -27,12 +30,22 @@ function HeaderMain() {
         {
             dispatch(setMsgErrorDataEdit(error));
 
-            dispatch({
-                type: 'CREATED_CINEMA',
-                payload: {
-                    ...dataEditCinema,
-                }
-            });
+            if(idCinema) // check id to distinguish update or create new function
+            {
+                dispatch({
+                    type: 'UPDATED_CINEMA',
+                    payload: {
+                        ...dataEditCinema,
+                    }
+                })
+            } else {
+                dispatch({
+                    type: 'CREATED_CINEMA',
+                    payload: {
+                        ...dataEditCinema,
+                    }
+                });
+            }
         }
         else {
             dispatch(setMsgErrorDataEdit(error));
@@ -53,7 +66,10 @@ function HeaderMain() {
                         <IoCaretBack size={18}/>
                     </Button>
                     <h2 className={cx('title', ['ml-1'])}>
-                        Thêm Mới Cụm Rạp
+                        {
+                            idCinema ? "CẬP NHẬT CỤM RẠP" : "THÊM MỚI CỤM RẠP"
+                        }
+                       
                     </h2>
                 </div>
                 <div
@@ -65,7 +81,8 @@ function HeaderMain() {
                         loading={loadingEdit}
                         loadingText="Đang xử lý..."
                     >
-                        Lưu lại
+                        { idCinema ? "Cập nhật" : "Lưu lại" }
+                        
                         <MdDataSaverOn size={18} style={{ marginLeft: '8px' }}/>
                     </Button>
                 </div>

@@ -5,6 +5,7 @@ import { CategoryContext } from 'contexts/CategoryContext';
 import { ModalContext } from 'contexts/ModalContext';
 import React, { useContext } from 'react';
 import { IoLockOpen, IoLockClosed, IoCreate, IoTrashSharp } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
 import { setDataUpdateCategory } from 'reducers/categoryReducer/categorySlice';
 
 interface GroupButtonProps {
@@ -13,6 +14,7 @@ interface GroupButtonProps {
 }
 
 function GroupButton({ status, data }: GroupButtonProps) {
+    const navigate = useNavigate();
 
     return (
         <>
@@ -49,10 +51,10 @@ function GroupButton({ status, data }: GroupButtonProps) {
                     }
                     color={COLORS.BLUE_INFO}
                     onClick={() => {
-                       
+                        navigate(`edit?id=${data.id}`)
                     }}
                 />
-                <ButtonTable 
+                {/* <ButtonTable 
                     icon={
                         <IoTrashSharp />
                     }
@@ -60,7 +62,7 @@ function GroupButton({ status, data }: GroupButtonProps) {
                     onClick={() => {
                       
                     }}
-                />
+                /> */}
             </div>
         </>
     )

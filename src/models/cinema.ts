@@ -19,8 +19,7 @@ export interface CinemaSlice {
     // type action loading
     loadingFetch: boolean,
     loadingEdit: boolean,
-
-
+    loadingFetchDetail: boolean,
 
     // data cinema
     sites: Array<any>,

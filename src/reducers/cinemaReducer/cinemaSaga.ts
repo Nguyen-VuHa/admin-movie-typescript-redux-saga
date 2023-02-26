@@ -1,6 +1,6 @@
 import cinemaApi from "api/cinemaApi";
 import { call, put, takeLatest, takeLeading } from "redux-saga/effects";
-import { createdCinemaFailed, createdCinemaSuccess, fetchAllSiteFailed, fetchAllSiteSuccess, fetchCinemaBySiteFailed, fetchCinemaBySiteSuccess, fetchLocalAddressFailed, fetchLocalAddressSuccess, setLoadingEdit, setLoadingFetch } from "./cinemaSlice";
+import { editCinemaFailed, editCinemaSuccess, fetchAllSiteFailed, fetchAllSiteSuccess, fetchCinemaByIdFailed, fetchCinemaByIdSuccess, fetchCinemaBySiteFailed, fetchCinemaBySiteSuccess, fetchLocalAddressFailed, fetchLocalAddressSuccess, setLoadingEdit, setLoadingFetch, setLoadingFetchDetail } from "./cinemaSlice";
 
 function* fetchAllSite(): any {
     try {
@@ -28,6 +28,17 @@ function* fetchCinemaBySite(action: any): any {
     }
 }
 
+function* fetchDetailCinemaById(action: any): any {
+    try {
+        yield put(setLoadingFetchDetail(true));
+        const response = yield call(cinemaApi.fetchDetailCinemaById, action.payload);
+        yield put(fetchCinemaByIdSuccess(response.data));
+    }
+    catch(err: any) {
+        yield put(fetchCinemaByIdFailed(err.response.data));
+    }
+}
+
 function* fetchLocalAddress(): any {
     try {
         const response = yield call(cinemaApi.fetchLocalAddress);
@@ -43,17 +54,31 @@ function* createCinema(action: any): any {
         yield put(setLoadingEdit(true)); // set loadingEdit is true on store
 
         const response = yield call(cinemaApi.createCinema, action.payload); //handle asynchorouse request data to server
-        yield put(createdCinemaSuccess(response.data)); // set status success on store
+        yield put(editCinemaSuccess(response.data)); // set status success on store
     }
     catch(err: any) {
-        yield put(createdCinemaFailed(err.response.data)); // set status failed on store
+        yield put(editCinemaFailed(err.response.data)); // set status failed on store
+    }
+}
+
+function* updateCinema(action: any): any {
+    try {
+        yield put(setLoadingEdit(true)); // set loadingEdit is true on store
+
+        const response = yield call(cinemaApi.updateCinema, action.payload); //handle asynchorouse request data to server
+        yield put(editCinemaSuccess(response.data)); // set status success on store
+    }
+    catch(err: any) {
+        yield put(editCinemaFailed(err.response.data)); // set status failed on store
     }
 }
 
 export function* cinemaSaga() {
     yield takeLeading('FETCH_ALL_SITES', fetchAllSite);
     yield takeLeading('FETCH_CINEMA_BY_SITE_ID', fetchCinemaBySite);
+    yield takeLeading('FETCH_CINEMA_BY_ID', fetchDetailCinemaById);
     yield takeLeading('FETCH_LOCAL_ADDRESS', fetchLocalAddress);
 
     yield takeLatest('CREATED_CINEMA', createCinema);
+    yield takeLatest('UPDATED_CINEMA', updateCinema);
 }

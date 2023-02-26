@@ -20,6 +20,11 @@ const cinemaApi = {
 
         return axiosClient.get(url, config);
     },
+    fetchDetailCinemaById: (payload: any) => {
+        const url = `api/cinema/${payload}`;
+
+        return axiosClient.get(url);
+    },
     fetchLocalAddress: () => {
         const url = `api/local/address`;
 
@@ -29,6 +34,17 @@ const cinemaApi = {
         const url = `api/create/cinema`;
 
         return axiosClient.post(url, payload);
+    },
+    updateCinema: (payload: any) => {
+        const url = `api/update/cinema`;
+
+        const config = configHeaderAxios({
+            params: {
+                _id: payload.id,
+            }
+        })
+
+        return axiosClient.put(url, payload, config);
     },
 }
 

@@ -80,7 +80,7 @@ function TableCinemaMain() {
                                     <div className={tb('table-text')}>
                                         <GroupButton 
                                             // status={c.status}
-                                            // data={c}
+                                            data={c}
                                         />
                                     </div>
                                 </td>

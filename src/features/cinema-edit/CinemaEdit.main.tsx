@@ -6,7 +6,7 @@ import FormDataMain from './FormData/FormData.main';
 import { useAppSelector } from 'app/hooks';
 import { useDispatch } from 'react-redux';
 import { STATUS_SUCCESS, STATUS_FAILED } from 'constants/status';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { setDefaultStatus } from 'reducers/cinemaReducer/cinemaSlice';
 import useToastify from 'hooks/useToastify';
 
@@ -17,6 +17,9 @@ function CinemaEditMain() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const dispatchToast = useToastify();
+
+    const [searchParams] = useSearchParams();
+    const idCinema = searchParams.get('id');
     
     const { areas, statusEdited, errorMessage } = useAppSelector(state => state.cinemaState);
     
@@ -43,7 +46,7 @@ function CinemaEditMain() {
                 type: 'TYPE_SUCCESS',
                 payload: {
                     position: 'top-left',
-                    message: 'created new cinema success.',
+                    message: `${idCinema ? "updated" : "created"} new cinema success.`,
                 }
             });
             navigate(-1);
@@ -59,9 +62,21 @@ function CinemaEditMain() {
                 }
             });
         }
-    }, [statusEdited])
+    }, [statusEdited]);
     
-    
+    useEffect(() => {
+        /*
+            re-render according to params `idCinema`
+            - is valid: fetch data cinema by `idCinema`
+            - is null: do not fecth data
+        */
+        if(idCinema) {
+            dispatch({
+                type: 'FETCH_CINEMA_BY_ID',
+                payload: idCinema,
+            });
+        }
+    }, [idCinema, dispatch]);
 
     return (
         <div className={gb('container-main')}>

@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { removeItemPoster, setImageBase64, setModalEditImage } from 'reducers/movieReducer/movieSlice';
 import useToastify from 'hooks/useToastify';
 import { IoClose } from "react-icons/io5";
+import Image from 'components/Common/Image';
 
 const cx = classNames.bind(Styles);
 
@@ -25,14 +26,10 @@ function GroupPoster() {
                 {
                     listPoster && listPoster.length > 0
                     && listPoster.map((lt: any, index: number) => {
-                        return <div className={cx('layout-image')} key={index}>
-                            <img 
+                        return <div className={cx('layout-image', ['overflow-hidden'])} key={index}>
+                            <Image 
                                 src={lt.base64}
                                 alt="NO POSTER"
-                                width="100%"
-                                style={{
-                                    backgroundSize: "cover",
-                                }}
                             />
                             <div 
                                 className={cx('button-remove')}

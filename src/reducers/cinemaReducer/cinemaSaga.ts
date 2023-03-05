@@ -1,6 +1,6 @@
 import cinemaApi from "api/cinemaApi";
 import { call, put, takeLatest, takeLeading } from "redux-saga/effects";
-import { editCinemaFailed, editCinemaSuccess, fetchAllSiteFailed, fetchAllSiteSuccess, fetchCinemaByIdFailed, fetchCinemaByIdSuccess, fetchCinemaBySiteFailed, fetchCinemaBySiteSuccess, fetchLocalAddressFailed, fetchLocalAddressSuccess, setLoadingEdit, setLoadingFetch, setLoadingFetchDetail } from "./cinemaSlice";
+import { editCinemaFailed, editCinemaSuccess, fetchAllSiteFailed, fetchAllSiteSuccess, fetchCinemaByIdFailed, fetchCinemaByIdSuccess, fetchCinemaBySiteFailed, fetchCinemaBySiteSuccess, fetchCinemaSelectBySiteFailed, fetchCinemaSelectBySiteSuccess, fetchLocalAddressFailed, fetchLocalAddressSuccess, fetchRoomByCinemaIdFailed, fetchRoomByCinemaIdSuccess, setLoadingEdit, setLoadingFetch, setLoadingFetchDetail } from "./cinemaSlice";
 
 function* fetchAllSite(): any {
     try {
@@ -28,6 +28,16 @@ function* fetchCinemaBySite(action: any): any {
     }
 }
 
+function* fetchCinemaSelectBySite(action: any): any {
+    try {
+        const response = yield call(cinemaApi.fetchCinemaSelectBySite, action.payload);
+        yield put(fetchCinemaSelectBySiteSuccess(response.data));
+    }
+    catch(err: any) {
+        yield put(fetchCinemaSelectBySiteFailed(err.response.data));
+    }
+}
+
 function* fetchDetailCinemaById(action: any): any {
     try {
         yield put(setLoadingFetchDetail(true));
@@ -36,6 +46,24 @@ function* fetchDetailCinemaById(action: any): any {
     }
     catch(err: any) {
         yield put(fetchCinemaByIdFailed(err.response.data));
+    }
+}
+
+
+function* fetchRoomByCinemaId(action: any): any {
+    try {
+        yield put(setLoadingFetch(true));
+        const response = yield call(cinemaApi.fetchRoomByCinemaId, action.payload);
+        yield put(fetchRoomByCinemaIdSuccess({
+            siteId: action.payload.siteId,
+            id: action.payload.id,
+            data: response.data,
+            totalPage: response.totalPage,
+            totalRows: response.totalRows,
+        }));
+    }
+    catch(err: any) {
+        yield put(fetchRoomByCinemaIdFailed(err.response.data));
     }
 }
 
@@ -76,6 +104,8 @@ function* updateCinema(action: any): any {
 export function* cinemaSaga() {
     yield takeLeading('FETCH_ALL_SITES', fetchAllSite);
     yield takeLeading('FETCH_CINEMA_BY_SITE_ID', fetchCinemaBySite);
+    yield takeLeading('FETCH_CINEMA_SELECT_BY_SITE_ID', fetchCinemaSelectBySite);
+    yield takeLeading('FETCH_ROOM_BY_CINEMA_ID', fetchRoomByCinemaId);
     yield takeLeading('FETCH_CINEMA_BY_ID', fetchDetailCinemaById);
     yield takeLeading('FETCH_LOCAL_ADDRESS', fetchLocalAddress);
 

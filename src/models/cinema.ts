@@ -26,11 +26,20 @@ export interface CinemaSlice {
     selectSite: number | null,
 
     cinemas: Array<any>,
+    cinemaCombobox: Array<any>,
+    selectCinema: string | null,
+
+    rooms: Array<any>,
 
     areas: Array<any>,
 
     // type status edit
     statusEdited: number,
+
+    // type pagination rooms
+    totalPageRooms: number,
+    currentPageRooms: number,
+    totalRowsRooms: number,
 
     // type pagination
     totalPage: number,

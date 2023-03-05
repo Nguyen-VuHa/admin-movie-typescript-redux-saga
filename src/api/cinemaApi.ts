@@ -20,6 +20,29 @@ const cinemaApi = {
 
         return axiosClient.get(url, config);
     },
+    fetchCinemaSelectBySite: (payload: any) => {
+        const url = `api/cinema-select`;
+
+        const config = configHeaderAxios({
+            params: {
+                _id: payload,
+            }
+        })
+
+        return axiosClient.get(url, config);
+    },
+    fetchRoomByCinemaId: (payload: any) => {
+        const url = `api/cinema/room`;
+
+        const config = configHeaderAxios({
+            params: {
+                _id: payload.id,
+                _p: payload.currentPage,
+            }
+        });
+
+        return axiosClient.get(url, config);
+    },
     fetchDetailCinemaById: (payload: any) => {
         const url = `api/cinema/${payload}`;
 

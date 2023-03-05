@@ -30,13 +30,21 @@ const initialState: CinemaSlice = {
     sites: [],
     selectSite: null,
     cinemas: [],
+    selectCinema: null,
+    cinemaCombobox: [],
     areas: [],
+
+    rooms: [],
 
     statusEdited: 0,
 
     totalPage: 0,
     totalRows: 0,
     currentPage: 1,
+
+    totalPageRooms: 0,
+    totalRowsRooms: 0,
+    currentPageRooms: 1,
 
     dataEditCinema: dataEditCinema,
 
@@ -159,6 +167,19 @@ export const cinemaSlice = createSlice({
                 loadingFetch: false,
             }
         },
+        // Fetch Cinema Select By Site
+        fetchCinemaSelectBySiteSuccess: (state, { payload }) => {
+            return {
+                ...state,
+                cinemaCombobox: payload,
+            }
+        },
+        fetchCinemaSelectBySiteFailed: (state, { payload }) => {
+            return {
+                ...state,
+                errorMessage: payload.message,
+            }
+        },
         // Fetch Cinema By Cinema Id
         fetchCinemaByIdSuccess: (state, { payload }) => {
             return {
@@ -175,6 +196,24 @@ export const cinemaSlice = createSlice({
                 ...state,
                 errorMessage: payload.message,
                 loadingFetchDetail: false,
+            }
+        },
+        fetchRoomByCinemaIdSuccess: (state, { payload }) => {
+            let findCinemaById = state.cinemaCombobox.filter(c => c.id === payload.id)[0];
+            let findSite = state.sites.filter(s => s.id === payload.siteId)[0];
+            return {
+                ...state,
+                rooms: payload.data.map((d: any) => { return { ...d, cinemaName: findCinemaById?.cinemaName, siteId: findSite?.code }}),
+                totalPageRooms: payload.totalPage,
+                totalRowsRooms: payload.totalRows,
+                loadingFetch: false,
+            }
+        },
+        fetchRoomByCinemaIdFailed: (state, { payload }) => {
+            return {
+                ...state,
+                errorMessage: payload.message,
+                loadingFetch: false,
             }
         },
         // Fetch local address
@@ -216,10 +255,28 @@ export const cinemaSlice = createSlice({
                 selectSite: payload,
             }
         },
+        setDataSelectCinema: (state, { payload }) => {
+            return {
+                ...state,
+                selectCinema: payload,
+            }
+        },
+        clearCinemaCombobox: (state) => {
+            return {
+                ...state,
+                cinemaCombobox: [],
+            }
+        },
         clearCinemas: (state) => {
             return {
                 ...state,
                 cinemas: [],
+            }
+        },
+        clearRooms: (state) => {
+            return {
+                ...state,
+                rooms: [],
             }
         },
         setDefaultStatus: (state) => {
@@ -247,6 +304,10 @@ export const {
     fetchAllSiteFailed,
     fetchCinemaBySiteSuccess,
     fetchCinemaBySiteFailed,
+    fetchCinemaSelectBySiteSuccess,
+    fetchCinemaSelectBySiteFailed,
+    fetchRoomByCinemaIdSuccess,
+    fetchRoomByCinemaIdFailed,
     fetchCinemaByIdSuccess,
     fetchCinemaByIdFailed,
     fetchLocalAddressSuccess,
@@ -255,7 +316,10 @@ export const {
     editCinemaFailed,
     
     setDataSelectSite,
+    setDataSelectCinema,
+    clearCinemaCombobox,
     clearCinemas,
+    clearRooms,
     setDefaultStatus,
 } = cinemaSlice.actions;
 

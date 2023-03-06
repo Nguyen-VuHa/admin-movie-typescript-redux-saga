@@ -51,7 +51,7 @@ function GroupButton({ status, data }: GroupButtonProps) {
                     }
                     color={COLORS.BLUE_INFO}
                     onClick={() => {
-                        // navigate(`edit?id=${data.id}`)
+                        navigate(`edit?id=${data.id}`)
                     }}
                 />
                 {/* <ButtonTable 

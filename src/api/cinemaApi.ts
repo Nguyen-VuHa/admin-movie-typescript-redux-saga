@@ -48,6 +48,11 @@ const cinemaApi = {
 
         return axiosClient.get(url);
     },
+    fetchDetailRoomById: (payload: any) => {
+        const url = `api/room/${payload}`;
+
+        return axiosClient.get(url);
+    },
     fetchLocalAddress: () => {
         const url = `api/local/address`;
 

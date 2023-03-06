@@ -273,6 +273,25 @@ export const cinemaSlice = createSlice({
                 loadingFetchDetail: false,
             }
         },
+        // Fetch room by room Id
+        fetchDetailRoomByIdSuccess: (state, { payload }) => {
+            return {
+                ...state,
+                dataEditRooms: {
+                    ...state.dataEditRooms,
+                    ...payload,
+                },
+                loadingFetchDetail: false,
+            }
+        },
+        fetchDetailRoomByIdFailed: (state, { payload }) => {
+            return {
+                ...state,
+                errorMessage: payload.message,
+                loadingFetchDetail: false,
+            }
+        },
+        // fetch room by cinema id
         fetchRoomByCinemaIdSuccess: (state, { payload }) => {
             let findCinemaById = state.cinemaCombobox.filter(c => c.id === payload.id)[0];
             let findSite = state.sites.filter(s => s.id === payload.siteId)[0];
@@ -373,6 +392,18 @@ export const cinemaSlice = createSlice({
                 rooms: [],
             }
         },
+        clearDataEditCinema: (state) => {
+            return {
+                ...state,
+                dataEditCinema: dataEditCinema,
+            }
+        },
+        clearDataEditRoom: (state) => {
+            return {
+                ...state,
+                dataEditRooms: dataEditRooms,
+            }
+        },
         setDefaultStatus: (state) => {
             return {
                 ...state,
@@ -412,6 +443,8 @@ export const {
     fetchRoomByCinemaIdFailed,
     fetchCinemaByIdSuccess,
     fetchCinemaByIdFailed,
+    fetchDetailRoomByIdSuccess,
+    fetchDetailRoomByIdFailed,
     fetchLocalAddressSuccess,
     fetchLocalAddressFailed,
     editCinemaSuccess,
@@ -424,6 +457,8 @@ export const {
     clearCinemaCombobox,
     clearCinemas,
     clearRooms,
+    clearDataEditCinema,
+    clearDataEditRoom,
     setDefaultStatus,
 } = cinemaSlice.actions;
 

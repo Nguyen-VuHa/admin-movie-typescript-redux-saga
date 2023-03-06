@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import HeaderMain from './Header/Header.main';
 import FormDataMain from './FormData/FormData.main';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { setDefaultStatus, setFormCinemaId } from 'reducers/cinemaReducer/cinemaSlice';
+import { clearDataEditRoom, setDefaultStatus, setFormCinemaId } from 'reducers/cinemaReducer/cinemaSlice';
 import { STATUS_FAILED, STATUS_SUCCESS } from 'constants/status';
 import useToastify from 'hooks/useToastify';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -83,6 +83,23 @@ function CinemaRoomEditMain() {
             });
         }
     }, [statusEdited]);
+
+    useEffect(() => {
+        /*
+            re-render according to params `idRoom`
+            - is valid: fetch data cinema by `idRoom`
+            - is null: does not fecth data
+        */
+        if(idRoom) {
+            dispatch({
+                type: 'FETCH_DETAIL_ROOM_BY_ID',
+                payload: idRoom,
+            });
+        } else {
+            dispatch(clearDataEditRoom());
+        }
+    }, [idRoom, dispatch]);
+
     
     return (
         <div className={gb('container-main')}>

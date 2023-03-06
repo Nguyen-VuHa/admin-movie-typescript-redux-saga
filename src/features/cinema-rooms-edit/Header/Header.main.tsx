@@ -26,18 +26,20 @@ function HeaderMain() {
         let resValid = validateDataRoom(dataEditRooms);
         const { status, error } = resValid;
 
+        console.log(status);
         if(status) // check status reponse from function `validateDataCinema`: true => handle submit; false: dispatch message error to store.
         {
-            dispatch(setMsgErrorDataEditRoom(error));
+            dispatch(setMsgErrorDataEditRoom(error)); // reset message error: error is null
 
+            console.log(status);
             if(idRooms) // check id to distinguish update or create new function
             {
-                // dispatch({
-                //     type: 'UPDATED_CINEMA',
-                //     payload: {
-                //         ...dataEditCinema,
-                //     }
-                // })
+                dispatch({
+                    type: 'UPDATED_ROOM',
+                    payload: {
+                        ...dataEditRooms,
+                    }
+                })
             } else {
                 dispatch({
                     type: 'CREATED_ROOM',

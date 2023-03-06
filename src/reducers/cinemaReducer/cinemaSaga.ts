@@ -1,6 +1,6 @@
 import cinemaApi from "api/cinemaApi";
 import { call, put, takeLatest, takeLeading } from "redux-saga/effects";
-import { editCinemaFailed, editCinemaSuccess, editRoomFailed, editRoomSuccess, fetchAllSiteFailed, fetchAllSiteSuccess, fetchCinemaByIdFailed, fetchCinemaByIdSuccess, fetchCinemaBySiteFailed, fetchCinemaBySiteSuccess, fetchCinemaSelectBySiteFailed, fetchCinemaSelectBySiteSuccess, fetchLocalAddressFailed, fetchLocalAddressSuccess, fetchRoomByCinemaIdFailed, fetchRoomByCinemaIdSuccess, setLoadingEdit, setLoadingFetch, setLoadingFetchDetail } from "./cinemaSlice";
+import { editCinemaFailed, editCinemaSuccess, editRoomFailed, editRoomSuccess, fetchAllSiteFailed, fetchAllSiteSuccess, fetchCinemaByIdFailed, fetchCinemaByIdSuccess, fetchCinemaBySiteFailed, fetchCinemaBySiteSuccess, fetchCinemaSelectBySiteFailed, fetchCinemaSelectBySiteSuccess, fetchDetailRoomByIdFailed, fetchDetailRoomByIdSuccess, fetchLocalAddressFailed, fetchLocalAddressSuccess, fetchRoomByCinemaIdFailed, fetchRoomByCinemaIdSuccess, setLoadingEdit, setLoadingFetch, setLoadingFetchDetail } from "./cinemaSlice";
 
 function* fetchAllSite(): any {
     try {
@@ -67,6 +67,17 @@ function* fetchRoomByCinemaId(action: any): any {
     }
 }
 
+function* fetchDetailRoomById(action: any): any {
+    try {
+        yield put(setLoadingFetchDetail(true));
+        const response = yield call(cinemaApi.fetchDetailRoomById, action.payload);
+        yield put(fetchDetailRoomByIdSuccess(response.data));
+    }
+    catch(err: any) {
+        yield put(fetchDetailRoomByIdFailed(err.response.data));
+    }
+}
+
 function* fetchLocalAddress(): any {
     try {
         const response = yield call(cinemaApi.fetchLocalAddress);
@@ -81,7 +92,7 @@ function* createCinema(action: any): any {
     try {
         yield put(setLoadingEdit(true)); // set loadingEdit is true on store
 
-        const response = yield call(cinemaApi.createCinema, action.payload); //handle asynchorouse request data to server
+        yield call(cinemaApi.createCinema, action.payload); //handle asynchorouse request data to server
         yield put(editCinemaSuccess()); // set status success on store
     }
     catch(err: any) {
@@ -113,17 +124,30 @@ function* createRoom(action: any): any {
     }
 }
 
+function* updateRoom(action: any): any {
+    try {
+        yield put(setLoadingEdit(true)); // set loadingEdit is true on store
+
+        yield call(cinemaApi.updateRoom, action.payload); //handle asynchorouse request data to server
+        yield put(editRoomSuccess()); // set status success on store
+    }
+    catch(err: any) {
+        yield put(editRoomFailed(err.response.data)); // set status failed on store
+    }
+}
+
 export function* cinemaSaga() {
     yield takeLeading('FETCH_ALL_SITES', fetchAllSite);
     yield takeLeading('FETCH_CINEMA_BY_SITE_ID', fetchCinemaBySite);
     yield takeLeading('FETCH_CINEMA_SELECT_BY_SITE_ID', fetchCinemaSelectBySite);
     yield takeLeading('FETCH_ROOM_BY_CINEMA_ID', fetchRoomByCinemaId);
     yield takeLeading('FETCH_CINEMA_BY_ID', fetchDetailCinemaById);
+    yield takeLeading('FETCH_DETAIL_ROOM_BY_ID', fetchDetailRoomById);
     yield takeLeading('FETCH_LOCAL_ADDRESS', fetchLocalAddress);
 
     yield takeLatest('CREATED_CINEMA', createCinema);
     yield takeLatest('UPDATED_CINEMA', updateCinema);
 
     yield takeLatest('CREATED_ROOM', createRoom);
-
+    yield takeLatest('UPDATED_ROOM', updateRoom);
 }

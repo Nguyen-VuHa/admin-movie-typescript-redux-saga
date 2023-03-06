@@ -19,10 +19,10 @@ function GroupControl() {
         >
             <Button
                 onClick={() => {
-                    // navigate('edit');
+                    navigate('edit');
                 }}
             >
-                Thêm cụm rạp
+                Thêm phòng chiếu
                 <IoAddSharp 
                     size={18}
                     style={{ marginLeft: '8px' }}

@@ -1,6 +1,6 @@
 import cinemaApi from "api/cinemaApi";
 import { call, put, takeLatest, takeLeading } from "redux-saga/effects";
-import { editCinemaFailed, editCinemaSuccess, fetchAllSiteFailed, fetchAllSiteSuccess, fetchCinemaByIdFailed, fetchCinemaByIdSuccess, fetchCinemaBySiteFailed, fetchCinemaBySiteSuccess, fetchCinemaSelectBySiteFailed, fetchCinemaSelectBySiteSuccess, fetchLocalAddressFailed, fetchLocalAddressSuccess, fetchRoomByCinemaIdFailed, fetchRoomByCinemaIdSuccess, setLoadingEdit, setLoadingFetch, setLoadingFetchDetail } from "./cinemaSlice";
+import { editCinemaFailed, editCinemaSuccess, editRoomFailed, editRoomSuccess, fetchAllSiteFailed, fetchAllSiteSuccess, fetchCinemaByIdFailed, fetchCinemaByIdSuccess, fetchCinemaBySiteFailed, fetchCinemaBySiteSuccess, fetchCinemaSelectBySiteFailed, fetchCinemaSelectBySiteSuccess, fetchLocalAddressFailed, fetchLocalAddressSuccess, fetchRoomByCinemaIdFailed, fetchRoomByCinemaIdSuccess, setLoadingEdit, setLoadingFetch, setLoadingFetchDetail } from "./cinemaSlice";
 
 function* fetchAllSite(): any {
     try {
@@ -82,7 +82,7 @@ function* createCinema(action: any): any {
         yield put(setLoadingEdit(true)); // set loadingEdit is true on store
 
         const response = yield call(cinemaApi.createCinema, action.payload); //handle asynchorouse request data to server
-        yield put(editCinemaSuccess(response.data)); // set status success on store
+        yield put(editCinemaSuccess()); // set status success on store
     }
     catch(err: any) {
         yield put(editCinemaFailed(err.response.data)); // set status failed on store
@@ -93,11 +93,23 @@ function* updateCinema(action: any): any {
     try {
         yield put(setLoadingEdit(true)); // set loadingEdit is true on store
 
-        const response = yield call(cinemaApi.updateCinema, action.payload); //handle asynchorouse request data to server
-        yield put(editCinemaSuccess(response.data)); // set status success on store
+        yield call(cinemaApi.updateCinema, action.payload); //handle asynchorouse request data to server
+        yield put(editCinemaSuccess()); // set status success on store
     }
     catch(err: any) {
         yield put(editCinemaFailed(err.response.data)); // set status failed on store
+    }
+}
+
+function* createRoom(action: any): any {
+    try {
+        yield put(setLoadingEdit(true)); // set loadingEdit is true on store
+
+        yield call(cinemaApi.createRoom, action.payload); //handle asynchorouse request data to server
+        yield put(editRoomSuccess()); // set status success on store
+    }
+    catch(err: any) {
+        yield put(editRoomFailed(err.response.data)); // set status failed on store
     }
 }
 
@@ -111,4 +123,7 @@ export function* cinemaSaga() {
 
     yield takeLatest('CREATED_CINEMA', createCinema);
     yield takeLatest('UPDATED_CINEMA', updateCinema);
+
+    yield takeLatest('CREATED_ROOM', createRoom);
+
 }

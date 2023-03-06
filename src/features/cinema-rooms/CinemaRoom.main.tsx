@@ -13,6 +13,11 @@ function CinemaRoomMain() {
     const { selectCinema, selectSite, sites, currentPageRooms } = useAppSelector(state => state.cinemaState);
 
     useEffect(() => {
+        /*
+            Check `sites` exists
+            - true: don't fetch data `sites`
+            - false: fetch data `sites`
+        */
         if(!sites || sites.length <= 0) {
             dispatch({
                 type: 'FETCH_ALL_SITES'
@@ -26,7 +31,6 @@ function CinemaRoomMain() {
             - true: fetch `cinemas` by `selectSite`
             - false: dispatch clear `cinemas` on store
         */
-        
         if(selectSite)
         {   
             dispatch({

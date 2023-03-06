@@ -1,12 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { STATUS_FAILED, STATUS_SUCCESS } from 'constants/status';
-import { CinemaSlice, DataEditCinema, MsgErrorFormCinema } from 'models/cinema';
+import { CinemaSlice, DataEditCinema, DataEditRooms, MsgErrorFormCinema, MsgErrorFormRoom } from 'models/cinema';
 
-// state error form value
+// state error form value cinema
 const msgErrorForm: MsgErrorFormCinema = {
     msgSite: '',
     msgCinemaName: '',
     msgAddress: '',
+}
+
+// state error form value room
+const msgErrorFormRoom: MsgErrorFormRoom = {
+    msgCinemaId: '',
+    msgRoomName: '',
+    msgRoomType: '',
+    msgHorizontalSize: '',
+    msgVerticalSize: '',
 }
 
 // state data edit cinema
@@ -20,6 +29,15 @@ const dataEditCinema: DataEditCinema = {
     pointLng: '',
 }
 
+// state data edit rooms
+const dataEditRooms: DataEditRooms = {
+    id: '',
+    cinemaId: '',
+    roomName: '',
+    type: '',
+    horizontalSize: 0,
+    verticalSize: 0,
+}
 
 // inital state defalt cinema
 const initialState: CinemaSlice = {
@@ -47,9 +65,11 @@ const initialState: CinemaSlice = {
     currentPageRooms: 1,
 
     dataEditCinema: dataEditCinema,
+    dataEditRooms: dataEditRooms,
 
     errorMessage: '',
     msgDataEdit: msgErrorForm,
+    msgDataEditRoom: msgErrorFormRoom,
 };
 
 
@@ -77,7 +97,7 @@ export const cinemaSlice = createSlice({
             }
         },
 
-        // ACTION: HANDLE FORM VALUE
+        // ACTION: HANDLE FORM VALUE CINEMA
         setSiteCinema: (state, { payload }) => {
             return {
                 ...state,
@@ -133,7 +153,62 @@ export const cinemaSlice = createSlice({
                 },
             }
         },
+        setMsgErrorDataEditRoom: (state, { payload }) => {
+            return {
+                ...state,
+                msgDataEditRoom: {
+                    ...state.msgDataEditRoom,
+                    ...payload,
+                },
+            }
+        },
 
+        // ACTION: HANDLE FORM VALUE ROOMS
+        setFormCinemaId: (state, { payload }) => {
+            return {
+                ...state,
+                dataEditRooms: {
+                    ...state.dataEditRooms,
+                    cinemaId: payload,
+                },
+            }
+        },
+        setFormRoomName: (state, { payload }) => {
+            return {
+                ...state,
+                dataEditRooms: {
+                    ...state.dataEditRooms,
+                    roomName: payload,
+                },
+            }
+        },
+        setFormRoomType: (state, { payload }) => {
+            return {
+                ...state,
+                dataEditRooms: {
+                    ...state.dataEditRooms,
+                    type: payload,
+                },
+            }
+        },
+        setFormHorizontalSize: (state, { payload }) => {
+            return {
+                ...state,
+                dataEditRooms: {
+                    ...state.dataEditRooms,
+                    horizontalSize: parseInt(payload),
+                },
+            }
+        },
+        setFormVerticalSize: (state, { payload }) => {
+            return {
+                ...state,
+                dataEditRooms: {
+                    ...state.dataEditRooms,
+                    verticalSize: parseInt(payload),
+                },
+            }
+        },
         // ACTION: HANDLE CALL API
         // Fetch All Site
         fetchAllSiteSuccess: (state, { payload }) => {
@@ -230,7 +305,7 @@ export const cinemaSlice = createSlice({
             }
         },
         // Request data created and update cinema 
-        editCinemaSuccess: (state, { payload }) => {
+        editCinemaSuccess: (state) => {
             return {
                 ...state,
                 statusEdited: STATUS_SUCCESS,
@@ -240,6 +315,25 @@ export const cinemaSlice = createSlice({
             }
         },
         editCinemaFailed: (state, { payload }) => {
+            return {
+                ...state,
+                errorMessage: payload.message,
+                statusEdited: STATUS_FAILED,
+                loadingEdit: false,
+            }
+        },
+
+        // Request data created and update room 
+        editRoomSuccess: (state) => {
+            return {
+                ...state,
+                statusEdited: STATUS_SUCCESS,
+                loadingEdit: false,
+                dataEditRooms: dataEditRooms, // set default value form
+                msgDataEdit: msgErrorForm, // set default message error
+            }
+        },
+        editRoomFailed: (state, { payload }) => {
             return {
                 ...state,
                 errorMessage: payload.message,
@@ -293,12 +387,20 @@ export const {
     setLoadingEdit,
     setLoadingFetchDetail,
 
+    // Form Edit Cinema
     setSiteCinema,
     setCinemaName,
     setAddressCinema,
     setPointLngCinema,
     setPointLatCinema,
     setMsgErrorDataEdit,
+    setMsgErrorDataEditRoom,
+    // Form Edit Rooms
+    setFormCinemaId,
+    setFormRoomName,
+    setFormRoomType,
+    setFormHorizontalSize,
+    setFormVerticalSize,
 
     fetchAllSiteSuccess,
     fetchAllSiteFailed,
@@ -314,6 +416,8 @@ export const {
     fetchLocalAddressFailed,
     editCinemaSuccess,
     editCinemaFailed,
+    editRoomSuccess,
+    editRoomFailed,
     
     setDataSelectSite,
     setDataSelectCinema,

@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import { useAppSelector } from 'app/hooks';
 import LoadingTable from 'components/Common/LoadingTable';
 import TableDefault from 'components/Common/TableDefault';
-import GroupButton from 'features/cinema/TableCinema/GroupButton';
+import GroupButton from './GroupButton';
 
 const tb = classNames.bind(styleTable);
 

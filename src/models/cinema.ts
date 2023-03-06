@@ -5,6 +5,16 @@ export interface MsgErrorFormCinema {
     msgAddress: string,
 }
 
+
+export interface MsgErrorFormRoom {
+    msgCinemaId: string,
+    msgRoomName: string,
+    msgRoomType: string,
+    msgHorizontalSize: string,
+    msgVerticalSize: string,
+}
+
+
 export interface DataEditCinema {
     id: string,
     siteCode: string,
@@ -13,6 +23,15 @@ export interface DataEditCinema {
     address: string,
     pointLat: string,
     pointLng: string,
+}
+
+export interface DataEditRooms {
+    id: string,
+    cinemaId: string,
+    roomName: string,
+    type: string,
+    horizontalSize: number,
+    verticalSize: number,
 }
 
 export interface CinemaSlice {
@@ -49,9 +68,13 @@ export interface CinemaSlice {
     // data edit cinema
     dataEditCinema: DataEditCinema,
 
+    // data edit rooms
+    dataEditRooms: DataEditRooms,
+
     // type message error
     errorMessage: string,
 
     // type message error form data
     msgDataEdit: MsgErrorFormCinema,
+    msgDataEditRoom: MsgErrorFormRoom,
 }

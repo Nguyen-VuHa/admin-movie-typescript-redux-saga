@@ -3,36 +3,56 @@ import globalStyles from 'utils/globalStyle.module.scss';
 import classNames from 'classnames/bind';
 import HeaderMain from './Header/Header.main';
 import FormDataMain from './FormData/FormData.main';
-import { useAppSelector } from 'app/hooks';
-import { useDispatch } from 'react-redux';
-import { STATUS_SUCCESS, STATUS_FAILED } from 'constants/status';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { setDefaultStatus } from 'reducers/cinemaReducer/cinemaSlice';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { setDefaultStatus, setFormCinemaId } from 'reducers/cinemaReducer/cinemaSlice';
+import { STATUS_FAILED, STATUS_SUCCESS } from 'constants/status';
 import useToastify from 'hooks/useToastify';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const gb = classNames.bind(globalStyles);
 
+function CinemaRoomEditMain() {
+    const [searchParams] = useSearchParams();
+    const idRoom = searchParams.get('id');
 
-function CinemaEditMain() {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const dispatchToast = useToastify();
+    const dispatch = useAppDispatch();
 
-    const [searchParams] = useSearchParams();
-    const idCinema = searchParams.get('id');
-    
-    const { areas, statusEdited, errorMessage } = useAppSelector(state => state.cinemaState);
-    
+    const { sites, selectSite, statusEdited, errorMessage } = useAppSelector(state => state.cinemaState);
+
     useEffect(() => {
         /*
-            first render: check `areas` exists data on store
-            - true: do not fetch data area 
-            - false: dispatch fetch data area
+            Check `sites` exists
+            - true: don't fetch data `sites`
+            - false: fetch data `sites`
         */
-        if(!areas || areas.length <= 0)
-            dispatch({ type: 'FETCH_LOCAL_ADDRESS' });
-        
-    }, []);
+        if(!sites || sites.length <= 0) {
+            dispatch({
+                type: 'FETCH_ALL_SITES'
+            });
+        }
+    }, [sites]);
+
+    useEffect(() => {
+        /*
+            Check `selectSite` exists
+            - true: fetch `cinemas` by `selectSite`
+            - false: dispatch clear `cinemas` on store
+        */
+        if(selectSite)
+        {   
+            dispatch({
+                type: 'FETCH_CINEMA_SELECT_BY_SITE_ID',
+                payload: selectSite,
+            });
+
+            dispatch(setFormCinemaId(''));
+            
+        } else {
+            dispatch(setFormCinemaId(''));
+        }
+    }, [selectSite]);
 
     useEffect(() => {
         /*
@@ -46,7 +66,7 @@ function CinemaEditMain() {
                 type: 'TYPE_SUCCESS',
                 payload: {
                     position: 'top-left',
-                    message: `${idCinema ? "updated" : "created"} cinema success.`,
+                    message: `${idRoom ? "updated" : "created"} room success.`,
                 }
             });
             navigate(-1);
@@ -64,20 +84,6 @@ function CinemaEditMain() {
         }
     }, [statusEdited]);
     
-    useEffect(() => {
-        /*
-            re-render according to params `idCinema`
-            - is valid: fetch data cinema by `idCinema`
-            - is null: do not fecth data
-        */
-        if(idCinema) {
-            dispatch({
-                type: 'FETCH_CINEMA_BY_ID',
-                payload: idCinema,
-            });
-        }
-    }, [idCinema, dispatch]);
-
     return (
         <div className={gb('container-main')}>
             <HeaderMain />
@@ -86,4 +92,4 @@ function CinemaEditMain() {
     )
 }
 
-export default CinemaEditMain
+export default CinemaRoomEditMain

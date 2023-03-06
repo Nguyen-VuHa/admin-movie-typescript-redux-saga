@@ -69,6 +69,22 @@ const cinemaApi = {
 
         return axiosClient.put(url, payload, config);
     },
+    createRoom: (payload: any) => {
+        const url = `api/create/cinema-room`;
+
+        return axiosClient.post(url, payload);
+    },
+    updateRoom: (payload: any) => {
+        const url = `api/update/cinema-room`;
+
+        const config = configHeaderAxios({
+            params: {
+                _id: payload.id,
+            }
+        })
+
+        return axiosClient.put(url, payload, config);
+    },
 }
 
 export default cinemaApi;

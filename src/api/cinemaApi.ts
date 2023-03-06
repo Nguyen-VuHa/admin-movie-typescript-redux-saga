@@ -20,8 +20,36 @@ const cinemaApi = {
 
         return axiosClient.get(url, config);
     },
+    fetchCinemaSelectBySite: (payload: any) => {
+        const url = `api/cinema-select`;
+
+        const config = configHeaderAxios({
+            params: {
+                _id: payload,
+            }
+        })
+
+        return axiosClient.get(url, config);
+    },
+    fetchRoomByCinemaId: (payload: any) => {
+        const url = `api/cinema/room`;
+
+        const config = configHeaderAxios({
+            params: {
+                _id: payload.id,
+                _p: payload.currentPage,
+            }
+        });
+
+        return axiosClient.get(url, config);
+    },
     fetchDetailCinemaById: (payload: any) => {
         const url = `api/cinema/${payload}`;
+
+        return axiosClient.get(url);
+    },
+    fetchDetailRoomById: (payload: any) => {
+        const url = `api/room/${payload}`;
 
         return axiosClient.get(url);
     },
@@ -37,6 +65,22 @@ const cinemaApi = {
     },
     updateCinema: (payload: any) => {
         const url = `api/update/cinema`;
+
+        const config = configHeaderAxios({
+            params: {
+                _id: payload.id,
+            }
+        })
+
+        return axiosClient.put(url, payload, config);
+    },
+    createRoom: (payload: any) => {
+        const url = `api/create/cinema-room`;
+
+        return axiosClient.post(url, payload);
+    },
+    updateRoom: (payload: any) => {
+        const url = `api/update/cinema-room`;
 
         const config = configHeaderAxios({
             params: {

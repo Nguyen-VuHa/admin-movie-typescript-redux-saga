@@ -48,7 +48,7 @@ let listMenu = [
             },
             {
                 menuName: 'Phòng chiếu',
-                navigateLink: '#',
+                navigateLink: routePath.ROOM_MANAGER,
             },
         ]
     },

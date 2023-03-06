@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames/bind';
 import GlobalStyles from 'utils/globalStyle.module.scss';
-import Styles from './header.module.scss';
+import Styles from 'assets/styles/header.style.module.scss';
 import SortBy from './SortBy';
 import InputSearch from './InputSearch';
 import { useAppSelector } from 'app/hooks';

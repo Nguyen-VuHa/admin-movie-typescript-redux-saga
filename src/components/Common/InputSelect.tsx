@@ -17,12 +17,14 @@ interface InputSelectProps {
     onChange?: Function,
     errMessage?: string,
     defaultItem?: boolean,
+    style?: Object,
 }
 
 function InputSelect({
     data, placeholder = "Selected Combobox",
     value, labelDefault = "-- Xóa lựa chọn --", onChange,
-    errMessage, defaultItem = true
+    errMessage, defaultItem = true,
+    style,
 }: InputSelectProps) {
     const dropdownRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLDivElement>(null);
@@ -48,6 +50,7 @@ function InputSelect({
     return (
         <div
             className={cx('wrapper-select')}
+            style={style}
         >
             <div
                 ref={buttonRef} 

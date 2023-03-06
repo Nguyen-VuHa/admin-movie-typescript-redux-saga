@@ -7,7 +7,7 @@ import { useAppSelector } from 'app/hooks';
 import { useDispatch } from 'react-redux';
 import { STATUS_SUCCESS, STATUS_FAILED } from 'constants/status';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { setDefaultStatus } from 'reducers/cinemaReducer/cinemaSlice';
+import { clearDataEditCinema, setDefaultStatus } from 'reducers/cinemaReducer/cinemaSlice';
 import useToastify from 'hooks/useToastify';
 
 const gb = classNames.bind(globalStyles);
@@ -46,7 +46,7 @@ function CinemaEditMain() {
                 type: 'TYPE_SUCCESS',
                 payload: {
                     position: 'top-left',
-                    message: `${idCinema ? "updated" : "created"} new cinema success.`,
+                    message: `${idCinema ? "updated" : "created"} cinema success.`,
                 }
             });
             navigate(-1);
@@ -75,6 +75,8 @@ function CinemaEditMain() {
                 type: 'FETCH_CINEMA_BY_ID',
                 payload: idCinema,
             });
+        } else {
+            dispatch(clearDataEditCinema());
         }
     }, [idCinema, dispatch]);
 

@@ -1,5 +1,7 @@
 import PageNotFound from "components/Page404";
 import CinemaEditMain from "features/cinema-edit/CinemaEdit.main";
+import CinemaRoomEditMain from "features/cinema-rooms-edit/CinemaRoomEdit.main";
+import CinemaRoomMain from "features/cinema-rooms/CinemaRoom.main";
 import CinemaMain from "features/cinema/Cinema.main";
 import DashBoardMain from "features/dashboard";
 import FileSystemPage from "features/files-system";
@@ -21,6 +23,10 @@ export const routes = [
     //Route Cinema
     { path: routePath.CINEMA_MANAGER, element: <CinemaMain />},
     { path: routePath.CINEMA_EDIT, element: <CinemaEditMain />},
+
+    // Route cinema room
+    { path: routePath.ROOM_MANAGER, element: <CinemaRoomMain />},
+    { path: routePath.ROOM_EDIT, element: <CinemaRoomEditMain />},
 
     // Route Category
     { path: routePath.MOVIE_CATEGORY, element: <MovieCategoryPage /> }, 

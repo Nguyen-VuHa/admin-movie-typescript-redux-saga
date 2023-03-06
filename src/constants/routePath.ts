@@ -8,6 +8,9 @@ export default {
     CINEMA_MANAGER: 'cinema-manager',
     CINEMA_EDIT: 'cinema-manager/edit',
 
+    ROOM_MANAGER: 'room',
+    ROOM_EDIT: 'room/edit',
+
     AUTHOR_MAIN_ACTOR: 'movie-manager/author-main-actor',
     FILES_SYSTEM: 'files-system/root'
 };

@@ -6,6 +6,7 @@ import InputSelectMultiple from 'components/Common/InputSelectMultiple';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { setAuthorSelectEdit, setCategorySelectEdit, setDescriptionEdit, setEndDateEdit, setIDTrailerEdit, setMainActorSelectEdit, setMovieNameEdit, setShowtimeEdit, setStartDateEdit } from 'reducers/movieReducer/movieSlice';
 import InputArea from 'components/Common/InputArea';
+import { handleCheckIsNumber } from 'utils/checkIsNumber';
 
 const cx = classNames.bind(Styles);
 
@@ -174,7 +175,7 @@ const FormGroupShowTime = () => {
                 placeholder='Nhập thời lượng...'
                 value={showTime ? showTime.toString() : ''}
                 onChange={(text: string) => {
-                    if(text && /^\d+$/.test(text))
+                    if(text && handleCheckIsNumber(text))
                         dispatch(setShowtimeEdit(parseInt(text)))
                     
                     if(!text)

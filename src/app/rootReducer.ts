@@ -6,6 +6,7 @@ import authorActorSlice from 'reducers/authorActorReducer/authorActorSlice';
 import movieSlice from 'reducers/movieReducer/movieSlice';
 import globalSlice from 'reducers/globalReducer/globalSlice';
 import cinemaSlice from 'reducers/cinemaReducer/cinemaSlice';
+import showtimeSlice from 'reducers/showtimeReducer/showtimeSlice';
 
 export const rootReducer = {
     toastifyState: toastifySlice,
@@ -16,4 +17,5 @@ export const rootReducer = {
     movieState: movieSlice,
     globalState: globalSlice,
     cinemaState: cinemaSlice,
+    showtimeState: showtimeSlice,
 }

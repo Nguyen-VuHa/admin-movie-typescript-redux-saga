@@ -10,6 +10,7 @@ import moment from 'moment';
 import GroupButton from './GroupButton';
 import WrapperModal from './WrapperModal';
 import { setCurrentPage } from 'reducers/movieReducer/movieSlice';
+import { DEFAULT_PAGE_SIZE } from 'constants/globalConstant';
 
 const tb = classNames.bind(styleTable);
 
@@ -65,7 +66,7 @@ function TableMovie() {
                             let statusFilter = status.filter(s => s.id === parseInt(m.status));
                             return <tr key={m.id} >
                                 <td>
-                                    <div className={tb('table-text')}> { idx + 1 } </div>
+                                    <div className={tb('table-text')}> { idx + 1 + ((currentPage - 1) * DEFAULT_PAGE_SIZE) } </div>
                                 </td>
                                 <td>
                                     <div className={tb('table-text')}> { m.movie_name } </div>

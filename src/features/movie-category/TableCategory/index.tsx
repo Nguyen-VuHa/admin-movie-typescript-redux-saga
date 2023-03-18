@@ -10,6 +10,7 @@ import TableDefault from 'components/Common/TableDefault';
 import GroupButton from './GroupButton';
 import WrapperModal from './WrapperModal';
 import { status } from 'constants/status';
+import { DEFAULT_PAGE_SIZE } from 'constants/globalConstant';
 
 const tb = classNames.bind(styleTable);
 
@@ -69,7 +70,7 @@ function TableCategory() {
                             let statusFilter = status.filter(s => s.id === ct.status);
                             return <tr key={index} >
                                 <td>
-                                    <div className={tb('table-text')}>{ index + 1}</div>
+                                    <div className={tb('table-text')}>{ index + 1 + ((currentPage - 1) * DEFAULT_PAGE_SIZE) }</div>
                                 </td>
                                 <td>
                                     <div className={tb('table-text')}>{  ct.category_name }</div>

@@ -10,6 +10,7 @@ import { status } from 'constants/status';
 import GroupButton from './GroupButton';
 import WrapperModal from './WrapperModal';
 import { setCurrentPageAuthorActor } from 'reducers/authorActorReducer/authorActorSlice';
+import { DEFAULT_PAGE_SIZE } from 'constants/globalConstant';
 
 const tb = classNames.bind(styleTable);
 
@@ -75,7 +76,7 @@ function TableAuthorMainActor() {
 
                             return <tr className={tb('tb-content-item')} key={index} >
                                 <td>
-                                    <div className={tb('table-text')}>{ index + 1}</div>
+                                    <div className={tb('table-text')}>{ index + 1 + ((currentPage - 1) * DEFAULT_PAGE_SIZE)}</div>
                                 </td>
                                 <td>
                                     <div className={tb('table-text')}>{ ac.name }</div>

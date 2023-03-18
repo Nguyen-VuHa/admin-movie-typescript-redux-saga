@@ -25,21 +25,54 @@ export const showtimeSlice = createSlice({
     name: 'showtimes',
     initialState,
     reducers: {
-        // Handle Data Edit Movie
+        // Handle Data Edit Showtime
         
         // ACTION LOADING
-       
+        setLoadingFetch: (state) => {
+            return {
+                ...state,
+                loadingFetch: true,
+            }
+        },
         
         // ACTION HANDLE CALL API
-        
+        fetchShowtimeSuccess: (state, { payload }) => {
+            return {
+                ...state,
+                loadingFetch: false,
+                showtimes: payload.data,
+                totalPage: payload.totalPage,
+                totalRows: payload.totalRows,
+            }
+        },
+        fetchShowtimeFailed: (state, { payload }) => {
+            return {
+                ...state,
+                loadingFetch: false,
+                errorMessage: payload.message,
+            }
+        },
         // ACTION HANDLE UI
-        
+        setCurrentPage: (state, { payload }) => {
+            return {
+                ...state,
+                currentPage: payload,
+            }
+        },
         // ACTION DEFAULT VALUE
     },
 });
 
 export const { 
-    
+    // SET LOADING FETCH
+    setLoadingFetch,
+
+    // FETCH LIST SHOWTIMES
+    fetchShowtimeSuccess,
+    fetchShowtimeFailed,
+
+    // SET CURRENT PAGE IN TABLE SHOWTIMES
+    setCurrentPage,
 } = showtimeSlice.actions;
 
 export default showtimeSlice.reducer;

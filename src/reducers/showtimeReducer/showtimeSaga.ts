@@ -1,19 +1,20 @@
-import moviesApi from "api/movieApi";
+import showtimeApi from "api/showtimeApi";
 import { call, put, takeLatest, takeLeading } from "redux-saga/effects";
+import { fetchShowtimeFailed, fetchShowtimeSuccess, setLoadingFetch } from "./showtimeSlice";
 
-function* fetchAllMovie(action: any): any {
-    // try {
-    //     yield put(setLoadingFetch());
-    //     const response = yield call(moviesApi.fetchAllMovie, action.payload)
-    //     yield put(fetchMovieSuccess(response))
-    // }
-    // catch(err: any) {
-    //     yield put(fetchMovieFailed(err.response.data))
-    // }
+function* fetchAllShowtime(action: any): any {
+    try {
+        yield put(setLoadingFetch());
+        const response = yield call(showtimeApi.fetchShowtimes, action.payload);
+        yield put(fetchShowtimeSuccess(response))
+    }
+    catch(err: any) {
+        yield put(fetchShowtimeFailed(err.response.data))
+    }
 }
 
 
 
 export function* showtimeSaga() {
-    // yield takeLatest('FETCH_LIST_MOVIE', fetchAllMovie);
+    yield takeLatest('FETCH_LIST_SHOWTIME', fetchAllShowtime);
 }

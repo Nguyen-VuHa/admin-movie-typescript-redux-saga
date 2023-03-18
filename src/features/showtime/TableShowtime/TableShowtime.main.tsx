@@ -1,11 +1,15 @@
 import React from 'react';
 import styleTable from 'assets/styles/table.style.module.scss';
 import classNames from 'classnames/bind';
-import { useAppSelector } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import LoadingTable from 'components/Common/LoadingTable';
 import TableDefault from 'components/Common/TableDefault';
 import GroupButton from './GroupButton';
 import Pagination from 'components/Common/Pagination';
+import moment from 'moment';
+import { status } from 'constants/status';
+import { setCurrentPage } from 'reducers/showtimeReducer/showtimeSlice';
+import { DEFAULT_PAGE_SIZE } from 'constants/globalConstant';
 
 const tb = classNames.bind(styleTable);
 
@@ -45,7 +49,9 @@ const arrTitle = [
 ];
 
 function TableShowtimeMain() {
-    const { cinemas, loadingFetch, currentPage, totalPage } = useAppSelector(state => state.cinemaState);
+    const dispatch = useAppDispatch();
+
+    const { showtimes, loadingFetch, currentPage, totalPage } = useAppSelector(state => state.showtimeState);
     
     return (
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: 'auto'}}>
@@ -65,30 +71,39 @@ function TableShowtimeMain() {
                 </thead>
                 <tbody>
                     {
-                        cinemas && cinemas.length > 0 ? 
-                        cinemas.map((c, idx) => {
-                            return <tr key={c.id} >
+                        showtimes && showtimes.length > 0 ? 
+                        showtimes.map((s, idx) => {
+                            let statusFilter = status.filter(ss => ss.id === s.status);
+                            return <tr key={s.id} >
                                 <td>
-                                    <div className={tb('table-text')}>{ idx + 1}</div>
+                                    <div className={tb('table-text')}>{ (idx + 1) + ((currentPage - 1) * DEFAULT_PAGE_SIZE)}</div>
                                 </td>
                                 <td>
-                                    <div className={tb('table-text')}>{ c.code }</div>
+                                    <div className={tb('table-text')}>{ s.code }</div>
                                 </td>
                                 <td>
-                                    <div className={tb('table-text')}> { c.siteName }</div>
+                                    <div className={tb('table-text')}> { moment(s.showtime).format('HH:mm DD/MM/YYYY') }</div>
                                 
                                 </td>  
                                 <td>
-                                    <div className={tb('table-text')}>{ c.cinemaName }</div>
+                                    <div className={tb('table-text')}>{ s.fare.toLocaleString() } đ</div>
                                 </td> 
                                 <td>
-                                    <div className={tb('table-text')}>{ c.address }</div>
+                                <div className={tb('table-text')} style={{color: statusFilter[0]?.color || "#ff9800" }}>
+                                        { statusFilter[0]?.statusName || 'Không xác định' }
+                                    </div>   
                                 </td>  
+                                <td>
+                                    <div className={tb('table-text')}>{ s.movieName}</div>
+                                </td>
+                                <td>
+                                    <div className={tb('table-text')}>{ `${s.roomName} - ${s.roomType}` }</div>
+                                </td>
                                 <td>
                                     <div className={tb('table-text')}>
                                         <GroupButton 
-                                            // status={c.status}
-                                            data={c}
+                                            // status={s.status}
+                                            data={s}
                                         />
                                     </div>
                                 </td>
@@ -102,7 +117,7 @@ function TableShowtimeMain() {
                         </tr> 
                         : <tr>
                             <td colSpan={arrTitle.length}>
-                                <TableDefault textNotify='Không có cụm rạp phim hiện hành!'/>
+                                <TableDefault textNotify='Không có suất chiếu hiện hành!'/>
                             </td>
                         </tr>
                     }
@@ -113,15 +128,7 @@ function TableShowtimeMain() {
                 currentPage={currentPage}
                 totalPage={totalPage}
                 onChangeCurrentPage={(page: number) => {
-                    // dispatch({
-                    //     type: 'FETCH_ALL_CATEGORIES',
-                    //     payload: {
-                    //         page,
-                    //         search
-                    //     },
-                    // });
-
-                    // dispatch(setCurrentPage(page));
+                    dispatch(setCurrentPage(page));
                 }}
             />
         </div>

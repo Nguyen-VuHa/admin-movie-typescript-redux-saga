@@ -56,6 +56,16 @@ let listMenu = [
         icon: <IoTicket size={20} />,
         menuName: 'QUẢN LÝ VÉ PHIM',
         navigateLink: '#',
+        listItemDrop: [
+            {
+                menuName: 'Quản lý suất chiếu',
+                navigateLink: routePath.SHOWTIME_MANAGER,
+            },
+            {
+                menuName: 'Doanh thu',
+                navigateLink: '#',
+            },
+        ]
     },
     {
         icon: <IoPeopleCircleOutline size={20} />,

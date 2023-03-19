@@ -17,6 +17,7 @@ export default {
 
     // Showtime Path
     SHOWTIME_MANAGER: 'showtime',
+    SHOWTIME_EDIT: 'showtime/edit',
 
     // Author, Main Actor Path
     AUTHOR_MAIN_ACTOR: 'movie-manager/author-main-actor',

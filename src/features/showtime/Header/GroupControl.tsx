@@ -19,7 +19,7 @@ function GroupControl() {
         >
             <Button
                 onClick={() => {
-                    // navigate('edit');
+                    navigate('edit');
                 }}
             >
                 Thêm suất chiếu
@@ -30,7 +30,7 @@ function GroupControl() {
             </Button>
             <Button
                 onClick={() => {
-                    // navigate('edit');
+                    
                 }}
             >
                 <MdManageSearch 

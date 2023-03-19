@@ -6,6 +6,7 @@ import Input from 'components/Common/Input';
 import InputArea from 'components/Common/InputArea';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { setAddressCinema, setCinemaName, setPointLatCinema, setPointLngCinema, setSiteCinema } from 'reducers/cinemaReducer/cinemaSlice';
+import InputSelectFetchData from 'components/Common/InputSelectFetchData';
 
 const cx = classNames.bind(Styles);
 
@@ -15,13 +16,53 @@ export const FromGroupMovieSelect = () => {
     return (
         <div className={cx('form-group')}>
             <div className={cx('title-input')}>Phim sắp chiếu</div>
-            <InputSelect
+            <InputSelectFetchData 
                 defaultItem={false}
                 placeholder='-- Chọn phim sắp chiếu cho suất chiếu --'
-                data={[]}
+                url={'api/select/movie'}
                 value={''}
                 onChange={(value: string) => { 
-                   
+                   console.log(value);
+                }}
+                errMessage={''}
+            />
+        </div>
+    )
+}
+
+export const FromGroupSiteSelect = () => { 
+    const dispatch = useAppDispatch();
+
+    return (
+        <div className={cx('form-group')}>
+            <div className={cx('title-input')}>Khu vực</div>
+            <InputSelectFetchData 
+                defaultItem={false}
+                placeholder='-- Chọn khu vực cho suất chiếu --'
+                url={'api/select/site'}
+                value={''}
+                onChange={(value: string) => { 
+                   console.log(value);
+                }}
+                errMessage={''}
+            />
+        </div>
+    )
+}
+
+export const FromGroupCinemaSelect = () => { 
+    const dispatch = useAppDispatch();
+
+    return (
+        <div className={cx('form-group')}>
+            <div className={cx('title-input')}>Rạp chiếu</div>
+            <InputSelectFetchData 
+                defaultItem={false}
+                placeholder='-- Chọn rạp chiếu cho suất chiếu --'
+                url={'api/select/cinema'}
+                value={''}
+                onChange={(value: string) => { 
+                   console.log(value);
                 }}
                 errMessage={''}
             />
@@ -35,13 +76,13 @@ export const FromGroupRoomSelect = () => {
     return (
         <div className={cx('form-group')}>
             <div className={cx('title-input')}>Phòng chiếu</div>
-            <InputSelect
+            <InputSelectFetchData 
                 defaultItem={false}
                 placeholder='-- Chọn phòng chiếu cho suất chiếu --'
-                data={[]}
+                url={'api/select/rooms'}
                 value={''}
                 onChange={(value: string) => { 
-                   
+                   console.log(value);
                 }}
                 errMessage={''}
             />

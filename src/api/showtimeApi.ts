@@ -18,6 +18,11 @@ const showtimeApi = {
 
         return axiosClient.get(url, config);
     },
+    createShowtime: (payload: any) => {
+        const url = `api/showtime/create`;
+
+        return axiosClient.post(url, payload);
+    }
 }
 
 export default showtimeApi;

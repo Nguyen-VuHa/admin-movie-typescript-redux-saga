@@ -28,12 +28,16 @@ const _DEFAULT_CURRENT_PAGE = 1;
 const _DEFAULT_TOTAL_PAGE = 1;
 const _DEFAULT_PAGE_SIZE = 10;
 
-
 function InputSelectFetchData({
     placeholder = "Selected Combobox",
-    value, labelDefault = "-- Xóa lựa chọn --", onChange,
-    errMessage, defaultItem = true,
-    style, propsParams, url,
+    value, 
+    labelDefault = "-- Xóa lựa chọn --", 
+    onChange,
+    errMessage, 
+    defaultItem = true,
+    style, 
+    propsParams, // params request with url
+    url, // url call api
 }: InputSelectProps) {
     const dropdownRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLDivElement>(null);
@@ -48,6 +52,8 @@ function InputSelectFetchData({
     const [totalPage, setTotalPage] = useState<number>(_DEFAULT_TOTAL_PAGE);
     const [data, setData] = useState<Array<ObjectData>>([]);
     const [isFetch, setIsFetch] = useState<boolean>(false);
+    const [dataParams, setDataParams] = useState<Object | null>(null);
+    
 
     // click ousite button or dropbox is colose dropbox
     const handleClickOutside = useCallback((event: any) => {
@@ -68,7 +74,22 @@ function InputSelectFetchData({
 
     useLayoutEffect(() => {
         loadMoreItems();
-    }, [])
+    }, []);
+    
+    useEffect(() => {
+        setDataParams(propsParams || null);
+        setCurrentPage(_DEFAULT_CURRENT_PAGE);
+        setTotalPage(_DEFAULT_TOTAL_PAGE);
+        setData([]);
+
+        return () => {
+            setDataParams(null);
+            setCurrentPage(_DEFAULT_CURRENT_PAGE);
+            setTotalPage(_DEFAULT_TOTAL_PAGE);
+            setData([]);
+        }
+    }, [JSON.stringify(propsParams)]);
+    
 
     const loadMoreItems = async () => {
         try {
@@ -125,11 +146,27 @@ function InputSelectFetchData({
     };
 
     useEffect(() => {
+        // check props params for when there is changed
+        if(dataParams && Object.keys(dataParams || {}).length > 0)
+        {
+            for(let i = 0; i < Object.keys(dataParams || {}).length; i++) 
+            {
+                var strKey = Object.keys(dataParams || {})[i]; 
+                if(Object(dataParams)[`${strKey}`]) {
+                    loadMoreItems();
+                    return;
+                }
+            };
+        }
+
         if(!loadingFetch && isFetch && currentPage <= totalPage) {
             loadMoreItems();
         }
-    }, [isFetch])
-    
+
+        return () => {
+            setDataParams(null);
+        }
+    }, [isFetch, dataParams]);
 
    // Add event listener for scroll event
     useEffect(() => {
@@ -207,15 +244,11 @@ function InputSelectFetchData({
                     </div>
                 } 
                 {
-                    currentPage <= totalPage && <LoadingFetchData />
+                    currentPage < totalPage && <LoadingFetchData />
                 }
             </div>
         </div>
     )
-}
-
-interface LoadingProps {
-    textLoading?: string,
 }
 
 const layoutLoading = {

@@ -45,7 +45,7 @@ function GroupButton({ status, data }: GroupButtonProps) {
                         })
                     }}
                 /> */}
-                <ButtonTable 
+                {/* <ButtonTable 
                     icon={
                         <IoCreate />
                     }
@@ -53,7 +53,7 @@ function GroupButton({ status, data }: GroupButtonProps) {
                     onClick={() => {
                         navigate(`edit?id=${data.id}`)
                     }}
-                />
+                /> */}
                 {/* <ButtonTable 
                     icon={
                         <IoTrashSharp />

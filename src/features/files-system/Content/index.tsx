@@ -9,7 +9,7 @@ function ContentFileSystem() {
 
     return (
         <div 
-            style={{padding: '0 15px', height: '100%' }} ref={layoutRef}
+            style={{padding: '0 15px' }} ref={layoutRef}
             onContextMenu={(e) => {
                 console.log(123);
             }}

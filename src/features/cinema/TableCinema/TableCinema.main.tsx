@@ -6,6 +6,7 @@ import LoadingTable from 'components/Common/LoadingTable';
 import TableDefault from 'components/Common/TableDefault';
 import GroupButton from './GroupButton';
 import Pagination from 'components/Common/Pagination';
+import { DEFAULT_PAGE_SIZE } from 'constants/globalConstant';
 
 const tb = classNames.bind(styleTable);
 
@@ -61,7 +62,7 @@ function TableCinemaMain() {
                         cinemas.map((c, idx) => {
                             return <tr key={c.id} >
                                 <td>
-                                    <div className={tb('table-text')}>{ idx + 1}</div>
+                                    <div className={tb('table-text')}>{ idx + 1 + ((currentPage - 1) * DEFAULT_PAGE_SIZE) }</div>
                                 </td>
                                 <td>
                                     <div className={tb('table-text')}>{ c.code }</div>

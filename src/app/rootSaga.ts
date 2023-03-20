@@ -4,6 +4,7 @@ import { folderSaga } from 'reducers/folderReducer/folderSaga';
 import { authorActorSaga } from 'reducers/authorActorReducer/authroActorSaga';
 import { movieSaga } from 'reducers/movieReducer/movieSaga';
 import { cinemaSaga } from 'reducers/cinemaReducer/cinemaSaga';
+import { showtimeSaga } from 'reducers/showtimeReducer/showtimeSaga';
 
 export default function* rootSaga() {
     yield all([
@@ -12,5 +13,6 @@ export default function* rootSaga() {
         authorActorSaga(),
         movieSaga(),
         cinemaSaga(),
+        showtimeSaga(),
     ]);
 }

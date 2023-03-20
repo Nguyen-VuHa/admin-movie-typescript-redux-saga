@@ -5,6 +5,8 @@ import { useAppSelector } from 'app/hooks';
 import LoadingTable from 'components/Common/LoadingTable';
 import TableDefault from 'components/Common/TableDefault';
 import GroupButton from './GroupButton';
+import Pagination from 'components/Common/Pagination';
+import { DEFAULT_PAGE_SIZE } from 'constants/globalConstant';
 
 const tb = classNames.bind(styleTable);
 
@@ -45,7 +47,7 @@ const arrTitle = [
 
 
 function TableRoomMain() {
-    const { rooms, loadingFetch } = useAppSelector(state => state.cinemaState);
+    const { rooms, loadingFetch, currentPageRooms, totalPageRooms } = useAppSelector(state => state.cinemaState);
 
     return (
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: 'auto'}}>
@@ -69,7 +71,7 @@ function TableRoomMain() {
                         rooms.map((r, idx) => {
                             return <tr key={r.id}>
                                 <td>
-                                    <div className={tb('table-text')}>{ idx + 1}</div>
+                                    <div className={tb('table-text')}>{ idx + 1 + ((currentPageRooms - 1) * DEFAULT_PAGE_SIZE) }</div>
                                 </td>
                                 <td>
                                     <div className={tb('table-text')}>{ r.siteId }</div>
@@ -114,6 +116,22 @@ function TableRoomMain() {
                     }
                 </tbody>
             </table>
+
+            <Pagination 
+                currentPage={currentPageRooms}
+                totalPage={totalPageRooms}
+                onChangeCurrentPage={(page: number) => {
+                    // dispatch({
+                    //     type: 'FETCH_ALL_CATEGORIES',
+                    //     payload: {
+                    //         page,
+                    //         search
+                    //     },
+                    // });
+
+                    // dispatch(setCurrentPage(page));
+                }}
+            />
         </div>
     )
 }

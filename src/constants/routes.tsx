@@ -9,6 +9,8 @@ import MovieAuthorMainActorPage from "features/movie-author-main-actor";
 import MovieCategoryPage from "features/movie-category";
 import MovieEditPage from "features/movie-edit/MovieEdit.main";
 import MovieManagerPage from "features/movie-manager";
+import ShowTimeEditPage from "features/showtime-edit/ShowTimeEdit.main";
+import ShowTimeMain from "features/showtime/ShowTime.main";
 
 import routePath from "./routePath";
 
@@ -27,6 +29,10 @@ export const routes = [
     // Route cinema room
     { path: routePath.ROOM_MANAGER, element: <CinemaRoomMain />},
     { path: routePath.ROOM_EDIT, element: <CinemaRoomEditMain />},
+
+    // Route showtime manager
+    { path: routePath.SHOWTIME_MANAGER, element: <ShowTimeMain />},
+    { path: routePath.SHOWTIME_EDIT, element: <ShowTimeEditPage />},
 
     // Route Category
     { path: routePath.MOVIE_CATEGORY, element: <MovieCategoryPage /> }, 

@@ -1,17 +1,18 @@
 import React from 'react'
-import InputSelect from 'components/Common/InputSelect';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { setDataSelectSite } from 'reducers/cinemaReducer/cinemaSlice';
+import InputSelectFetchData from 'components/Common/InputSelectFetchData';
+import { STR_API_SELECTED_SITE } from 'constants/globalConstant';
 
 function InputSelectSite() {
     const dispatch = useAppDispatch();
 
-    const { sites, selectSite } = useAppSelector(state => state.cinemaState);
+    const { selectSite } = useAppSelector(state => state.cinemaState);
 
     return (
-        <InputSelect    
+        <InputSelectFetchData    
             placeholder='-- Chọn khu vực cần xem --'
-            data={sites && sites.length > 0 ? sites.map(s => { return { value: s.id, name: s.siteName }}) : []}
+            url={STR_API_SELECTED_SITE}
             value={selectSite}
             onChange={(value: number) => {
                 dispatch(setDataSelectSite(value));

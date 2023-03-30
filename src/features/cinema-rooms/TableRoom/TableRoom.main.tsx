@@ -7,6 +7,8 @@ import TableDefault from 'components/Common/TableDefault';
 import GroupButton from './GroupButton';
 import Pagination from 'components/Common/Pagination';
 import { DEFAULT_PAGE_SIZE } from 'constants/globalConstant';
+import { setCurrentPageRooms } from 'reducers/cinemaReducer/cinemaSlice';
+import { useDispatch } from 'react-redux';
 
 const tb = classNames.bind(styleTable);
 
@@ -14,14 +16,6 @@ const arrTitle = [
     {
         title: 'STT',
         width: 50,
-    },
-    {
-        title: 'Mã khu vực',
-        width: 100,
-    },
-    {
-        title: 'Rạp phim',
-        width: 200,
     },
     {
         title: 'Phòng chiếu',
@@ -47,6 +41,8 @@ const arrTitle = [
 
 
 function TableRoomMain() {
+    const dispatch = useDispatch();
+    
     const { rooms, loadingFetch, currentPageRooms, totalPageRooms } = useAppSelector(state => state.cinemaState);
 
     return (
@@ -73,13 +69,6 @@ function TableRoomMain() {
                                 <td>
                                     <div className={tb('table-text')}>{ idx + 1 + ((currentPageRooms - 1) * DEFAULT_PAGE_SIZE) }</div>
                                 </td>
-                                <td>
-                                    <div className={tb('table-text')}>{ r.siteId }</div>
-                                </td>
-                                <td>
-                                    <div className={tb('table-text')}> { r.cinemaName }</div>
-                                
-                                </td>  
                                 <td>
                                     <div className={tb('table-text')}>{ r.roomName }</div>
                                 </td> 
@@ -121,15 +110,7 @@ function TableRoomMain() {
                 currentPage={currentPageRooms}
                 totalPage={totalPageRooms}
                 onChangeCurrentPage={(page: number) => {
-                    // dispatch({
-                    //     type: 'FETCH_ALL_CATEGORIES',
-                    //     payload: {
-                    //         page,
-                    //         search
-                    //     },
-                    // });
-
-                    // dispatch(setCurrentPage(page));
+                    dispatch(setCurrentPageRooms(page));
                 }}
             />
         </div>

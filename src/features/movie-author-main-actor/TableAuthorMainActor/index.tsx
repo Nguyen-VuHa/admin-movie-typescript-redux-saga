@@ -123,15 +123,6 @@ function TableAuthorMainActor() {
                 currentPage={currentPage}
                 totalPage={totalPage}
                 onChangeCurrentPage={(page: number) => {
-                    dispatch({
-                        type: 'FETCH_LIST_AUTHOR_ACTOR',
-                        payload: {
-                            page: currentPage,
-                            search,
-                            type
-                        },
-                    });
-
                     dispatch(setCurrentPageAuthorActor(page));
                 }}
             />

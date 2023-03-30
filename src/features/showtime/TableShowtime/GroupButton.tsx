@@ -7,6 +7,7 @@ import React, { useContext } from 'react';
 import { IoLockOpen, IoLockClosed, IoCreate, IoTrashSharp } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import { setDataUpdateCategory } from 'reducers/categoryReducer/categorySlice';
+import { FaEye } from 'react-icons/fa';
 
 interface GroupButtonProps {
     status?: number,
@@ -25,24 +26,33 @@ function GroupButton({ status, data }: GroupButtonProps) {
                     alignItems: 'center'
                 }}
             >
-                {/* <ButtonTable 
+                <ButtonTable 
                     icon={
                         status === 1 ? <IoLockClosed /> :  <IoLockOpen />
                     }
                     color={status === 1 ? COLORS.ORANGE_WARN : COLORS.GREEN_SUCCESS}
                     onClick={() => {
-                        dispatchCate({
-                            type: 'SET_STATUS_MODAL_QUESTION',
-                            payload: true,
-                        })
+                        // dispatchCate({
+                        //     type: 'SET_STATUS_MODAL_QUESTION',
+                        //     payload: true,
+                        // })
 
-                        dispatchCate({
-                            type: 'SET_DATA_UPDATE_STATUS_MODAL_QUESTION',
-                            payload: { 
-                                id: data.id, 
-                                status: data.status 
-                            },
-                        })
+                        // dispatchCate({
+                        //     type: 'SET_DATA_UPDATE_STATUS_MODAL_QUESTION',
+                        //     payload: { 
+                        //         id: data.id, 
+                        //         status: data.status 
+                        //     },
+                        // })
+                    }}
+                />
+                {/* <ButtonTable 
+                    icon={
+                        <FaEye />
+                    }
+                    color={COLORS.GREEN_SUCCESS}
+                    onClick={() => {
+                      
                     }}
                 /> */}
                 {/* <ButtonTable 

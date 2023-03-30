@@ -61,10 +61,10 @@ let listMenu = [
                 menuName: 'Quản lý suất chiếu',
                 navigateLink: routePath.SHOWTIME_MANAGER,
             },
-            {
-                menuName: 'Doanh thu',
-                navigateLink: '#',
-            },
+            // {
+            //     menuName: 'Doanh thu',
+            //     navigateLink: '#',
+            // },
         ]
     },
     {

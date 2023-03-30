@@ -16,14 +16,6 @@ const arrTitle = [
         width: 50,
     },
     {
-        title: 'Mã khu vực',
-        width: 100,
-    },
-    {
-        title: 'Khu vực',
-        width: 200,
-    },
-    {
         title: 'Rạp phim',
         width: 150,
     },
@@ -64,13 +56,6 @@ function TableCinemaMain() {
                                 <td>
                                     <div className={tb('table-text')}>{ idx + 1 + ((currentPage - 1) * DEFAULT_PAGE_SIZE) }</div>
                                 </td>
-                                <td>
-                                    <div className={tb('table-text')}>{ c.code }</div>
-                                </td>
-                                <td>
-                                    <div className={tb('table-text')}> { c.siteName }</div>
-                                
-                                </td>  
                                 <td>
                                     <div className={tb('table-text')}>{ c.cinemaName }</div>
                                 </td> 

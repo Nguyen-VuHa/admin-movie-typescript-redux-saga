@@ -9,7 +9,7 @@ const gb = classNames.bind(GlobalStyles);
 const cx = classNames.bind(Styles);
 
 function HeaderMain() {
-    const { totalRows } = useAppSelector(state => state.cinemaState);
+    const { totalRows } = useAppSelector(state => state.showtimeState);
 
     return (
         <div className={gb('wrapper-header', cx('sticky-header'))}>

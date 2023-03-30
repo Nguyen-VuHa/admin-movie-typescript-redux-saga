@@ -12,17 +12,7 @@ const gb = classNames.bind(globalStyles);
 function CinemaMain() { 
     const dispatch = useAppDispatch();
 
-    const { selectSite, currentPage, sites } = useAppSelector(state => state.cinemaState);
-
-    /*
-        Handle first render component:
-        - Fetch all sites cinema.
-    */
-    useEffect(() => {
-        dispatch({
-            type: 'FETCH_ALL_SITES'
-        });
-    }, []);
+    const { selectSite, currentPage } = useAppSelector(state => state.cinemaState);
 
     /*
         Handle call api with `selectSite` change:

@@ -362,6 +362,12 @@ export const cinemaSlice = createSlice({
         },
 
         // ACTION: HANDLE CLIENT
+        setCurrentPageRooms: (state, { payload }) => {
+            return {
+                ...state,
+                currentPageRooms: payload,
+            }
+        },
         setDataSelectSite: (state, { payload }) => {
             return {
                 ...state,
@@ -453,6 +459,7 @@ export const {
     editRoomFailed,
     
     setDataSelectSite,
+    setCurrentPageRooms,
     setDataSelectCinema,
     clearCinemaCombobox,
     clearCinemas,

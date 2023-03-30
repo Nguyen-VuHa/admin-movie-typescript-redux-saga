@@ -2,28 +2,29 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import classNames from 'classnames/bind';
 import Input from 'components/Common/Input';
-import InputArea from 'components/Common/InputArea';
-import InputSelect from 'components/Common/InputSelect';
-import { setAddressCinema, setDataSelectSite, setFormHorizontalSize, setFormRoomName, setFormRoomType, setFormVerticalSize, setPointLatCinema, setPointLngCinema, setFormCinemaId } from 'reducers/cinemaReducer/cinemaSlice';
+import { setDataSelectSite, setFormHorizontalSize, setFormRoomName, setFormRoomType, setFormVerticalSize, setFormCinemaId } from 'reducers/cinemaReducer/cinemaSlice';
 import Styles from './formdata.module.scss';
 import { handleCheckIsNumber } from 'utils/checkIsNumber';
+import InputSelectFetchData from 'components/Common/InputSelectFetchData';
+import { STR_API_SELECTED_CINEMA, STR_API_SELECTED_SITE } from 'constants/globalConstant';
 
 const cx = classNames.bind(Styles);
 
 export const FromGroupSiteSelect = () => { 
     const dispatch = useAppDispatch();
 
-    const { sites, selectSite } = useAppSelector(state => state.cinemaState);
+    const { selectSite } = useAppSelector(state => state.cinemaState);
 
     return (
         <div className={cx('form-group')}>
             <div className={cx('title-input')}>Khu vực hiện hành</div>
-            <InputSelect
+            <InputSelectFetchData
                 defaultItem={false}
                 placeholder='-- Chọn khu vực rạp chiếu --'
-                data={sites.length > 0 ? sites.map((a: any) => { return { value: a.id, name: `${a.code} - ${a.siteName}`}}) : []}
+                url={STR_API_SELECTED_SITE}
                 value={selectSite}
-                onChange={(value: string) => { 
+                onChange={(value: string) => {
+                    dispatch(setFormCinemaId(null))
                     dispatch(setDataSelectSite(value));
                 }}
                 errMessage={''}
@@ -36,17 +37,20 @@ export const FromGroupSiteSelect = () => {
 export const FromGroupCinemaSelect = () => {
     const dispatch = useAppDispatch();
 
-    const { cinemaCombobox, dataEditRooms, msgDataEditRoom } = useAppSelector(state => state.cinemaState);
+    const { dataEditRooms, msgDataEditRoom, selectSite } = useAppSelector(state => state.cinemaState);
     const { cinemaId } = dataEditRooms;
     const { msgCinemaId } = msgDataEditRoom;
 
     return (
         <div className={cx('form-group')}>
             <div className={cx('title-input')}>Cụm rạp phim</div>
-            <InputSelect
+            <InputSelectFetchData
                 defaultItem={false}
                 placeholder='-- Chọn cụm rạp chiếu --'
-                data={cinemaCombobox.length > 0 ? cinemaCombobox.map((c: any) => { return { value: c.id, name: c.cinemaName}}) : []}
+                url={selectSite ? STR_API_SELECTED_CINEMA : ''}
+                propsParams={{
+                    _site_id: selectSite
+                }}
                 value={cinemaId}
                 onChange={(value: string) => { 
                     dispatch(setFormCinemaId(value))

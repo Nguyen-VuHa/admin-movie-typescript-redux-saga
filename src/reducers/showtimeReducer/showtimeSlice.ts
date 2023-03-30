@@ -128,7 +128,7 @@ export const showtimeSlice = createSlice({
                 loadingFetch: false,
                 showtimes: payload.data,
                 totalPage: payload.totalPage,
-                totalRows: payload.totalRows,
+                totalRows: payload.totalRow,
             }
         },
         fetchShowtimeFailed: (state, { payload }) => {

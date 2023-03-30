@@ -10,43 +10,7 @@ const gb = classNames.bind(globalStyles);
 
 function CinemaRoomMain() {
     const dispatch = useAppDispatch();
-    const { selectCinema, selectSite, sites, currentPageRooms } = useAppSelector(state => state.cinemaState);
-
-    useEffect(() => {
-        /*
-            Check `sites` exists
-            - true: don't fetch data `sites`
-            - false: fetch data `sites`
-        */
-        if(!sites || sites.length <= 0) {
-            dispatch({
-                type: 'FETCH_ALL_SITES'
-            });
-        }
-    }, [sites]);
-    
-     useEffect(() => {
-        /*
-            Check `selectSite` exists
-            - true: fetch `cinemas` by `selectSite`
-            - false: dispatch clear `cinemas` on store
-        */
-        if(selectSite)
-        {   
-            dispatch({
-                type: 'FETCH_CINEMA_SELECT_BY_SITE_ID',
-                payload: selectSite,
-            });
-            dispatch(setDataSelectCinema(null));
-            dispatch(clearCinemaCombobox());
-            
-        } else {
-
-            dispatch(clearCinemas());
-            dispatch(setDataSelectCinema(null));
-            dispatch(clearCinemaCombobox());
-        }
-    }, [selectSite]);
+    const { selectCinema, selectSite, currentPageRooms } = useAppSelector(state => state.cinemaState);
 
     useEffect(() => {
         /*

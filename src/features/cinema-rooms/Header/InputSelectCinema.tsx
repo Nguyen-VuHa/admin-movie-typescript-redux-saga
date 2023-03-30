@@ -2,16 +2,21 @@ import React from 'react'
 import InputSelect from 'components/Common/InputSelect';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { setDataSelectCinema } from 'reducers/cinemaReducer/cinemaSlice';
+import InputSelectFetchData from 'components/Common/InputSelectFetchData';
+import { STR_API_SELECTED_CINEMA } from 'constants/globalConstant';
 
 function InputSelectCinema() {
     const dispatch = useAppDispatch();
 
-    const { selectCinema, cinemaCombobox } = useAppSelector(state => state.cinemaState);
+    const { selectCinema, selectSite } = useAppSelector(state => state.cinemaState);
 
     return (
-        <InputSelect    
+        <InputSelectFetchData    
             placeholder='-- Chọn rạp chiếu cần xem --'
-            data={cinemaCombobox && cinemaCombobox.length > 0 ? cinemaCombobox.map(c => { return { value: c.id, name: c.cinemaName }}) : []}
+            url={selectSite ? STR_API_SELECTED_CINEMA : ''}
+            propsParams={{
+                _site_id: selectSite
+            }}
             value={selectCinema}
             onChange={(value: string) => {
                 dispatch(setDataSelectCinema(value));

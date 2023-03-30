@@ -119,7 +119,7 @@ function MovieAuthorMainActorPage() {
                 type
             },
         });
-    }, [search])
+    }, [search, currentPage])
 
     return (
         <AuthorActorContextProvider>

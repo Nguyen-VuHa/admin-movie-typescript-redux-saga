@@ -118,7 +118,7 @@ function TableMovie() {
                     dispatch({
                         type: 'FETCH_LIST_MOVIE',
                         payload: {
-                            page: currentPage,
+                            page: page,
                             search
                         },
                     });

@@ -1,18 +1,16 @@
-import authApi from 'api/authApi';
+import { loginAccount } from 'api/authApi';
 import Images from 'assets/images';
 import classNames from 'classnames/bind';
 import { Button, CheckBox } from 'components/Common';
 import Input from 'components/Common/Input';
 import { AuthContext } from 'contexts/AuthContext';
+import useToastify from 'hooks/useToastify';
 import { handleValidationLogin } from 'middlewares/authLogin';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LoginRequest, LoginResponse } from 'types/login';
 import globalStyles from 'utils/globalStyle.module.scss';
 import styles from './login.module.scss';
-import useToastify from 'hooks/useToastify';
-import { Base64 } from 'js-base64';
-import { encryption } from 'utils/variables';
-import enCodeString from 'utils/generatorPosition';
 
 const gb = classNames.bind(globalStyles);
 const cx = classNames.bind(styles);
@@ -25,8 +23,8 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const dispatchToast = useToastify();
 
-    const [userName, setUserName] = useState('admin@gmail.com');
-    const [passWord, setPassWord] = useState('123123123');
+    const [userName, setUserName] = useState('vuha201199@gmail.com');
+    const [passWord, setPassWord] = useState('123123');
     const [rememberLogin, setRememberLogin] = useState(false);
     const [validator, setValidator] = useState<any>(null);
     const [submitLoading, setSubmitLoading] = useState(false);
@@ -56,89 +54,45 @@ const LoginPage = () => {
             password: passWord,
         }, setValidator);
 
-        if(userName && passWord && checkValid) {  
+        if(checkValid) {  
             setSubmitLoading(true);
 
-            authApi.generatorKeyAuth(Base64.encode(userName))
-            .then((res: any) => {
-                if(res) {
+            let payload: LoginRequest = {
+                email: userName,
+                password: passWord
+            }
 
-                    let dataEncode = Base64.encode(`{
-                        "password": "${Base64.encode(passWord)}",
-                        "email": "${userName}"
-                    }`);
+            let result: LoginResponse = await loginAccount(payload)
 
-                    let base64 = enCodeString(dataEncode, res._k);
-                    let objEnCode = [];
-        
-                    res.e_cd.split('').map((eC: string) => {
-                        let strSplit = base64.substring(0, encryption[eC]);
-                        base64 = base64.replace(strSplit, '');
+            if (result.code === 200) {
+                setSubmitLoading(false);
+                localStorage.setItem('accessToken', result.data.ak);
+                localStorage.setItem('refreshToken', result.data.fk);
 
-                        objEnCode.push({
-                            [eC]: strSplit,
-                        });
-                    });
+                dispatchAuth({
+                    type: 'SET_USER_INFO',
+                    payload: result.data.uid,
+                });
 
-                    objEnCode.push({
-                        N: base64,
-                    });
-
-                    authApi.loginAccount({ data: objEnCode }, Base64.encode(userName))
-                    .then((res: any)=> {
-                        if(res && res.status === 200) {
-                            setSubmitLoading(false);
-                            localStorage.setItem('accessToken', res.accessToken);
-                            localStorage.setItem('refreshToken', res.refreshToken);
-                            localStorage.setItem('dssKey', res.dssKey);
-
-                            dispatchAuth({
-                                type: 'SET_USER_INFO',
-                                payload: res.user,
-                            });
-        
-                            dispatchToast({
-                                type: 'TYPE_SUCCESS',
-                                payload: {
-                                    position: 'top-left',
-                                    message: 'login admin page successfully!',
-                                }
-                            });
-                            
-                            navigate('/');
-                        }
-                        else {
-                            setSubmitLoading(false);
-                            dispatchToast({
-                                type: 'TYPE_WARN',
-                                payload: {
-                                    position: 'top-left',
-                                    message: res.message,
-                                }
-                            });
-                        }
-                    })
-                    .catch((err: any) => {
-                        setSubmitLoading(false);
-                        dispatchToast({
-                            type: 'TYPE_WARN',
-                            payload: {
-                                position: 'top-left',
-                                message: err.message,
-                            }
-                        });
-                    })
-                }
-            }).catch((err: any) => {
+                dispatchToast({
+                    type: 'TYPE_SUCCESS',
+                    payload: {
+                        position: 'top-left',
+                        message: result.message,
+                    }
+                });
+                
+                navigate('/');
+            } else {
                 setSubmitLoading(false);
                 dispatchToast({
                     type: 'TYPE_WARN',
                     payload: {
                         position: 'top-left',
-                        message: err.message,
+                        message: result.message,
                     }
                 });
-            })
+            }
         }
     }
 

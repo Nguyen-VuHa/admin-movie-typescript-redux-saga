@@ -15,11 +15,11 @@ export const handleValidationLogin = (data: AuthLogin, setValidator: React.SetSt
         msg.email = "Email không hợp lệ xin mời kiểm tra lại!";
     else
         msg.email = ''
-
+    
     if(isEmpty(data.password))
         msg.password = "Trường này không được trống!";
-    else if(isByLength(data.password, {min: 50}))
-        msg.password = "Mật khẩu không được vượt quá 50 ký tự!";
+    else if(!isByLength(data.password, {min: 8, max: 50}))
+        msg.password = "Mật khẩu tối thiểu 8 và không vượt quá 50 ký tự";
     else
         msg.password = ''
 

@@ -23,7 +23,7 @@ axiosClient.interceptors.response.use(
             return response.data;
         }
         return response;
-        },async (error) => {
+    },async (error) => {
         // Handle errors
         const originalRequest = error.config;
         if (error.response.status === 403 && !originalRequest._retry)
@@ -38,7 +38,8 @@ axiosClient.interceptors.response.use(
             return axiosClient(originalRequest);
 
         }
-        throw error;
+        
+        return error.response.data;
     }
 );
 

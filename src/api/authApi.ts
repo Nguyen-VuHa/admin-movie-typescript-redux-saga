@@ -1,3 +1,4 @@
+import { LoginRequest } from "types/login";
 import { configHeaderAxios } from "utils/configAxios";
 
 const { default: axiosClient } = require("./axiosClient");
@@ -33,6 +34,12 @@ const authApi = {
             dssKey: localStorage.getItem('dssKey') 
         });
     }
+}
+
+export const loginAccount = (payload: LoginRequest) => {
+    const url = `/api/auth/sign-in`;
+
+    return axiosClient.post(url, payload);
 }
 
 export default authApi;

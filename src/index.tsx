@@ -1,11 +1,10 @@
-import React from 'react';
+import { AuthContextProvider } from 'contexts/AuthContext';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { store } from './app/store';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { AuthContextProvider } from 'contexts/AuthContext';
+import App from './App';
+import { store } from './app/store';
+import reportWebVitals from './reportWebVitals';
 import './utils/global.scss';
 
 const container = document.getElementById('root')!;

@@ -6,17 +6,20 @@ import App from './App';
 import { store } from './app/store';
 import reportWebVitals from './reportWebVitals';
 import './utils/global.scss';
+import { Suspense } from 'react';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
 root.render(
     <Provider store={store}>
-        <BrowserRouter>
-            <AuthContextProvider>
-                <App />
-            </AuthContextProvider>
-        </BrowserRouter>
+        <Suspense fallback={<div>Loading...</div>}>
+            <BrowserRouter>
+                <AuthContextProvider>
+                    <App />
+                </AuthContextProvider>
+            </BrowserRouter>
+        </Suspense>
     </Provider>
 );
 

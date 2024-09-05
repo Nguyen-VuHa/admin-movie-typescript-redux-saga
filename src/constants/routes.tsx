@@ -1,22 +1,27 @@
-import PageNotFound from "components/Page404";
-import CinemaEditMain from "features/cinema-edit/CinemaEdit.main";
-import CinemaRoomEditMain from "features/cinema-rooms-edit/CinemaRoomEdit.main";
-import CinemaRoomMain from "features/cinema-rooms/CinemaRoom.main";
-import CinemaMain from "features/cinema/Cinema.main";
-import DashBoardMain from "features/dashboard";
-import FileSystemPage from "features/files-system";
-import MovieAuthorMainActorPage from "features/movie-author-main-actor";
-import MovieCategoryPage from "features/movie-category";
-import MovieEditPage from "features/movie-edit/MovieEdit.main";
-import MovieManagerPage from "features/movie-manager";
-import ShowTimeEditPage from "features/showtime-edit/ShowTimeEdit.main";
-import ShowTimeMain from "features/showtime/ShowTime.main";
-
+import { lazy } from 'react';
 import routePath from "./routePath";
+
+const PageNotFound = lazy(() => import("components/Page404"));
+const CinemaEditMain = lazy(() => import("features/cinema-edit/CinemaEdit.main"));
+const CinemaRoomEditMain = lazy(() => import("features/cinema-rooms-edit/CinemaRoomEdit.main"));
+const CinemaRoomMain = lazy(() => import("features/cinema-rooms/CinemaRoom.main"));
+const CinemaMain = lazy(() => import("features/cinema/Cinema.main"));
+const DashBoardMain = lazy(() => import("features/dashboard"));
+const FileSystemPage = lazy(() => import("features/files-system"));
+const MovieAuthorMainActorPage = lazy(() => import("features/movie-author-main-actor"));
+const MovieCategoryPage = lazy(() => import("features/movie-category"));
+const MovieEditPage = lazy(() => import("features/movie-edit/MovieEdit.main"));
+const MovieManagerPage = lazy(() => import("features/movie-manager"));
+const ShowTimeEditPage = lazy(() => import("features/showtime-edit/ShowTimeEdit.main"));
+const ShowTimeMain = lazy(() => import("features/showtime/ShowTime.main"));
+const StudioMainPage = lazy(() => import("features/studio-video"))
 
 export const routes = [
     // Route Dashboard
     { path: routePath.DASHBOARD, element: <DashBoardMain /> },
+
+    // Router Studio
+    { path: routePath.STUDIO_VIDEO, element: <StudioMainPage />},
 
     // Route Movie
     { path: routePath.MOVIE_MANAGER, element: <MovieManagerPage />},

@@ -20,68 +20,79 @@ let listMenu = [
     },
     {
         icon: <IoFilmSharp size={20} />,
-        menuName: 'QUẢN LÝ PHIM',
+        menuName: 'STUDIO',
         navigateLink: '#',
         listItemDrop: [
             {
-                menuName: 'Danh Sách Phim',
-                navigateLink: routePath.MOVIE_MANAGER,
-            },
-            {
-                menuName: 'Thể loại',
-                navigateLink: routePath.MOVIE_CATEGORY,
-            },
-            {
-                menuName: 'Đạo diễn / Diễn viên',
-                navigateLink: routePath.AUTHOR_MAIN_ACTOR,
+                menuName: 'Video',
+                navigateLink: routePath.STUDIO_VIDEO,
             },
         ]
     },
-    {
-        icon: <IoCubeSharp size={20} />,
-        menuName: 'QUẢN LÝ CỤM RẠP',
-        navigateLink: '#',
-        listItemDrop: [
-            {
-                menuName: 'Cụm rạp chiếu phim',
-                navigateLink: routePath.CINEMA_MANAGER,
-            },
-            {
-                menuName: 'Phòng chiếu',
-                navigateLink: routePath.ROOM_MANAGER,
-            },
-        ]
-    },
-    {
-        icon: <IoTicket size={20} />,
-        menuName: 'QUẢN LÝ VÉ PHIM',
-        navigateLink: '#',
-        listItemDrop: [
-            {
-                menuName: 'Quản lý suất chiếu',
-                navigateLink: routePath.SHOWTIME_MANAGER,
-            },
-            {
-                menuName: 'Doanh thu',
-                navigateLink: '#',
-            },
-        ]
-    },
-    {
-        icon: <IoPeopleCircleOutline size={20} />,
-        menuName: 'QUẢN LÝ NGƯỜI DÙNG',
-        navigateLink: '#',
-    },
-    {
-        icon: <IoChatbubblesSharp size={20} />,
-        menuName: 'COMMENTS & REVIEWS',
-        navigateLink: '#',
-    },
-    {
-        icon: <IoDocumentAttach size={20} />,
-        menuName: 'FILES SYSTEM',
-        navigateLink: routePath.FILES_SYSTEM,
-    }
+    // {
+    //     icon: <IoFilmSharp size={20} />,
+    //     menuName: 'QUẢN LÝ PHIM',
+    //     navigateLink: '#',
+    //     listItemDrop: [
+    //         {
+    //             menuName: 'Danh Sách Phim',
+    //             navigateLink: routePath.MOVIE_MANAGER,
+    //         },
+    //         {
+    //             menuName: 'Thể loại',
+    //             navigateLink: routePath.MOVIE_CATEGORY,
+    //         },
+    //         {
+    //             menuName: 'Đạo diễn / Diễn viên',
+    //             navigateLink: routePath.AUTHOR_MAIN_ACTOR,
+    //         },
+    //     ]
+    // },
+    // {
+    //     icon: <IoCubeSharp size={20} />,
+    //     menuName: 'QUẢN LÝ CỤM RẠP',
+    //     navigateLink: '#',
+    //     listItemDrop: [
+    //         {
+    //             menuName: 'Cụm rạp chiếu phim',
+    //             navigateLink: routePath.CINEMA_MANAGER,
+    //         },
+    //         {
+    //             menuName: 'Phòng chiếu',
+    //             navigateLink: routePath.ROOM_MANAGER,
+    //         },
+    //     ]
+    // },
+    // {
+    //     icon: <IoTicket size={20} />,
+    //     menuName: 'QUẢN LÝ VÉ PHIM',
+    //     navigateLink: '#',
+    //     listItemDrop: [
+    //         {
+    //             menuName: 'Quản lý suất chiếu',
+    //             navigateLink: routePath.SHOWTIME_MANAGER,
+    //         },
+    //         {
+    //             menuName: 'Doanh thu',
+    //             navigateLink: '#',
+    //         },
+    //     ]
+    // },
+    // {
+    //     icon: <IoPeopleCircleOutline size={20} />,
+    //     menuName: 'QUẢN LÝ NGƯỜI DÙNG',
+    //     navigateLink: '#',
+    // },
+    // {
+    //     icon: <IoChatbubblesSharp size={20} />,
+    //     menuName: 'COMMENTS & REVIEWS',
+    //     navigateLink: '#',
+    // },
+    // {
+    //     icon: <IoDocumentAttach size={20} />,
+    //     menuName: 'FILES SYSTEM',
+    //     navigateLink: routePath.FILES_SYSTEM,
+    // }
 ]
 
 function NavMenu() {

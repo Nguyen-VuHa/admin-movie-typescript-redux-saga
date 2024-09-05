@@ -2,6 +2,9 @@ export default {
     // Dashboard Path
     DASHBOARD: 'dashboard',
 
+    // Studio Path
+    STUDIO_VIDEO: 'studio/video',
+    
     // Movie Path
     MOVIE_MANAGER: 'movie-manager/movie',
     MOVIE_EDITER: 'movie-manager/movie/edit',

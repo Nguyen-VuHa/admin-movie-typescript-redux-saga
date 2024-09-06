@@ -8,26 +8,29 @@ import { setVideoFileUpload } from 'reducers/studioVideoReducer/studioVideoSlice
 
 const cx = classNames.bind(Styles);
 
-function GroupPoster() {
+interface FormDataProps {
+    setSelectedFile: Function;
+}
+
+function GroupPoster({setSelectedFile}: FormDataProps) {
     return (
         <div>  
             <div className={cx('title-form')}>UPLOAD VIDEO</div>
            
             <div className={cx('wrapper-image')}>
-                <InputSelectVideo />
+                <InputSelectVideo setSelectedFile={setSelectedFile}/>
             </div>
         </div>
     )
 }
 
-const InputSelectVideo = () => {
+const InputSelectVideo = ({setSelectedFile}: FormDataProps) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const layoutRef = useRef<HTMLDivElement>(null);
 
-    const [selectedFile, setSelectedFile] = useState<File>();
-
     const dispatch = useAppDispatch();
     const dispatchToast = useToastify();
+    const { videoFileUpload } = useAppSelector(state => state.studioVideoState)
 
     const handleSaveFile = (file: any) => {
         if(file && file.type.startsWith('video/')) {
@@ -121,8 +124,8 @@ const InputSelectVideo = () => {
             >
                 <RiVideoUploadFill size={40} />
                 {
-                    selectedFile ? <>
-                        <div className='mt-1 p-1 text-center'>{selectedFile && selectedFile.name}</div>
+                    videoFileUpload ? <>
+                        <div className='mt-1 p-1 text-center'>{videoFileUpload && videoFileUpload.name}</div>
                     </>
                     : <>
                         <div className='mt-1 p-1 text-center'>Kéo thả file hoặc nhấn để tải file lên</div>

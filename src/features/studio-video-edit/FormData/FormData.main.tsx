@@ -1,10 +1,17 @@
 import FormValue from './FormValue'
 import GroupPoster from './GroupPoster'
 
-function FormDataMain() {
+interface FormDataProps {
+    setSelectedFile: Function;
+}
+
+
+function FormDataMain({ setSelectedFile }: FormDataProps) {
     return (
         <>
-            <GroupPoster />
+            <GroupPoster 
+                setSelectedFile={setSelectedFile}
+            />
             <FormValue />
         </>
     )

@@ -3,7 +3,6 @@ import classNames from 'classnames/bind';
 import Input from 'components/Common/Input';
 import InputArea from 'components/Common/InputArea';
 import InputSelectMultiple from 'components/Common/InputSelectMultiple';
-import { setCategorySelectEdit } from 'reducers/movieReducer/movieSlice';
 import { setDescriptionForm, setTitleForm } from 'reducers/studioVideoReducer/studioVideoSlice';
 import Styles from './formdata.module.scss';
 

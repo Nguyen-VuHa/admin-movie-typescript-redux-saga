@@ -6,7 +6,8 @@ const initialState: any = {
         title: '',
         category: [],
         description: '',
-    }
+    },
+    isUploadVideo: false,
 };
 
 const getFileNameWithoutExtension = (fileName: string) => {
@@ -58,13 +59,14 @@ export const studioVideoSlice = createSlice({
                     description: payload,
                 }
             }
-        }
+        },
     },
 });
 
 export const { 
     setVideoFileUpload,
     setTitleForm, setCategoryForm, setDescriptionForm,
+
 } = studioVideoSlice.actions;
 
 export default studioVideoSlice.reducer;

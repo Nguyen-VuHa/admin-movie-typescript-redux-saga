@@ -1,12 +1,11 @@
-import React from 'react'
-import classNames from 'classnames/bind';
-import GlobalStyles from 'utils/globalStyle.module.scss';
-import Styles from 'assets/styles/header.style.module.scss';
-import InputSearch from './InputSearch';
 import { useAppSelector } from 'app/hooks';
+import Styles from 'assets/styles/header.style.module.scss';
+import classNames from 'classnames/bind';
 import { Button } from 'components/Common';
-import { IoAddSharp } from "react-icons/io5";
+import { BiVideoPlus } from "react-icons/bi";
 import { useNavigate } from 'react-router-dom';
+import GlobalStyles from 'utils/globalStyle.module.scss';
+import InputSearch from './InputSearch';
 
 const gb = classNames.bind(GlobalStyles);
 const cx = classNames.bind(Styles);
@@ -35,8 +34,8 @@ function Header() {
                             navigate('edit');
                         }}
                     >
-                        Tải Lên
-                        <IoAddSharp 
+                        Tạo Video
+                        <BiVideoPlus  
                             size={18}
                             style={{ marginLeft: '8px' }}
                         />

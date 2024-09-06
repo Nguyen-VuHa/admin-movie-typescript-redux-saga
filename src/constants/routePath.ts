@@ -4,6 +4,7 @@ export default {
 
     // Studio Path
     STUDIO_VIDEO: 'studio/video',
+    STUDIO_VIDEO_EDIT: 'studio/video/edit',
     
     // Movie Path
     MOVIE_MANAGER: 'movie-manager/movie',

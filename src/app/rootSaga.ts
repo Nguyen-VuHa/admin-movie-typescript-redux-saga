@@ -5,6 +5,7 @@ import { authorActorSaga } from 'reducers/authorActorReducer/authroActorSaga';
 import { movieSaga } from 'reducers/movieReducer/movieSaga';
 import { cinemaSaga } from 'reducers/cinemaReducer/cinemaSaga';
 import { showtimeSaga } from 'reducers/showtimeReducer/showtimeSaga';
+import { studioVideoSaga } from 'reducers/studioVideoReducer/studioVideoSaga';
 
 export default function* rootSaga() {
     yield all([
@@ -14,5 +15,6 @@ export default function* rootSaga() {
         movieSaga(),
         cinemaSaga(),
         showtimeSaga(),
+        studioVideoSaga(),
     ]);
 }

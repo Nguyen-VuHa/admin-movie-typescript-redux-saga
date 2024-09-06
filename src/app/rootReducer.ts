@@ -7,6 +7,7 @@ import movieSlice from 'reducers/movieReducer/movieSlice';
 import globalSlice from 'reducers/globalReducer/globalSlice';
 import cinemaSlice from 'reducers/cinemaReducer/cinemaSlice';
 import showtimeSlice from 'reducers/showtimeReducer/showtimeSlice';
+import studioVideoSlice from 'reducers/studioVideoReducer/studioVideoSlice';
 
 export const rootReducer = {
     toastifyState: toastifySlice,
@@ -18,4 +19,5 @@ export const rootReducer = {
     globalState: globalSlice,
     cinemaState: cinemaSlice,
     showtimeState: showtimeSlice,
+    studioVideoState: studioVideoSlice,
 }

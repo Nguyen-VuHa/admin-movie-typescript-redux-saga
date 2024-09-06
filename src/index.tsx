@@ -13,13 +13,11 @@ const root = createRoot(container);
 
 root.render(
     <Provider store={store}>
-        <Suspense fallback={<div>Loading...</div>}>
-            <BrowserRouter>
-                <AuthContextProvider>
-                    <App />
-                </AuthContextProvider>
-            </BrowserRouter>
-        </Suspense>
+        <BrowserRouter>
+            <AuthContextProvider>
+                <App />
+            </AuthContextProvider>
+        </BrowserRouter>
     </Provider>
 );
 

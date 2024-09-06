@@ -15,6 +15,7 @@ const MovieManagerPage = lazy(() => import("features/movie-manager"));
 const ShowTimeEditPage = lazy(() => import("features/showtime-edit/ShowTimeEdit.main"));
 const ShowTimeMain = lazy(() => import("features/showtime/ShowTime.main"));
 const StudioMainPage = lazy(() => import("features/studio-video"))
+const StudioEditMainPage = lazy(() => import("features/studio-video-edit"))
 
 export const routes = [
     // Route Dashboard
@@ -22,6 +23,7 @@ export const routes = [
 
     // Router Studio
     { path: routePath.STUDIO_VIDEO, element: <StudioMainPage />},
+    { path: routePath.STUDIO_VIDEO_EDIT, element: <StudioEditMainPage />},
 
     // Route Movie
     { path: routePath.MOVIE_MANAGER, element: <MovieManagerPage />},

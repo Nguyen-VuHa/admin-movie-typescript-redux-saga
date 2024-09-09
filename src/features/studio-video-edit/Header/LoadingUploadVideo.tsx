@@ -1,17 +1,18 @@
 import styleLoading from 'assets/styles/loading.style.module.scss';
 import classNames from 'classnames/bind';
-import "./header.scss"
-import { useEffect, useRef, useState } from 'react';
 import { Button } from 'components/Common';
+import { useEffect, useRef } from 'react';
+import "./header.scss";
 
 const cx = classNames.bind(styleLoading);
 
 interface LoadingProps {
     isLoading: boolean;
     percentProcess?: number;
+    setIsUploadVideo: Function;
 }
 
-function LoadingUploadVideo({isLoading, percentProcess}: LoadingProps) {
+function LoadingUploadVideo({isLoading, percentProcess, setIsUploadVideo}: LoadingProps) {
     const progressRef = useRef<HTMLDivElement>(null)
 
 
@@ -29,7 +30,7 @@ function LoadingUploadVideo({isLoading, percentProcess}: LoadingProps) {
                     <div className="progress">
                         { 
                         percentProcess === 100 ? 
-                            <h2>Upload video successfully.</h2>
+                            <h2>Tải tên video thành công.</h2>
                             : <h2>Uploading {percentProcess}% ...</h2>
                         }
                         
@@ -44,6 +45,9 @@ function LoadingUploadVideo({isLoading, percentProcess}: LoadingProps) {
                             percentProcess === 100 &&  
                             <Button
                                 className="mt-2"
+                                onClick={() => {
+                                    setIsUploadVideo(false)
+                                }}
                             >
                                 Xác nhận
                             </Button>

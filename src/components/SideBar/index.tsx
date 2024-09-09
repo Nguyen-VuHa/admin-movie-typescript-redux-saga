@@ -10,7 +10,7 @@ export default function MainSideBar() {
     return (
         <div className={cx('container')}>
             <a className={cx('logo')} href="!#">
-                <img width={150} src="https://www.tiendauroi.com/wp-content/uploads/2020/02/bhd-star-cinema.png" alt="LOGO_NULL"/>
+                <img width={80} src="/logo.png" alt="LOGO_NULL"/>
             </a>
 
             <UserDetail />

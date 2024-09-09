@@ -101,10 +101,8 @@ function Header({ file }: HeaderProps) {
                 currentChunk++;
                 const progress = Math.round((currentChunk / totalChunks) * 100);
                 setProcess(progress);
-    
-                console.log(progress);
                 
-                await delay(1000);
+                await delay(300);
             }
         }
     }
@@ -116,6 +114,7 @@ function Header({ file }: HeaderProps) {
             <LoadingUploadVideo 
                 isLoading={isUploadVideo}
                 percentProcess={process}
+                setIsUploadVideo={setIsUploadVideo}
             />
             <div className={gb('wrapper-header', cx('sticky-header'))}>
                 {

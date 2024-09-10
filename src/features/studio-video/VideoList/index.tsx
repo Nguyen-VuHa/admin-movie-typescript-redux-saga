@@ -77,10 +77,10 @@ function VideoList() {
                                 </td>
                                 <td>
                                     <div className={tb('table-text')}>
-                                        <GroupButton 
+                                        {/* <GroupButton 
                                             status={m.status}
                                             data={m}
-                                        />
+                                        /> */}
                                     </div>
                                 </td>  
                             </tr>

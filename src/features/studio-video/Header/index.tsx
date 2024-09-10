@@ -12,7 +12,7 @@ const cx = classNames.bind(Styles);
 
 function Header() {
     const navigate = useNavigate();
-    const { totalRows } = useAppSelector(state => state.movieState);
+    const { videoTotalRows } = useAppSelector(state => state.studioVideoState);
 
     return (
         <div className={gb('wrapper-header', cx('sticky-header'))}>
@@ -21,7 +21,7 @@ function Header() {
                     className={cx('layout-title')}
                 >
                     <h2 className={cx('title')}>Studio Video</h2>
-                    <span className={cx('total-text')}>{ totalRows } videos</span>
+                    <span className={cx('total-text')}>{ videoTotalRows } videos</span>
                 </div>
                 <div
                     className={cx('layout-title')}

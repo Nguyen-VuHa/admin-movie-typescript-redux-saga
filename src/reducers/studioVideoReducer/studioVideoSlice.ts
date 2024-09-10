@@ -12,6 +12,16 @@ const initialState: any = {
     thumbnailsBase64: '',
 
     isUploadVideo: false,
+    isFetchVideoList: false,
+
+    videoParams: {
+        page: 1,
+        pageSize: 10,
+        search: "",
+    },
+    
+    videoTotalRows: 0,
+    videos: [],
 };
 
 const getFileNameWithoutExtension = (fileName: string) => {
@@ -94,6 +104,35 @@ export const studioVideoSlice = createSlice({
                 modalEditImg: payload,
             }
         },
+        setVideoParams: (state, { payload }) => {
+            return {
+                ...state,
+                videoParams: {
+                    ...state.videoParams,
+                    ...payload,
+                }
+            }
+        },
+        setStatusIsFetchVideoList: (state, { payload }) => {
+            return {
+                ...state,
+                isFetchVideoList: payload,
+            }
+        },
+        fetchVideoListSuccess: (state, { payload }) => {
+            return {
+                ...state,
+                videos: payload.data || [],
+                videoTotalRows: payload.totalRows,
+            }
+        },
+        fetchVideoListFailed: (state, { payload }) => {
+            return {
+                ...state,
+                videos: [],
+                videoTotalRows: 0,
+            }
+        },
     },
 });
 
@@ -104,6 +143,9 @@ export const {
     setTitleForm, setCategoryForm, setDescriptionForm,
 
     setImageThumbnail, setDefaultImageEdit,  setModalEditImage,
+ 
+    setVideoParams,
+    setStatusIsFetchVideoList, fetchVideoListSuccess, fetchVideoListFailed,
 } = studioVideoSlice.actions;
 
 export default studioVideoSlice.reducer;

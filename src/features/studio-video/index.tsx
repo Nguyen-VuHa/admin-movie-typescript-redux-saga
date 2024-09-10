@@ -1,27 +1,30 @@
-import React, { useEffect } from 'react'
-import globalStyles from 'utils/globalStyle.module.scss';
 import classNames from 'classnames/bind';
-import Header from './Header';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { MovieContextProvider } from 'contexts/MovieContext';
+import globalStyles from 'utils/globalStyle.module.scss';
+import Header from './Header';
 import VideoList from './VideoList';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useEffect } from 'react';
 
 const gb = classNames.bind(globalStyles);
 
 function StudioVideoMainPage() {
-    // const dispatch = useAppDispatch();
-    // const { currentPage, search, sortBy } = useAppSelector(state => state.movieState);
+    const dispatch = useAppDispatch();
+    const { videoParams } = useAppSelector(state => state.studioVideoState);
+    const { page, pageSize, search } = videoParams
 
-    // useEffect(() => {
-    //     dispatch({
-    //         type: 'FETCH_LIST_MOVIE',
-    //         payload: {
-    //             page: currentPage,
-    //             search,
-    //             sortBy
-    //         },
-    //     });
-    // }, [search, sortBy]);
+    useEffect(() => {
+        
+        dispatch({
+            type: 'FETCH_VIDEO_LIST',
+            payload: {
+                page,
+                pageSize,
+                search
+            },
+        });
+
+    }, [search, page, pageSize]);
     
 
     return (

@@ -26,9 +26,9 @@ function GroupButton({ status, data }: GroupButtonProps) {
             >
                 <ButtonTable 
                     icon={
-                        status == 1 ? <IoLockClosed /> :  <IoLockOpen />
+                        status === 1 ? <IoLockClosed /> :  <IoLockOpen />
                     }
-                    color={status == 1 ? COLORS.ORANGE_WARN : COLORS.GREEN_SUCCESS}
+                    color={status === 1 ? COLORS.ORANGE_WARN : COLORS.GREEN_SUCCESS}
                     onClick={() => {
                         dispatchMovie({
                             type: "SET_STATUS_MODAL_QUESTION",
@@ -41,7 +41,7 @@ function GroupButton({ status, data }: GroupButtonProps) {
                         });
                     }}
                 />
-                <ButtonTable 
+                {/* <ButtonTable 
                     icon={
                         <IoCreate />
                     }
@@ -49,7 +49,7 @@ function GroupButton({ status, data }: GroupButtonProps) {
                     onClick={() => {
                         navigate(`edit?id=${data.id}`);
                     }}
-                />
+                /> */}
             </div>
         </>
     )

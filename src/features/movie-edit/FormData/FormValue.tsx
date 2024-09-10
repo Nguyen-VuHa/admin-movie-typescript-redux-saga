@@ -1,12 +1,11 @@
-import React from 'react'
-import Styles from './formdata.module.scss';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import classNames from 'classnames/bind';
 import Input from 'components/Common/Input';
-import InputSelectMultiple from 'components/Common/InputSelectMultiple';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { setAuthorSelectEdit, setCategorySelectEdit, setDescriptionEdit, setEndDateEdit, setIDTrailerEdit, setMainActorSelectEdit, setMovieNameEdit, setShowtimeEdit, setStartDateEdit } from 'reducers/movieReducer/movieSlice';
 import InputArea from 'components/Common/InputArea';
+import InputSelectMultiple from 'components/Common/InputSelectMultiple';
+import { setAuthorSelectEdit, setCategorySelectEdit, setDescriptionEdit, setEndDateEdit, setIDTrailerEdit, setMainActorSelectEdit, setMovieNameEdit, setShowtimeEdit, setStartDateEdit } from 'reducers/movieReducer/movieSlice';
 import { handleCheckIsNumber } from 'utils/checkIsNumber';
+import Styles from './formdata.module.scss';
 
 const cx = classNames.bind(Styles);
 

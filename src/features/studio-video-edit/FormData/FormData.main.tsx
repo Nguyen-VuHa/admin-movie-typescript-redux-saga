@@ -1,17 +1,27 @@
+import classNames from 'classnames';
 import FormValue from './FormValue'
-import GroupPoster from './GroupPoster'
+import GroupVideo from './GroupVideo'
+import Styles from './formdata.module.scss';
+import GroupPoster from './GroupPoster';
 
 interface FormDataProps {
     setSelectedFile: Function;
 }
 
+const cx = classNames.bind(Styles);
 
 function FormDataMain({ setSelectedFile }: FormDataProps) {
     return (
         <>
-            <GroupPoster 
-                setSelectedFile={setSelectedFile}
-            />
+            <div className={cx('grid-col-2', ['p-2'])}>
+                <GroupPoster 
+                
+                />
+                <GroupVideo 
+                    setSelectedFile={setSelectedFile}
+                />
+            </div>
+        
             <FormValue />
         </>
     )

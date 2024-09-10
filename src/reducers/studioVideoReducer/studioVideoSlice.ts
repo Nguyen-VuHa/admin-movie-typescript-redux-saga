@@ -7,6 +7,10 @@ const initialState: any = {
         category: [],
         description: '',
     },
+    
+    modalEditImg: false,
+    thumbnailsBase64: '',
+
     isUploadVideo: false,
 };
 
@@ -17,12 +21,24 @@ const getFileNameWithoutExtension = (fileName: string) => {
   
     // Lấy các phần trừ phần đuôi (phần cuối cùng)
     return parts.slice(0, -1).join('.');
-  };
+};
 
 export const studioVideoSlice = createSlice({ 
     name: 'studio-video',
     initialState,
     reducers: {
+        resetFormUpload: (state) => {
+            return {
+                ...state,
+                formUpload: {
+                    title: '',
+                    category: [],
+                    description: '',
+                },
+                thumbnailsBase64: '',
+                videoFileUpload: null,
+            }
+        },
         setVideoFileUpload: (state, { payload }) => {
             return {
                 ...state,
@@ -60,13 +76,34 @@ export const studioVideoSlice = createSlice({
                 }
             }
         },
+        setImageThumbnail: (state, { payload }) => {
+            return {
+                ...state,
+                thumbnailsBase64: payload,
+            }
+        },
+        setDefaultImageEdit: (state) => {
+            return {
+                ...state,
+                thumbnailsBase64: '',
+            }
+        },
+        setModalEditImage: (state, { payload }) => {
+            return {
+                ...state,
+                modalEditImg: payload,
+            }
+        },
     },
 });
 
 export const { 
+    resetFormUpload, 
+    
     setVideoFileUpload,
     setTitleForm, setCategoryForm, setDescriptionForm,
 
+    setImageThumbnail, setDefaultImageEdit,  setModalEditImage,
 } = studioVideoSlice.actions;
 
 export default studioVideoSlice.reducer;

@@ -3,6 +3,8 @@ import classNames from 'classnames/bind';
 import { Button } from 'components/Common';
 import { useEffect, useRef } from 'react';
 import "./header.scss";
+import { useAppDispatch } from 'app/hooks';
+import { resetFormUpload } from 'reducers/studioVideoReducer/studioVideoSlice';
 
 const cx = classNames.bind(styleLoading);
 
@@ -15,6 +17,7 @@ interface LoadingProps {
 function LoadingUploadVideo({isLoading, percentProcess, setIsUploadVideo}: LoadingProps) {
     const progressRef = useRef<HTMLDivElement>(null)
 
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         if(progressRef && progressRef.current) {
@@ -47,6 +50,7 @@ function LoadingUploadVideo({isLoading, percentProcess, setIsUploadVideo}: Loadi
                                 className="mt-2"
                                 onClick={() => {
                                     setIsUploadVideo(false)
+                                    dispatch(resetFormUpload())
                                 }}
                             >
                                 Xác nhận

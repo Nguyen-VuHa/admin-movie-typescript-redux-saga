@@ -1,52 +1,86 @@
 import classNames from 'classnames/bind';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import Styles from './formdata.module.scss';
+
 import { useAppDispatch, useAppSelector } from 'app/hooks';
+import Image from 'components/Common/Image';
 import useToastify from 'hooks/useToastify';
-import { RiVideoUploadFill } from "react-icons/ri";
-import { setVideoFileUpload } from 'reducers/studioVideoReducer/studioVideoSlice';
+import { IoClose } from "react-icons/io5";
+import { RiImageAddFill } from "react-icons/ri";
+import ModalEditPoster from './ModalEditPoster';
+import { setDefaultImageEdit, setImageThumbnail, setModalEditImage } from 'reducers/studioVideoReducer/studioVideoSlice';
 
 const cx = classNames.bind(Styles);
 
-interface FormDataProps {
-    setSelectedFile: Function;
-}
+function GroupPoster() {
+    const dispatch = useAppDispatch();
 
-function GroupPoster({setSelectedFile}: FormDataProps) {
+    const { thumbnailsBase64 } = useAppSelector(state => state.studioVideoState);
+    
     return (
         <div>  
-            <div className={cx('title-form')}>UPLOAD VIDEO</div>
+            <ModalEditPoster />
+            <div className={cx('title-form')}>THUMBNAIL VIDEO</div>
            
             <div className={cx('wrapper-image')}>
-                <InputSelectVideo setSelectedFile={setSelectedFile}/>
+                {
+                    thumbnailsBase64 !== '' && <div className={cx('layout-image', ['overflow-hidden'])} >
+                        <Image 
+                            src={thumbnailsBase64}
+                            alt="NO THUMNAIL"
+                        />
+                        <div 
+                            className={cx('button-remove')}
+                            onClick={() => {
+                                dispatch(setDefaultImageEdit());
+                            }}
+                        >
+                            <IoClose size={20}/>
+                        </div>
+                    </div>
+                }
+                {
+                    thumbnailsBase64 === '' && <InputSelectImage />
+                }
             </div>
         </div>
     )
 }
 
-const InputSelectVideo = ({setSelectedFile}: FormDataProps) => {
+const InputSelectImage = () => {
     const inputRef = useRef<HTMLInputElement>(null);
     const layoutRef = useRef<HTMLDivElement>(null);
 
     const dispatch = useAppDispatch();
+
     const dispatchToast = useToastify();
-    const { videoFileUpload } = useAppSelector(state => state.studioVideoState)
 
     const handleSaveFile = (file: any) => {
-        if(file && file.type.startsWith('video/')) {
-            if(file.size / 1024 / 1024 <= 100) {
-                setSelectedFile(file)
-                dispatch(setVideoFileUpload({
-                    name: file.name,
-                    size: file.size,
-                    type: file.type,
-                }));
+        if(file && file.type.includes('image')) {
+            if(file.size / 1024 / 1024 <= 3) {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    if(reader.result) {
+                        dispatch(setModalEditImage(true));
+                        dispatch(setImageThumbnail(reader.result));
+                    }
+                };
+                reader.onerror = error => {
+                    dispatchToast({
+                        type: 'TYPE_WARN',
+                        payload: {
+                            position: 'top-left',
+                            message: 'Lỗi khi xử lý hình ảnh!'
+                        }
+                    })
+                }
             } else {
                 dispatchToast({
                     type: 'TYPE_ERROR',
                     payload: {
                         position: 'top-left',
-                        message: 'Kích thước tệp tải lên vượt quá mức cho phép (100MB).'
+                        message: 'Kích thước ảnh tải lên vượt quá mức cho phép (3MB).'
                     }
                 })
             }
@@ -55,7 +89,7 @@ const InputSelectVideo = ({setSelectedFile}: FormDataProps) => {
                 type: 'TYPE_WARN',
                 payload: {
                     position: 'top-left',
-                    message: 'Hãy chắc chắn tệp của bạn là file video!'
+                    message: 'Hãy chắc chắn file của bạn là file hình ảnh!'
                 }
             })
         }
@@ -63,11 +97,11 @@ const InputSelectVideo = ({setSelectedFile}: FormDataProps) => {
 
     return (
         <>
-            <input 
+             <input 
                 ref={inputRef}
                 className='d-none'
                 type="file"
-                accept="video/*"
+                accept="image/png, image/jpeg"
                 value=""
                 onChange={(e: any) => {
                     if(e.target.files && e.target.files.length > 0) {
@@ -122,17 +156,9 @@ const InputSelectVideo = ({setSelectedFile}: FormDataProps) => {
                     }
                 }}
             >
-                <RiVideoUploadFill size={40} />
-                {
-                    videoFileUpload ? <>
-                        <div className='mt-1 p-1 text-center'>{videoFileUpload && videoFileUpload.name}</div>
-                    </>
-                    : <>
-                        <div className='mt-1 p-1 text-center'>Kéo thả file hoặc nhấn để tải file lên</div>
-                        <div>(Lưu ý video không vượt quá 100MB)</div>
-                    </>
-                }
-                
+                <RiImageAddFill size={40} />
+                <div className='mt-1 p-1 text-center'>Kéo thả ảnh hoặc nhấn để tải ảnh lên</div>
+                <div>(Lưu ý ảnh không vượt quá 3MB)</div>
             </div>
         </>
     )

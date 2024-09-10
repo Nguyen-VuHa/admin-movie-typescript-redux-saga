@@ -27,8 +27,8 @@ function delay(ms: number) {
 
 
 function Header({ file }: HeaderProps) {
-    const { formUpload } = useAppSelector(state => state.studioVideoState);
-    const { title } = formUpload;
+    const { formUpload, thumbnailsBase64 } = useAppSelector(state => state.studioVideoState);
+    const { title, description  } = formUpload;
 
     const navigate = useNavigate();
     const[isUploadVideo, setIsUploadVideo] = useState<boolean>(false)
@@ -39,21 +39,21 @@ function Header({ file }: HeaderProps) {
     const [process, setProcess] = useState<number>(0)
 
     const handleSubmitFormMovie = () => {
-        if(file) {
+        if(file && thumbnailsBase64 && title) {
             setModalConfirm(true);
         } else {
             dispatchToast({
                 type: 'TYPE_ERROR',
                 payload: {
                     position: 'top-left',
-                    message: 'Vui lòng chọn tệp video tải lên.'
+                    message: 'Vui lòng hoàn tất biểu mẩu upload video.'
                 }
             })
         }
     }
 
     const handleUploadFile = async () => {
-        if(file) {
+        if(file && thumbnailsBase64 && title) {
             const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
 
             let currentChunk = 0;
@@ -86,24 +86,41 @@ function Header({ file }: HeaderProps) {
                 formData.append("file", chunk);
                 formData.append("chunkNumber", (currentChunk + 1).toString());
                 formData.append("totalChunks", totalChunks.toString());
-                formData.append("filename", title);
                 formData.append("r_sign_hex", signRHex);
                 formData.append("s_sign_hex", signSHex);
                 formData.append("upload_id", uploadID);
+
+                console.log(currentChunk === totalChunks - 1);
+                
+                if (currentChunk === totalChunks - 1) {
+                    formData.append("filename", title);
+                    formData.append("thumbnail", thumbnailsBase64);
+                    formData.append("description", description);
+                }
     
                 const res = await apiUploadVideoFile(formData)
                 
                 if (res && res.code !== 200) {
                     currentChunk = totalChunks + 1
+                    setIsUploadVideo(false)
+                    setProcess(0);
                     continue
                 }
 
                 currentChunk++;
                 const progress = Math.round((currentChunk / totalChunks) * 100);
                 setProcess(progress);
-                
-                await delay(300);
             }
+
+
+        } else {
+            dispatchToast({
+                type: 'TYPE_ERROR',
+                payload: {
+                    position: 'top-left',
+                    message: 'Vui lòng hoàn tất biểu mẩu upload video.'
+                }
+            })
         }
     }
 
@@ -155,7 +172,7 @@ function Header({ file }: HeaderProps) {
                         <Button
                             onClick={() => handleSubmitFormMovie()}
                         >
-                            Upload
+                            Lưu Video
                             <AiOutlineCloudUpload size={18} style={{ marginLeft: '8px' }}/>
                         </Button>
                     </div>

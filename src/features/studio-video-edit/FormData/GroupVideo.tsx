@@ -1,92 +1,52 @@
-import classNames from 'classnames/bind';
-import { useRef } from 'react';
-import Styles from './formdata.module.scss';
-
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import Image from 'components/Common/Image';
+import classNames from 'classnames/bind';
 import useToastify from 'hooks/useToastify';
-import { IoClose } from "react-icons/io5";
-import { RiImageAddFill } from "react-icons/ri";
-import { removeItemPoster, setImageBase64, setModalEditImage } from 'reducers/movieReducer/movieSlice';
-import ModalEditPoster from './ModalEditPoster';
+import { useRef } from 'react';
+import { RiVideoUploadFill } from "react-icons/ri";
+import { setVideoFileUpload } from 'reducers/studioVideoReducer/studioVideoSlice';
+import Styles from './formdata.module.scss';
 
 const cx = classNames.bind(Styles);
 
-function GroupPoster() {
-    const dispatch = useAppDispatch();
+interface FormDataProps {
+    setSelectedFile: Function;
+}
 
-    const { listPoster } = useAppSelector(state => state.movieState);
-
+function GroupVideo({setSelectedFile}: FormDataProps) {
     return (
         <div>  
-            <ModalEditPoster />
-            <div className={cx('title-form')}>POSTER</div>
+            <div className={cx('title-form')}>UPLOAD VIDEO</div>
            
             <div className={cx('wrapper-image')}>
-                {
-                    listPoster && listPoster.length > 0
-                    && listPoster.map((lt: any, index: number) => {
-                        return <div className={cx('layout-image', ['overflow-hidden'])} key={index}>
-                            <Image 
-                                src={lt.base64}
-                                alt="NO POSTER"
-                            />
-                            <div 
-                                className={cx('button-remove')}
-                                onClick={() => {
-                                    dispatch(removeItemPoster(lt.id));
-                                }}
-                            >
-                                <IoClose size={20}/>
-                            </div>
-                        </div>
-                    }) 
-                }
-
-                {
-                    listPoster.length < 4 && <InputSelectImage />
-                }
-                
-                
+                <InputSelectVideo setSelectedFile={setSelectedFile}/>
             </div>
         </div>
     )
 }
 
-const InputSelectImage = () => {
+const InputSelectVideo = ({setSelectedFile}: FormDataProps) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const layoutRef = useRef<HTMLDivElement>(null);
 
     const dispatch = useAppDispatch();
-
     const dispatchToast = useToastify();
+    const { videoFileUpload } = useAppSelector(state => state.studioVideoState)
 
     const handleSaveFile = (file: any) => {
-        if(file && file.type.includes('image')) {
-            if(file.size / 1024 / 1024 <= 3) {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => {
-                    if(reader.result) {
-                        dispatch(setModalEditImage(true));
-                        dispatch(setImageBase64(reader.result));
-                    }
-                };
-                reader.onerror = error => {
-                    dispatchToast({
-                        type: 'TYPE_WARN',
-                        payload: {
-                            position: 'top-left',
-                            message: 'Lỗi khi xử lý hình ảnh!'
-                        }
-                    })
-                }
+        if(file && file.type.startsWith('video/')) {
+            if(file.size / 1024 / 1024 <= 100) {
+                setSelectedFile(file)
+                dispatch(setVideoFileUpload({
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                }));
             } else {
                 dispatchToast({
                     type: 'TYPE_ERROR',
                     payload: {
                         position: 'top-left',
-                        message: 'Kích thước ảnh tải lên vượt quá mức cho phép (3MB).'
+                        message: 'Kích thước tệp tải lên vượt quá mức cho phép (100MB).'
                     }
                 })
             }
@@ -95,7 +55,7 @@ const InputSelectImage = () => {
                 type: 'TYPE_WARN',
                 payload: {
                     position: 'top-left',
-                    message: 'Hãy chắc chắn file của bạn là file hình ảnh!'
+                    message: 'Hãy chắc chắn tệp của bạn là file video!'
                 }
             })
         }
@@ -103,11 +63,11 @@ const InputSelectImage = () => {
 
     return (
         <>
-             <input 
+            <input 
                 ref={inputRef}
                 className='d-none'
                 type="file"
-                accept="image/png, image/jpeg"
+                accept="video/*"
                 value=""
                 onChange={(e: any) => {
                     if(e.target.files && e.target.files.length > 0) {
@@ -162,12 +122,20 @@ const InputSelectImage = () => {
                     }
                 }}
             >
-                <RiImageAddFill size={40} />
-                <div className='mt-1 p-1 text-center'>Kéo thả ảnh hoặc nhấn để tải ảnh lên</div>
-                <div>(Lưu ý ảnh không vượt quá 3MB)</div>
+                <RiVideoUploadFill size={40} />
+                {
+                    videoFileUpload ? <>
+                        <div className='mt-1 p-1 text-center'>{videoFileUpload && videoFileUpload.name}</div>
+                    </>
+                    : <>
+                        <div className='mt-1 p-1 text-center'>Kéo thả file hoặc nhấn để tải file lên</div>
+                        <div>(Lưu ý video không vượt quá 100MB)</div>
+                    </>
+                }
+                
             </div>
         </>
     )
 }
 
-export default GroupPoster
+export default GroupVideo
